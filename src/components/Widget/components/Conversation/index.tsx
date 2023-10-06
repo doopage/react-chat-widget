@@ -11,6 +11,8 @@ import { AnyFunction } from '../../../../utils/types';
 
 import './style.scss';
 
+const PickerComponent = Picker as any;
+
 interface ISenderRef {
   onSelectEmoji: (event: any) => void;
 }
@@ -120,7 +122,7 @@ function Conversation({
         showTimeStamp={showTimeStamp}
       />
       <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
-      {emojis && pickerStatus && (<Picker 
+      {emojis && pickerStatus && (<PickerComponent 
         style={{ position: 'absolute', bottom: pickerOffset, left: '0', width: '100%' }}
         onSelect={onSelectEmoji}
       />)}
