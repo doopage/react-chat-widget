@@ -168,6 +168,7 @@ export default App;
 |**handleTextInputChange**|(event) => any|NO| |Prop that triggers on input change|
 |**handleSubmit**|(event) => any|NO| |Prop that triggers when a message is submitted, used for custom validation|
 |**resizable**|boolean|NO|false|Prop that allows to resize the widget by dragging it's left border|
+|**resizableProps**|object|NO|{heightOffset:300, widthOffset:300}|Prop that lets you set the maximum height and width if resizable==true. This is done by subtracting the supplied offset from the window's height and width.
 |**emojis**|boolean|NO|false|enable emoji picker|
 |**showBadge**|boolean|NO|true|Prop that allows to show or hide the unread message badge|
 

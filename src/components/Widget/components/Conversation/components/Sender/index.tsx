@@ -18,11 +18,10 @@ type Props = {
   sendMessage: (event: any) => void;
   buttonAlt: string;
   onPressEmoji: () => void;
-  onChangeSize: (event: any) => void;
   onTextInputChange?: (event: any) => void;
 }
 
-function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt, onPressEmoji, onChangeSize }: Props, ref) {
+function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt, onPressEmoji }: Props, ref) {
   const showChat = useSelector((state: GlobalState) => state.behavior.showChat);
   const inputRef = useRef<HTMLDivElement>(null!);
   const refContainer = useRef<HTMLDivElement>(null);
@@ -57,11 +56,11 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
     if(el.innerHTML) {
       const firstPart = el.innerHTML.substring(0, start);
       const secondPart = el.innerHTML.substring(end);
-      el.innerHTML = (`${firstPart}${emoji.native}${secondPart}`)
+      el.innerHTML = (`${firstPart}${emoji.emoji}${secondPart}`)
     } else {
-      el.innerHTML = emoji.native
+      el.innerHTML = emoji.emoji
     }
-    updateCaret(el, start, emoji.native.length)
+    updateCaret(el, start, emoji.emoji.length)
   }
 
   const handlerOnKeyPress = (event) => {
@@ -78,16 +77,6 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
     }
   }
 
-  // TODO use a context for checkSize and toggle picker
-  const checkSize = () => {
-    const senderEl = refContainer.current
-    if(senderEl && height !== senderEl.clientHeight) {
-      const {clientHeight} = senderEl;
-      setHeight(clientHeight)
-      onChangeSize(clientHeight ? clientHeight -1 : 0)
-    }
-  }
-
   const handlerOnKeyUp = (event) => {
     const el = inputRef.current;
     if(!el) return true;
@@ -101,7 +90,6 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
         el.innerHTML = el.innerHTML.replace(brRegex, '');
       }
     }
-    checkSize();
   }
 
   const handlerOnKeyDown= (event) => {
@@ -121,7 +109,6 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
 
   const handlerPressEmoji = () => {
     onPressEmoji();
-    checkSize();
   }
 
   return (

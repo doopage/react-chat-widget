@@ -3,7 +3,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
@@ -13,10 +12,9 @@ module.exports = {
   target: 'web',
   mode: 'development',
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
     compress: false,
     host: '0.0.0.0',
-    port: 3000,
+    port: 4000,
     hot: true
   },
   resolve: {
@@ -72,7 +70,6 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: './dev/index.html'
     }),

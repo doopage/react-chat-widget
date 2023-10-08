@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { Picker } from 'emoji-mart';
+import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
 import cn from 'classnames';
 
 import Header from './components/Header';
@@ -8,10 +8,9 @@ import Sender from './components/Sender';
 import QuickButtons from './components/QuickButtons';
 
 import { AnyFunction } from '../../../../utils/types';
+import { ResizableProps } from '@types';
 
 import './style.scss';
-
-const PickerComponent = Picker as any;
 
 interface ISenderRef {
   onSelectEmoji: (event: any) => void;
@@ -35,6 +34,7 @@ type Props = {
   sendButtonAlt: string;
   showTimeStamp: boolean;
   resizable?: boolean;
+  resizableProps?: ResizableProps;
   emojis?: boolean;
 };
 
@@ -56,59 +56,99 @@ function Conversation({
   sendButtonAlt,
   showTimeStamp,
   resizable,
+  resizableProps,
   emojis
 }: Props) {
-  const [containerDiv, setContainerDiv] = useState<HTMLElement | null>();
-  let startX, startWidth;
+
+  const containerDivRef = useRef<HTMLElement | null>(null);
+  const boundResizeRef = useRef<(event: MouseEvent) => void>(() => { });
+  const startXRef = useRef<number>(0);
+  const startYRef = useRef<number>(0);
+  const startWidthRef = useRef<number>(0);
+  const startHeightRef = useRef<number>(0);
+
+  const MIN_WIDTH = 400; // set the minimum width value
+  const MIN_HEIGHT = 300; // set the minimum height value
 
   useEffect(() => {
-    const containerDiv = document.getElementById('rcw-conversation-container');
-    setContainerDiv(containerDiv);
+    containerDivRef.current = document.getElementById('rcw-messages');
   }, []);
 
   const initResize = (e) => {
     if (resizable) {
-      startX = e.clientX;
-      if (document.defaultView && containerDiv){
-        startWidth = parseInt(document.defaultView.getComputedStyle(containerDiv).width);
-        window.addEventListener('mousemove', resize, false);
+      const resizerType = e.currentTarget.getAttribute('data-resizer');
+
+      startXRef.current = e.clientX;
+      startYRef.current = e.clientY;
+
+      if (document.defaultView && containerDivRef.current) {
+        startWidthRef.current = parseInt(document.defaultView.getComputedStyle(containerDivRef.current).width);
+        startHeightRef.current = parseInt(document.defaultView.getComputedStyle(containerDivRef.current).height);
+
+        // Bind the resizer type and store the reference
+        boundResizeRef.current = (event) => resize(event, resizerType);
+
+        window.addEventListener('mousemove', boundResizeRef.current, false);
         window.addEventListener('mouseup', stopResize, false);
       }
     }
   }
 
-  const resize = (e) => {
-    if (containerDiv) {
-      containerDiv.style.width = (startWidth - e.clientX + startX) + 'px';
+  const resize = (e, resizerType) => {
+    if (containerDivRef.current) {
+      let newWidth = startWidthRef.current;
+      let newHeight = startHeightRef.current;
+
+      switch (resizerType) {
+        case "top-left":
+          newWidth = startWidthRef.current - e.clientX + startXRef.current;
+          newHeight = startHeightRef.current - e.clientY + startYRef.current;
+          break;
+        case "left":
+          newWidth = startWidthRef.current - e.clientX + startXRef.current;
+          break;
+        case "top":
+          newHeight = startHeightRef.current - e.clientY + startYRef.current;
+          break;
+        default:
+          break;
+      }
+
+      const width = Math.min(Math.max(newWidth, MIN_WIDTH), Math.round(resizableProps?.widthOffset ? window.innerWidth - resizableProps.widthOffset : window.innerWidth - 300));
+      const height = Math.min(Math.max(newHeight, MIN_HEIGHT), Math.round(resizableProps?.heightOffset ? window.innerHeight - resizableProps.heightOffset : window.innerHeight - 300));
+
+      containerDivRef.current.style.width = width + 'px';
+      containerDivRef.current.style.height = height + 'px';
     }
   }
 
   const stopResize = (e) => {
-    window.removeEventListener('mousemove', resize, false);
+    window.removeEventListener('mousemove', boundResizeRef.current, false);
     window.removeEventListener('mouseup', stopResize, false);
   }
-  
-  const [pickerOffset, setOffset] = useState(0)
+
   const senderRef = useRef<ISenderRef>(null!);
-  const [pickerStatus, setPicket] = useState(false) 
- 
+  const [pickerStatus, setPickerStatus] = useState(false)
+
   const onSelectEmoji = (emoji) => {
     senderRef.current?.onSelectEmoji(emoji)
   }
 
   const togglePicker = () => {
-    setPicket(prevPickerStatus => !prevPickerStatus)
+    setPickerStatus(prevPickerStatus => !prevPickerStatus)
   }
 
   const handlerSendMsn = (event) => {
     sendMessage(event)
-    if(pickerStatus) setPicket(false)
+    if (pickerStatus) setPickerStatus(false)
   }
 
   return (
-    <div id="rcw-conversation-container" onMouseDown={initResize} 
+    <div id="rcw-conversation-container"
       className={cn('rcw-conversation-container', className)} aria-live="polite">
-      {resizable && <div className="rcw-conversation-resizer" />}
+      {resizable && <div data-resizer="top-left" className="rcw-conversation-xy-resizer" onMouseDown={initResize} />}
+      {resizable && <div data-resizer="left" className="rcw-conversation-x-resizer" onMouseDown={initResize} />}
+      {resizable && <div data-resizer="top" className="rcw-conversation-y-resizer" onMouseDown={initResize} />}
       <Header
         title={title}
         subtitle={subtitle}
@@ -122,9 +162,17 @@ function Conversation({
         showTimeStamp={showTimeStamp}
       />
       <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
-      {emojis && pickerStatus && (<PickerComponent 
-        style={{ position: 'absolute', bottom: pickerOffset, left: '0', width: '100%' }}
-        onSelect={onSelectEmoji}
+      {emojis && pickerStatus && (<EmojiPicker
+        onEmojiClick={onSelectEmoji}
+        emojiStyle={EmojiStyle.NATIVE}
+        searchDisabled
+        width="100%"
+        height={300}
+        previewConfig={{
+          showPreview: false
+        }
+
+        }
       />)}
       <Sender
         ref={senderRef}
@@ -135,7 +183,6 @@ function Conversation({
         onTextInputChange={onTextInputChange}
         buttonAlt={sendButtonAlt}
         onPressEmoji={togglePicker}
-        onChangeSize={setOffset}
       />
     </div>
   );
