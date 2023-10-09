@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 
-import { GlobalState } from 'src/store/types';
+import { GlobalState, ResizableProps } from '@types';
 import { AnyFunction } from 'src/utils/types';
 import { openFullscreenPreview } from '../../store/actions';
 
@@ -38,6 +38,7 @@ type Props = {
   zoomStep?: number;
   showBadge?: boolean;
   resizable?: boolean;
+  resizableProps?: ResizableProps;
   emojis?: boolean
 }
 
@@ -67,6 +68,7 @@ function WidgetLayout({
   zoomStep,
   showBadge,
   resizable,
+  resizableProps,
   emojis
 }: Props) {
   const dispatch = useDispatch();
@@ -80,7 +82,7 @@ function WidgetLayout({
 
   useEffect(() => {
     if(showChat) {
-      messageRef.current = document.getElementById('messages') as HTMLDivElement;
+      messageRef.current = document.getElementById('rcw-messages') as HTMLDivElement;
     }
     return () => {
       messageRef.current = null;
@@ -146,6 +148,7 @@ function WidgetLayout({
           sendButtonAlt={sendButtonAlt}
           showTimeStamp={showTimeStamp}
           resizable={resizable}
+          resizableProps={resizableProps}
           emojis={emojis}
         />
       }

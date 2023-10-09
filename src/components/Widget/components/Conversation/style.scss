@@ -5,8 +5,6 @@
 .rcw-conversation-container {
   border-radius: 10px;
   box-shadow: 0px 2px 10px 1px $grey-3;
-  min-width: 370px;
-  max-width: 90vw;
   position: relative;
 
   &.active {
@@ -24,13 +22,32 @@
   }
 }
 
-.rcw-conversation-resizer {
-  cursor: col-resize;
-  height: 100%;
-  left: 0;
+.rcw-conversation-xy-resizer {
   position: absolute;
   top: 0;
-  width: 5px;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  cursor: nw-resize;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.rcw-conversation-x-resizer {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 8px;
+  height: calc(100% - 15px);
+  cursor: col-resize;
+}
+
+.rcw-conversation-y-resizer {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  width: calc(100% - 15px);
+  height: 8px;
+  cursor: row-resize;
 }
 
 .emoji-mart-preview {

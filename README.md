@@ -4,6 +4,18 @@
 
 [![FEArmy](./assets/FEA_open_source_sm.png)](https://github.com/orgs/Wolox/teams/front-end-army/members)
 
+## Changelog (v3.3.0)
+
+- ResizableProps Interface: We've introduced the ResizableProps interface, allowing users to easily adjust the widget dimensions. By supplying heightOffset and widthOffset, you can now control the maximum height and width of the widget, offering a better fit for various interfaces.
+
+- Enhanced Emoji Picker: To provide a better experience, we've transitioned from emoji-mart to emoji-picker-react. This ensures enhanced support and eliminates build type errors previously encountered. Alongside this, we've added .rcw-picker-icon for more personalized emoji picker stylings.
+
+- Refined IDs and Class Names: In our commitment to reducing conflicts and promoting ease of use, we've renamed the messages ID to rcw-messages. We've also added a class to the subtitle, .rcw-subtitle, making it simpler for users to apply custom styles.
+
+- Versatile x-resizer: The x-resizer has been revamped, now supporting both vertical and diagonal resizing. This change enhances the user interaction and provides more flexibility in adapting to different UI scenarios.
+
+- Advice to Users: As with any update, we recommend testing these changes in a staging environment before implementing them in production. Given the refined IDs and class names, ensure any custom styles or scripts you've previously applied remain compatible. Your feedback is invaluable, so please share any thoughts or issues you might encounter.
+
 ## Features
 
 - Plain text message UI
@@ -168,6 +180,7 @@ export default App;
 |**handleTextInputChange**|(event) => any|NO| |Prop that triggers on input change|
 |**handleSubmit**|(event) => any|NO| |Prop that triggers when a message is submitted, used for custom validation|
 |**resizable**|boolean|NO|false|Prop that allows to resize the widget by dragging it's left border|
+|**resizableProps**|object|NO|{heightOffset:300, widthOffset:300}|Prop that lets you set the maximum height and width if resizable==true. This is done by subtracting the supplied offset from the window's height and width.
 |**emojis**|boolean|NO|false|enable emoji picker|
 |**showBadge**|boolean|NO|true|Prop that allows to show or hide the unread message badge|
 

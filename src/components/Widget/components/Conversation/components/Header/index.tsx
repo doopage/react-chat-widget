@@ -18,11 +18,11 @@ function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: P
           <img src={close} className="rcw-close" alt="close" />
         </button>
       }
-      <h4 className="rcw-title">
+      <p className="rcw-title">
         {titleAvatar && <img src={titleAvatar} className="avatar" alt="profile" />}
         {title}
-      </h4>
-      <span>{subtitle}</span>
+      </p>
+      <span className="rcw-subtitle">{subtitle}</span>
     </div>
   );
 }

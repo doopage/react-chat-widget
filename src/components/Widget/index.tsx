@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { toggleChat, addUserMessage } from '../../store/actions';
 import { isWidgetOpened } from '../../store/dispatcher';
 import { AnyFunction } from '../../utils/types';
+import { ResizableProps } from '@types';
 
 import WidgetLayout from './layout';
 
@@ -33,6 +34,7 @@ type Props = {
   handleSubmit?: AnyFunction;
   showBadge?: boolean;
   resizable?: boolean;
+  resizableProps?: ResizableProps;
   emojis?: boolean;
 }
 
@@ -63,6 +65,7 @@ function Widget({
   handleSubmit,
   showBadge,
   resizable,
+  resizableProps,
   emojis
 }: Props) {
   const dispatch = useDispatch();
@@ -114,6 +117,7 @@ function Widget({
       zoomStep={zoomStep}
       showBadge={showBadge}
       resizable={resizable}
+      resizableProps={resizableProps}
       emojis={emojis}
     />
   );

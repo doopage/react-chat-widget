@@ -46,6 +46,8 @@ export default class App extends Component {
         handleQuickButtonClicked={this.handleQuickButtonClicked}
         imagePreview
         handleSubmit={this.handleSubmit}
+        resizable
+        resizableProps={{heightOffset:500, widthOffset:500}}
         emojis
       />
     );

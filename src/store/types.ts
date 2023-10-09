@@ -69,3 +69,8 @@ export interface GlobalState {
   quickButtons: QuickButtonsState;
   preview: FullscreenPreviewState;
 }
+
+export interface ResizableProps {
+  heightOffset?: number;
+  widthOffset?: number;
+}

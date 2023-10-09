@@ -2,9 +2,9 @@
 @import 'common';
 
 .rcw-conversation-container {
-
+  font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
   .rcw-header {
-    background-color: $turqois-1;
+    background-color: $purple-1;
     border-radius: 10px 10px 0 0;
     color: $white;
     display: flex;
@@ -15,8 +15,16 @@
 
   .rcw-title {
     font-size: 24px;
+    font-weight: 500;
     margin: 0;
-    padding: 15px 0;
+    padding: 10px 0;
+  }
+
+  .rcw-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
   }
 
   .rcw-close-button {
