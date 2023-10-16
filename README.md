@@ -1,8 +1,21 @@
 # React Chat Widget
 [![circle-ci](https://img.shields.io/circleci/project/github/Wolox/react-chat-widget.svg)](https://circleci.com/gh/Wolox/react-chat-widget)
-[![npm](https://img.shields.io/npm/v/react-chat-widget.svg)](https://www.npmjs.com/package/react-chat-widget)
+[![npm](https://img.shields.io/npm/v/react-chat-widget.svg)](https://www.npmjs.com/package/@ryaneewx/react-chat-widget)
 
-[![FEArmy](./assets/FEA_open_source_sm.png)](https://github.com/orgs/Wolox/teams/front-end-army/members)
+
+## Changelog (v3.4.0)
+
+- Enhanced Input Focus: We've improved the input box's behavior to ensure that it regains focus effectively after toggling the `disabledInput` prop. This enhancement offers a smoother and more intuitive user interaction.
+
+- Input Box Resizing: Made adjustments to the input box to prevent it from unintentionally expanding the chat window's width. This tweak ensures that the chat window maintains a consistent size for a better user experience.
+
+- Emoji Picker Dimension Control: To prevent UI glitches, we've introduced constraints to ensure that the emoji picker doesn't expand beyond the chat window's dimensions, keeping the interface clean and user-friendly.
+
+- Plain Text Input Enhancement: We've provided an option to force plain text inputs in the chat box, ensuring that only plain text is accepted, and styled texts are avoided.
+
+- Plain Text Input Feature Toggle: Added the `disableRichTextInput` prop for better customization. This will be defaulted to `false` to maximize backwards compatibility. You may pass this prop as `true` to use the in-built function.
+
+- Advice to Users: As with any update, we recommend testing these changes in a staging environment before implementing them in production. Given the refined IDs and class names, ensure any custom styles or scripts you've previously applied remain compatible. Your feedback is invaluable, so please share any thoughts or issues you might encounter.
 
 ## Changelog (v3.3.0)
 
@@ -99,7 +112,7 @@ function App() {
 
   const handleNewUserMessage = (newMessage) => {
     console.log(`New message incoming! ${newMessage}`);
-    // Now send the message throught the backend API
+    // Now send the message through the backend API
     addResponseMessage(response);
   };
 
@@ -132,7 +145,7 @@ function App() {
 
   const handleNewUserMessage = (newMessage) => {
     console.log(`New message incoming! ${newMessage}`);
-    // Now send the message throught the backend API
+    // Now send the message through the backend API
   };
 
     return (
@@ -172,22 +185,24 @@ export default App;
 |**showTimeStamp**|boolean|NO|true|Show time stamp on messages|
 |**chatId**|string|NO|'rcw-chat-container'|Chat container id for a11y|
 |**handleToggle**|(...args: any[]) => any|NO|'rcw-chat-container'|Function to handle when the widget is toggled, will receive the toggle status|
-|**launcherOpenLabel**|string|NO|'Open chat'|Alt value for the laucher when closed|
-|**launcherCloseLabel**|string|NO|'Close chat'|Alt value for the laucher when open|
+|**launcherOpenLabel**|string|NO|'Open chat'|Alt value for the launcher when closed|
+|**launcherCloseLabel**|string|NO|'Close chat'|Alt value for the launcher when open|
 |**launcherOpenImg**|string|NO|''|local or remote image url, if not provided it will show default image|
 |**launcherCloseImg**|string|NO|''|local or remote image url, if not provided it will show default image|
 |**sendButtonAlt**|string|NO|'Send'|Send button alt for a11y purposes|
 |**handleTextInputChange**|(event) => any|NO| |Prop that triggers on input change|
+|**disableRichTextInput**|boolean|NO|false|Prop that overrides handleTextInputChange with a simple function that strips rich text and formatted text from the user's inputs, especially from the clipboard.
 |**handleSubmit**|(event) => any|NO| |Prop that triggers when a message is submitted, used for custom validation|
 |**resizable**|boolean|NO|false|Prop that allows to resize the widget by dragging it's left border|
-|**resizableProps**|object|NO|{heightOffset:300, widthOffset:300}|Prop that lets you set the maximum height and width if resizable==true. This is done by subtracting the supplied offset from the window's height and width.
+|**resizableProps**|object|NO|{heightOffset:105, widthOffset:35}|Prop that lets you set the maximum height and width if resizable==true. This is done by subtracting the supplied offset from the window's height and width.
 |**emojis**|boolean|NO|false|enable emoji picker|
 |**showBadge**|boolean|NO|true|Prop that allows to show or hide the unread message badge|
 
 #### Styles
 
-To change the styles you need the widget to have, simply override the CSS classes wrapping them within the containers and add your own style to them! All classes are prefixed with `rcw-` so they don't override your other classes in case you are not hasing them. 
-To override, you can do, for expample:
+To change the styles of the widget, simply override the CSS classes wrapped within the containers and add your own styles to them! All classes are prefixed with rcw- to avoid overriding your other classes in case you are not using them. 
+
+For example, to override a class, you can do the following:
 
 ```css
 .rcw-conversation-container > .rcw-header {
@@ -200,11 +215,11 @@ To override, you can do, for expample:
 }
 ```
 
-That way, you can leave the JS clean and keep the styles within the CSS.
+That way, you can keep the JS clean and keep the styles within the CSS.
 
 #### Messages
 
-As of v3.0, messages now have an optional ID that can be added on creation.If you want to add new messages, you can use the following methods:
+As of v3.0, messages now have an optional ID that can be added on creation. If you want to add new messages, you can use the following methods:
 
 - **addResponseMessage**
   - params:

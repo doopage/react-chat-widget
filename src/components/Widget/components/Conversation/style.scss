@@ -6,6 +6,10 @@
   border-radius: 10px;
   box-shadow: 0px 2px 10px 1px $grey-3;
   position: relative;
+  width: 600px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
 
   &.active {
     opacity: 1;

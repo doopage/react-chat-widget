@@ -21,6 +21,7 @@ type Props = {
   handleNewUserMessage: AnyFunction;
   handleQuickButtonClicked?: AnyFunction;
   handleTextInputChange?: (event: any) => void;
+  disableRichTextInput?: boolean;
   chatId: string;
   handleToggle?: AnyFunction;
   launcherOpenLabel: string;
@@ -52,6 +53,7 @@ function Widget({
   handleNewUserMessage,
   handleQuickButtonClicked,
   handleTextInputChange,
+  disableRichTextInput,
   chatId,
   handleToggle,
   launcherOpenLabel,
@@ -90,6 +92,16 @@ function Widget({
     handleQuickButtonClicked?.(value)
   }
 
+  function defaultTextInputHandler(event) {
+    const target = event.target;
+    if (target && target.textContent) {
+      // Clean the input to retain only plain text
+      target.textContent = target.textContent.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+        return '&#' + i.charCodeAt(0) + ';';
+      });
+    }
+  }
+
   return (
     <WidgetLayout
       onToggleConversation={toggleConversation}
@@ -105,7 +117,7 @@ function Widget({
       fullScreenMode={fullScreenMode}
       autofocus={autofocus}
       customLauncher={customLauncher}
-      onTextInputChange={handleTextInputChange}
+      onTextInputChange={disableRichTextInput ? defaultTextInputHandler : handleTextInputChange}
       chatId={chatId}
       launcherOpenLabel={launcherOpenLabel}
       launcherCloseLabel={launcherCloseLabel}

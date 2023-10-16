@@ -3,12 +3,10 @@
 
 .rcw-messages-container {
   background-color: $white;
-  overflow-y: scroll;
   padding-top: 10px;
-  width: 600px;
-  height: 500px;
-  min-width: 600px; 
-  min-height: 500px;
+  flex-grow: 1;
+  overflow-y: scroll;
+  width: 100%;
   -webkit-overflow-scrolling: touch;
 }
 

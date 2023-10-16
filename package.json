@@ -1,6 +1,6 @@
 {
   "name": "@ryaneewx/react-chat-widget",
-  "version": "3.3.0",
+  "version": "3.4.1",
   "description": "Chat web widget for React apps",
   "main": "lib/index.js",
   "repository": "git@github.com:ryaneewx/react-chat-widget.git",
@@ -84,6 +84,7 @@
     "sass-loader": "^13.3.2",
     "source-map-loader": "^4.0.1",
     "style-loader": "^3.3.3",
+    "terser-webpack-plugin": "^5.3.9",
     "ts-jest": "^29.1.1",
     "ts-loader": "^9.4.4",
     "typescript": "^5.2.2",

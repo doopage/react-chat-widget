@@ -21,6 +21,7 @@ type Props = {
   profileClientAvatar?: string;
   launcher?: AnyFunction;
   handleTextInputChange?: (event: any) => void;
+  disableRichTextInput?: boolean;
   chatId?: string;
   handleToggle?: AnyFunction;
   launcherOpenLabel?: string,
@@ -52,6 +53,7 @@ function ConnectedWidget({
   handleNewUserMessage,
   handleQuickButtonClicked,
   handleTextInputChange,
+  disableRichTextInput,
   chatId,
   handleToggle,
   launcherOpenLabel,
@@ -84,6 +86,7 @@ function ConnectedWidget({
         autofocus={autofocus}
         customLauncher={launcher}
         handleTextInputChange={handleTextInputChange}
+        disableRichTextInput={disableRichTextInput}
         chatId={chatId}
         handleToggle={handleToggle}
         launcherOpenLabel={launcherOpenLabel}

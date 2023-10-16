@@ -71,7 +71,7 @@ function Conversation({
   const MIN_HEIGHT = 300; // set the minimum height value
 
   useEffect(() => {
-    containerDivRef.current = document.getElementById('rcw-messages');
+    containerDivRef.current = document.getElementById('rcw-conversation-container');
   }, []);
 
   const initResize = (e) => {
@@ -114,8 +114,8 @@ function Conversation({
           break;
       }
 
-      const width = Math.min(Math.max(newWidth, MIN_WIDTH), Math.round(resizableProps?.widthOffset ? window.innerWidth - resizableProps.widthOffset : window.innerWidth - 300));
-      const height = Math.min(Math.max(newHeight, MIN_HEIGHT), Math.round(resizableProps?.heightOffset ? window.innerHeight - resizableProps.heightOffset : window.innerHeight - 300));
+      const width = Math.min(Math.max(newWidth, MIN_WIDTH), Math.round(resizableProps?.widthOffset ? window.innerWidth - resizableProps.widthOffset : window.innerWidth - 35));
+      const height = Math.min(Math.max(newHeight, MIN_HEIGHT), Math.round(resizableProps?.heightOffset ? window.innerHeight - resizableProps.heightOffset : window.innerHeight - 105));
 
       containerDivRef.current.style.width = width + 'px';
       containerDivRef.current.style.height = height + 'px';
@@ -167,7 +167,7 @@ function Conversation({
         emojiStyle={EmojiStyle.NATIVE}
         searchDisabled
         width="100%"
-        height={300}
+        height={350}
         previewConfig={{
           showPreview: false
         }

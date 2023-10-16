@@ -42,10 +42,11 @@
 
 .rcw-input {
   display: block;
-  height: 100%;
   line-height: 20px;
   max-height: 78px;
+  width: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   user-select: text;
   white-space: pre-wrap;
   word-wrap: break-word;
