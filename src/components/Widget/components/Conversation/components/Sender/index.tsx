@@ -27,10 +27,15 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
   const refContainer = useRef<HTMLDivElement>(null);
   const [enter, setEnter]= useState(false)
   const [firefox, setFirefox] = useState(false);
-  const [height, setHeight] = useState(0)
   // @ts-ignore
   useEffect(() => { if (showChat && autofocus) inputRef.current?.focus(); }, [showChat]);
   useEffect(() => { setFirefox(isFirefox())}, [])
+
+  useEffect(() => {
+    if (!disabledInput && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [disabledInput]);
 
   useImperativeHandle(ref, () => {
     return {

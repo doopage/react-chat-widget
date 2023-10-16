@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import { Widget, addResponseMessage, setQuickButtons, toggleMsgLoader, addLinkSnippet } from '../index';
+import { Widget, addResponseMessage, setQuickButtons, toggleMsgLoader, addLinkSnippet, toggleInputDisabled } from '../index';
 import { addUserMessage } from '..';
 
 export default class App extends Component {
@@ -20,6 +20,7 @@ export default class App extends Component {
       } else {
         addResponseMessage(newMessage);
       }
+      toggleInputDisabled();
     }, 2000);
   }
 
@@ -29,6 +30,7 @@ export default class App extends Component {
   }
 
   handleSubmit = (msgText: string) => {
+    toggleInputDisabled();
     if(msgText.length < 80) {
       addUserMessage("Uh oh, please write a bit more.");
       return false;
@@ -44,10 +46,12 @@ export default class App extends Component {
         senderPlaceHolder="Escribe aquí ..."
         handleNewUserMessage={this.handleNewUserMessage}
         handleQuickButtonClicked={this.handleQuickButtonClicked}
+        disableRichTextInput={true}
         imagePreview
         handleSubmit={this.handleSubmit}
+        disableInput={true}
         resizable
-        resizableProps={{heightOffset:500, widthOffset:500}}
+        resizableProps={{heightOffset:105, widthOffset:35}}
         emojis
       />
     );

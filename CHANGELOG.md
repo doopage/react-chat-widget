@@ -1,5 +1,27 @@
 # Changelog
 
+## [3.4.0] - 2023-10-16
+
+- **Enhanced Input Focus**: 
+  - We've improved the input box's behavior to ensure that it regains focus effectively after toggling the `disabledInput` prop. This enhancement offers a smoother and more intuitive user interaction.
+
+- **Input Box Resizing**: 
+  - Made adjustments to the input box to prevent it from unintentionally expanding the chat window's width. This tweak ensures that the chat window maintains a consistent size for a better user experience.
+
+- **Emoji Picker Dimension Control**: 
+  - To prevent UI glitches, we've introduced constraints to ensure that the emoji picker doesn't expand beyond the chat window's dimensions, keeping the interface clean and user-friendly.
+
+- **Plain Text Input Enhancement**: 
+  - We've provided an option to force plain text inputs in the chat box, ensuring that only plain text is accepted, and styled texts are avoided.
+  - Added the `disableRichTextInput` prop for better customization. This will be defaulted to `false` to maximize backwards compatibility. You may pass this prop as `true` to use the in-built function.
+
+- **Improve Js Payload Size**:
+  - Decreased built library size from 897KiB to 424KiB to improve loading times for your pages.
+
+- **Recommendation**: 
+  - As always, we recommend thoroughly testing these changes in a staging or development environment before deploying them in production. This ensures smooth transitions and compatibility with your specific setup. We appreciate your feedback and continuously strive to enhance the user experience. Let us know if you encounter any issues or have suggestions for future improvements.
+
+
 ## [3.3.0] - 2023-10-09
 
 ### Added
