@@ -1,3 +1,6 @@
+# Idea
+/.idea/
+
 # Package manager files
 node_modules
 npm-debug.log
