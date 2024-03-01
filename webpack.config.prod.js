@@ -11,8 +11,10 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/lib'),
     filename: 'index.js',
-    library: 'react-chat-widget',
-    libraryTarget: 'umd',
+    library: {
+      name:  'react-chat-widget',
+      type: 'umd',
+    },
     clean: true
   },
   resolve: {
@@ -29,7 +31,7 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x?)$/,
-        exclude: [/node_modules/, /dev/],
+        exclude: /\/(node_modules|dev)\//,
         use: ['babel-loader', 'ts-loader']
       },
       {
