@@ -2,7 +2,7 @@ import cn from 'classnames';
 
 import './styles.scss';
 
-type Props = {
+export type Props = {
   typing: boolean;
 }
 

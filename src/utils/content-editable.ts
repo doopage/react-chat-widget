@@ -9,7 +9,7 @@ export const getCaretIndex = (el) => {
     position = preCaretRange.toString().length;
   }
   return position;
-}
+};
 
 export const getSelection = (el) => {
   const range = window.getSelection()!.getRangeAt(0);
@@ -18,35 +18,35 @@ export const getSelection = (el) => {
   preSelectionRange.setEnd(range.startContainer, range.startOffset);
 
   const start = preSelectionRange.toString().length;
-  return { 
+  return {
     start: start,
     end: start + range.toString().length
-  }
-}
+  };
+};
 
-export const isFirefox = () => navigator.userAgent.search("Firefox") > 0;
+export const isFirefox = () => navigator.userAgent.search('Firefox') > 0;
 
 export const updateCaret = (el, caret, offset) => {
   const range = document.createRange();
   const selection = window.getSelection()!;
-  range.setStart(el.childNodes[0], caret+offset);
+  range.setStart(el.childNodes[0], caret + offset);
   range.collapse(true);
   selection.removeAllRanges();
   selection.addRange(range);
   el.focus();
-}
+};
 
 export const insertNodeAtCaret = (el) => {
-  const position = getCaretIndex(el)
+  const position = getCaretIndex(el);
   let characterToEnter = '\n\n';
   let prevChar, char = '';
   if (position > 0) {
     prevChar = el.innerHTML.charAt(position - 1);
     char = el.innerHTML.charAt(position);
     const newLines = el.innerHTML.match(/\n/g);
-    if(
-      prevChar === char || 
-      (prevChar === '\n' && char === '') || 
+    if (
+      prevChar === char ||
+      (prevChar === '\n' && char === '') ||
       (isFirefox() && newLines?.length > 0)
     ) {
       characterToEnter = '\n';
@@ -64,4 +64,4 @@ export const insertNodeAtCaret = (el) => {
   selection.addRange(cloneRange);
   el.innerHTML = el.innerHTML.replace(/<br>/g, '');
   updateCaret(el, position, 1);
-}
+};

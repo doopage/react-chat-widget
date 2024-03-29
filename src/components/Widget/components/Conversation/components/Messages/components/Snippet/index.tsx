@@ -1,10 +1,10 @@
 import format from 'date-fns/format';
 
-import { Link } from 'src/store/types';
+import { Link } from '@types';
 
 import './styles.scss';
 
-type Props = {
+export type Props = {
   message: Link;
   showTimeStamp: boolean;
 }

@@ -1,37 +1,43 @@
-import { ElementType } from 'react';
+import { ComponentType } from 'react';
 
-import { MessageTypes as MessageI, Link, CustomCompMessage, LinkParams } from '../store/types';
+import { CustomCompMessage, Link, LinkParams, MessageTypes as MessageI, QuickButtonTypes } from '@types';
 
 import Message from '../components/Widget/components/Conversation/components/Messages/components/Message';
 import Snippet from '../components/Widget/components/Conversation/components/Messages/components/Snippet';
 import QuickButton from '../components/Widget/components/Conversation/components/QuickButtons/components/QuickButton';
 
-import { MESSAGES_TYPES, MESSAGE_SENDER, MESSAGE_BOX_SCROLL_DURATION } from '../constants';
+import { MESSAGE_BOX_SCROLL_DURATION, MESSAGE_SENDER, MESSAGES_TYPES } from '@constants';
+import { ref } from '@utils/store';
 
 export function createNewMessage(
   text: string,
   sender: string,
   id?: string,
+  status?: string,
+  props?: any
 ): MessageI {
   return {
     type: MESSAGES_TYPES.TEXT,
-    component: Message,
+    component: ref(Message),
     text,
+    props: props ? ref(props) : undefined,
     sender,
     timestamp: new Date(),
     showAvatar: true,
+    status,
     customId: id,
     unread: sender === MESSAGE_SENDER.RESPONSE
   };
 }
 
-export function createLinkSnippet(link: LinkParams, id?: string) : Link {
+export function createLinkSnippet(link: LinkParams, id?: string, props?: any): Link {
   return {
     type: MESSAGES_TYPES.SNIPPET.LINK,
-    component: Snippet,
+    component: ref(Snippet),
     title: link.title,
     link: link.link,
     target: link.target || '_blank',
+    props: props ? ref(props) : undefined,
     sender: MESSAGE_SENDER.RESPONSE,
     timestamp: new Date(),
     showAvatar: true,
@@ -40,11 +46,11 @@ export function createLinkSnippet(link: LinkParams, id?: string) : Link {
   };
 }
 
-export function createComponentMessage(component: ElementType, props: any, showAvatar: boolean, id?: string): CustomCompMessage {
+export function createComponentMessage(component: ComponentType, props: any, showAvatar: boolean, id?: string): CustomCompMessage {
   return {
     type: MESSAGES_TYPES.CUSTOM_COMPONENT,
-    component,
-    props,
+    component: ref(component),
+    props: props ? ref(props) : undefined,
     sender: MESSAGE_SENDER.RESPONSE,
     timestamp: new Date(),
     showAvatar,
@@ -53,9 +59,9 @@ export function createComponentMessage(component: ElementType, props: any, showA
   };
 }
 
-export function createQuickButton(button: { label: string, value: string | number }) {
+export function createQuickButton(button: { label: string, value: string | number }): QuickButtonTypes {
   return {
-    component: QuickButton,
+    component: ref(QuickButton),
     label: button.label,
     value: button.value
   };
@@ -68,7 +74,7 @@ function sinEaseOut(timestamp: any, begining: any, change: any, duration: any) {
 }
 
 /**
- * 
+ *
  * @param {*} target scroll target
  * @param {*} scrollStart
  * @param {*} scroll scroll distance
@@ -86,7 +92,7 @@ function scrollWithSlowMotion(target: any, scrollStart: any, scroll: number) {
     if (total < scrollStart + scroll) {
       raf(step);
     }
-  }
+  };
   raf(step);
 }
 
@@ -97,3 +103,5 @@ export function scrollToBottom(messagesDiv: HTMLDivElement | null) {
   const scrollOffset = messagesDiv.scrollHeight - (scrollTop + screenHeight);
   if (scrollOffset) scrollWithSlowMotion(messagesDiv, scrollTop, scrollOffset);
 }
+
+export const Component = { Message, Snippet };

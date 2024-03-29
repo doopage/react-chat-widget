@@ -12,25 +12,14 @@
   }
 }
 
-.rcw-timestamp {
-  font-size: 10px;
-  margin-top: 5px;
-}
-
 .rcw-client {
   display: flex;
   flex-direction: column;
   margin-left: auto;
 
   .rcw-message-text {
-    @include message-bubble($purple-2);
-
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-
-  .rcw-timestamp {
-    align-self: flex-end;
+    @include message-bubble(var(--message-client-color));
+    color: var(--message-client-text-color);
   }
 }
 
@@ -40,12 +29,15 @@
   align-items: flex-start;
 
   .rcw-message-text {
-    @include message-bubble($grey-2);
+    @include message-bubble(var(--message-response-color));
+    color: var(--message-response-text-color);
   }
 }
 
-/* For markdown elements created with default styles */
 .rcw-message-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+
   p {
     margin: 0;
   }
@@ -53,6 +45,10 @@
   img {
     width: 100%;
     object-fit: contain;
+  }
+
+  &.is-attachment {
+    margin-top: 5px;
   }
 }
 

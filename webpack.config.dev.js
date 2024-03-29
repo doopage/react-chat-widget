@@ -1,8 +1,11 @@
-'use strict'
+'use strict';
 
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 module.exports = {
   entry: {
@@ -18,19 +21,33 @@ module.exports = {
     hot: true
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin()]
   },
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
         exclude: /\/node_modules\//,
-        use: ['babel-loader', 'ts-loader']
+        use: 'babel-loader'
       },
       {
-        enforce: "pre",
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader',
+        options: {
+          getCustomTransformers: () => ({
+            before: [
+              ReactRefreshTypeScript()
+            ]
+          }),
+          transpileOnly: true
+        }
+      },
+      {
+        enforce: 'pre',
         test: /\.js$/,
-        loader: "source-map-loader"
+        loader: 'source-map-loader'
       },
       {
         test: /\.js$/,
@@ -75,9 +92,13 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       'React': 'react'
-    })
+    }),
+    new ReactRefreshWebpackPlugin()
   ],
   performance: {
     hints: false
+  },
+  optimization: {
+    runtimeChunk: 'single'
   }
 };
