@@ -1,39 +1,47 @@
-import { useEffect, useRef, useState, ElementRef, ImgHTMLAttributes, MouseEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useRef } from 'react';
 import format from 'date-fns/format';
 
-import { scrollToBottom } from '../../../../../../utils/messages';
-import { MessageTypes, Link, CustomCompMessage, GlobalState } from '../../../../../../store/types';
-import { setBadgeCount, markAllMessagesRead } from '../../../../../../store/actions';
-import { MESSAGE_SENDER } from '../../../../../../constants';
+import { scrollToBottom } from '@utils/messages';
+import { Message } from '@types';
+import { markAllMessagesRead, setBadgeCount } from '@actions';
+import { MESSAGE_SENDER } from '@constants';
 
 import Loader from './components/Loader';
 import './styles.scss';
+import { Optional } from 'utility-types';
+import { useSelector } from '@selectors';
+import { Snapshot } from '@utils/types';
 
-type Props = {
+type CProps = {
   showTimeStamp: boolean,
   profileAvatar?: string;
   profileClientAvatar?: string;
 }
 
-function Messages({ profileAvatar, profileClientAvatar, showTimeStamp }: Props) {
-  const dispatch = useDispatch();
-  const { messages, typing, showChat, badgeCount } = useSelector((state: GlobalState) => ({
-    messages: state.messages.messages,
-    badgeCount: state.messages.badgeCount,
-    typing: state.behavior.messageLoader,
-    showChat: state.behavior.showChat
+const defaultProps = {
+  showTimeStamp: true
+};
+
+type IProps = CProps & typeof defaultProps;
+export type Props = Optional<CProps, keyof typeof defaultProps>;
+
+function Messages({ profileAvatar, profileClientAvatar, showTimeStamp }: IProps) {
+  const { messages, typing, showChat, badgeCount } = useSelector(({ behavior, messages }) => ({
+    messages: messages.messages,
+    badgeCount: messages.badgeCount,
+    typing: behavior.messageLoader,
+    showChat: behavior.showChat
   }));
 
   const messageRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     // @ts-ignore
     scrollToBottom(messageRef.current);
-    if (showChat && badgeCount) dispatch(markAllMessagesRead());
-    else dispatch(setBadgeCount(messages.filter((message) => message.unread).length));
+    if (showChat && badgeCount) markAllMessagesRead();
+    else setBadgeCount(messages.filter((message) => message.unread).length);
   }, [messages, badgeCount, showChat]);
-    
-  const getComponentToRender = (message: MessageTypes | Link | CustomCompMessage) => {
+
+  const getComponentToRender = (message: Snapshot<Message>) => {
     const ComponentToRender = message.component;
     if (message.type === 'component') {
       return <ComponentToRender {...message.props} />;
@@ -54,13 +62,13 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp }: Props) 
   return (
     <div id="rcw-messages" className="rcw-messages-container" ref={messageRef}>
       {messages?.map((message, index) =>
-        <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`} 
-          key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
+        <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`}
+             key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
           {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
-            message.showAvatar && 
-            <img 
-              src={isClient(message.sender) ? profileClientAvatar : profileAvatar} 
-              className={`rcw-avatar ${isClient(message.sender) ? 'rcw-avatar-client' : ''}`} 
+            message.showAvatar &&
+            <img
+              src={message.profileAvatar ?? (isClient(message.sender) ? profileClientAvatar : profileAvatar)}
+              className={`rcw-avatar ${isClient(message.sender) ? 'rcw-avatar-client' : ''}`}
               alt="profile"
             />
           }
@@ -71,5 +79,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp }: Props) 
     </div>
   );
 }
+
+Messages.defaultProps = defaultProps;
 
 export default Messages;

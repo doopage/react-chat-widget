@@ -1,3 +1,4 @@
+@import 'variables/sizes';
 @import 'animation';
 @import 'common';
 
@@ -15,7 +16,7 @@
   @include widget-container-fs;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: $fullscreen-break) {
   .rcw-widget-container {
     height: 100%;
     @include widget-container-fs;

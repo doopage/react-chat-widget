@@ -1,169 +1,100 @@
-import { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useRef } from 'react';
 import cn from 'classnames';
+import { AnyFunction } from '@utils/types';
+import { openFullscreenPreview } from '@actions';
 
-import { GlobalState, ResizableProps } from '@types';
-import { AnyFunction } from 'src/utils/types';
-import { openFullscreenPreview } from '../../store/actions';
-
-import Conversation from './components/Conversation';
-import Launcher from './components/Launcher';
+import Conversation, { Props as ConversationProps } from './components/Conversation';
+import Launcher, { Props as LauncherProps } from './components/Launcher';
 import FullScreenPreview from './components/FullScreenPreview';
 
 import './style.scss';
+import { useSelector } from '@selectors';
+import { Optional } from 'utility-types';
 
-type Props = {
-  title: string;
-  titleAvatar?: string;
-  subtitle: string;
-  onSendMessage: AnyFunction;
-  onToggleConversation: AnyFunction;
-  senderPlaceHolder: string;
-  onQuickButtonClicked: AnyFunction;
-  profileAvatar?: string;
-  profileClientAvatar?: string;
-  showCloseButton: boolean;
-  fullScreenMode: boolean;
-  autofocus: boolean;
+export type CProps = {
+  rootRef?: React.Ref<HTMLDivElement>;
+  conversationProps?: ConversationProps;
+  launcherProps?: Omit<LauncherProps, 'toggle'>;
+  onToggleConversation: () => void;
+  fullScreenMode?: boolean;
   customLauncher?: AnyFunction;
-  onTextInputChange?: (event: any) => void;
-  chatId: string;
-  launcherOpenLabel: string;
-  launcherCloseLabel: string;
-  launcherCloseImg: string;
-  launcherOpenImg: string;
-  sendButtonAlt: string;
-  showTimeStamp: boolean;
   imagePreview?: boolean;
   zoomStep?: number;
-  showBadge?: boolean;
-  resizable?: boolean;
-  resizableProps?: ResizableProps;
-  emojis?: boolean
 }
 
-function WidgetLayout({
-  title,
-  titleAvatar,
-  subtitle,
-  onSendMessage,
-  onToggleConversation,
-  senderPlaceHolder,
-  onQuickButtonClicked,
-  profileAvatar,
-  profileClientAvatar,
-  showCloseButton,
-  fullScreenMode,
-  autofocus,
-  customLauncher,
-  onTextInputChange,
-  chatId,
-  launcherOpenLabel,
-  launcherCloseLabel,
-  launcherCloseImg,
-  launcherOpenImg,
-  sendButtonAlt,
-  showTimeStamp,
-  imagePreview,
-  zoomStep,
-  showBadge,
-  resizable,
-  resizableProps,
-  emojis
-}: Props) {
-  const dispatch = useDispatch();
-  const { disableInput, showChat, visible } = useSelector((state: GlobalState) => ({
-    showChat: state.behavior.showChat,
-    disableInput: state.behavior.disabledInput,
-    visible: state.preview.visible,
+const defaultProps = {
+  fullScreenMode: false,
+  imagePreview: false,
+  zoomStep: 80
+};
+
+type IProps = CProps & typeof defaultProps;
+export type Props = Optional<CProps, keyof typeof defaultProps>;
+
+function WidgetLayout({ rootRef, conversationProps, launcherProps, onToggleConversation, fullScreenMode, customLauncher, imagePreview, zoomStep }: IProps) {
+  const { showChat, visible } = useSelector(({ behavior, preview }) => ({
+    showChat: behavior.showChat,
+    visible: preview.visible
   }));
 
   const messageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if(showChat) {
+    if (showChat) {
       messageRef.current = document.getElementById('rcw-messages') as HTMLDivElement;
     }
     return () => {
       messageRef.current = null;
-    }
-  }, [showChat])
-  
+    };
+  }, [showChat]);
+
   const eventHandle = evt => {
-    if(evt.target && evt.target.className === 'rcw-message-img') {
+    if (evt.target && evt.target.className === 'rcw-message-img') {
       const { src, alt, naturalWidth, naturalHeight } = (evt.target as HTMLImageElement);
       const obj = {
         src: src,
         alt: alt,
         width: naturalWidth,
-        height: naturalHeight,
+        height: naturalHeight
       };
-      dispatch(openFullscreenPreview(obj))
+      openFullscreenPreview(obj);
     }
-  }
+  };
 
   /**
    * Previewer needs to prevent body scroll behavior when fullScreenMode is true
    */
   useEffect(() => {
     const target = messageRef?.current;
-    if(imagePreview && showChat) {
+    if (imagePreview && showChat) {
       target?.addEventListener('click', eventHandle, false);
     }
 
     return () => {
       target?.removeEventListener('click', eventHandle);
-    }
+    };
   }, [imagePreview, showChat]);
 
   useEffect(() => {
-    document.body.setAttribute('style', `overflow: ${visible || fullScreenMode ? 'hidden' : 'auto'}`)
-  }, [fullScreenMode, visible])
+    document.body.setAttribute('style', `overflow: ${visible || fullScreenMode ? 'hidden' : 'auto'}`);
+  }, [fullScreenMode, visible]);
 
   return (
     <div
+      ref={rootRef}
       className={cn('rcw-widget-container', {
         'rcw-full-screen': fullScreenMode,
         'rcw-previewer': imagePreview,
         'rcw-close-widget-container ': !showChat
-        })
-      }
+      })}
     >
       {showChat &&
-        <Conversation
-          title={title}
-          subtitle={subtitle}
-          sendMessage={onSendMessage}
-          senderPlaceHolder={senderPlaceHolder}
-          profileAvatar={profileAvatar}
-          profileClientAvatar={profileClientAvatar}
-          toggleChat={onToggleConversation}
-          showCloseButton={showCloseButton}
-          disabledInput={disableInput}
-          autofocus={autofocus}
-          titleAvatar={titleAvatar}
-          className={showChat ? 'active' : 'hidden'}
-          onQuickButtonClicked={onQuickButtonClicked}
-          onTextInputChange={onTextInputChange}
-          sendButtonAlt={sendButtonAlt}
-          showTimeStamp={showTimeStamp}
-          resizable={resizable}
-          resizableProps={resizableProps}
-          emojis={emojis}
-        />
+        <Conversation {...conversationProps} className={showChat ? 'active' : 'hidden'} />
       }
       {customLauncher ?
         customLauncher(onToggleConversation) :
         !fullScreenMode &&
-        <Launcher
-          toggle={onToggleConversation}
-          chatId={chatId}
-          openLabel={launcherOpenLabel}
-          closeLabel={launcherCloseLabel}
-          closeImg={launcherCloseImg}
-          openImg={launcherOpenImg}
-          showBadge={showBadge}
-        />
+        <Launcher {...launcherProps} toggle={onToggleConversation} />
       }
       {
         imagePreview && <FullScreenPreview fullScreenMode={fullScreenMode} zoomStep={zoomStep} />
@@ -171,5 +102,7 @@ function WidgetLayout({
     </div>
   );
 }
+
+WidgetLayout.defaultProps = defaultProps;
 
 export default WidgetLayout;

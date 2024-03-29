@@ -1,11 +1,14 @@
 import { ElementType } from 'react';
+import { StateRef } from '@utils/types';
 
 type BaseMessage = {
   type: string;
-  component: ElementType;
+  component: StateRef<ElementType>;
   sender: string;
   showAvatar: boolean;
+  profileAvatar?: string;
   timestamp: Date;
+  status?: string;
   unread: boolean;
   customId?: string;
   props?: any;
@@ -13,19 +16,19 @@ type BaseMessage = {
 
 export interface MessageTypes extends BaseMessage {
   text: string;
-};
+}
 
 export type QuickButtonTypes = {
   label: string;
   value: string | number;
-  component: ElementType;
+  component: StateRef<ElementType>;
 };
 
 export interface Link extends BaseMessage {
   title: string;
   link: string;
   target: string;
-};
+}
 
 export interface LinkParams {
   link: string;
@@ -41,10 +44,20 @@ export interface BehaviorState {
   showChat: boolean;
   disabledInput: boolean;
   messageLoader: boolean;
-};
+}
+
+export type Message = MessageTypes | Link | CustomCompMessage;
+
+export type ResponseUser = {
+  avatar: string;
+  name: string;
+  message?: string;
+  online?: boolean;
+}
 
 export interface MessagesState {
-  messages: (MessageTypes | Link | CustomCompMessage)[];
+  responseUser: ResponseUser | null;
+  messages: Message[];
   badgeCount: number;
 }
 
@@ -61,7 +74,7 @@ export interface ImageState {
 
 export interface FullscreenPreviewState extends ImageState {
   visible?: boolean;
-};
+}
 
 export interface GlobalState {
   messages: MessagesState;

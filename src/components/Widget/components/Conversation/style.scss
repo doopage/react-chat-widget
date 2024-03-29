@@ -1,13 +1,14 @@
-@import 'common';
+@import 'variables/sizes';
 @import 'variables/colors';
+@import 'common';
 @import 'animation';
 
 .rcw-conversation-container {
   border-radius: 10px;
   box-shadow: 0px 2px 10px 1px $grey-3;
   position: relative;
-  width: 600px;
-  height: 700px;
+  width: 400px;
+  height: 300px;
   display: flex;
   flex-direction: column;
 
@@ -64,7 +65,7 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: $fullscreen-break) {
   .rcw-conversation-container {
     @include conversation-container-fs;
   }

@@ -1,4 +1,4 @@
-import { QuickButtonTypes } from 'src/store/types';
+import { QuickButtonTypes } from '@types';
 import './styles.scss';
 
 type Props = {

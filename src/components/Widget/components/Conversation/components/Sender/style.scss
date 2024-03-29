@@ -1,3 +1,4 @@
+@import 'variables/sizes';
 @import 'variables/colors';
 
 .rcw-sender {
@@ -33,11 +34,22 @@
   &.expand {
     height: 40px;
   }
+
+  &.rcw-message-disable {
+    .rcw-input {
+      display: none;
+    }
+
+    .rcw-input-fake {
+      display: block;
+    }
+  }
 }
 
 .rcw-picker-icon {
-  margin-right: 10px;
   opacity: 0.8;
+  width: 24px;
+  height: 24px;
 }
 
 .rcw-input {
@@ -57,8 +69,12 @@
 
   &[placeholder]:empty::before {
     content: attr(placeholder);
-    color: $grey-0; 
+    color: $grey-0;
   }
+}
+
+.rcw-input-fake {
+  display: none;
 }
 
 .rcw-send, .rcw-picker-btn {
@@ -66,17 +82,21 @@
   border: 0;
   cursor: pointer;
 
+  &.active {
+    color: #35e65d;
+  }
+
   .rcw-send-icon {
     height: 25px;
   }
 }
 
 .rcw-message-disable {
-  background-color: $grey-2;
+  background-color: rgba($grey-0, .3);
   cursor: not-allowed;
 }
 
-@media screen and (max-width: 800px)  {
+@media screen and (max-width: $fullscreen-break) {
   .rcw-sender {
     border-radius: 0;
     flex-shrink: 0;

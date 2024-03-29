@@ -1,0 +1,40 @@
+@import 'variables/colors';
+@import 'common';
+
+.rcw-timestamp {
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+.rcw-client {
+  .status {
+    align-self: flex-end;
+  }
+}
+
+.has-status {
+  .status {
+    position: relative;
+    display: flex;
+
+    .rcw-timestamp {
+      align-self: flex-start;
+    }
+  }
+
+  .rcw-timestamp {
+    margin-right: 5px;
+  }
+}
+
+.icon-status {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-top: 2.5px;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}

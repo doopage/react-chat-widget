@@ -1,24 +1,27 @@
-'use strict'
+'use strict';
 
 const webpack = require('webpack');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { BundleDeclarationsWebpackPlugin } = require('bundle-declarations-webpack-plugin');
 
 module.exports = {
-  entry: './index.js',
+  entry: path.join(__dirname, 'src/index.ts'),
   output: {
     path: path.join(__dirname, '/lib'),
     filename: 'index.js',
     library: {
-      name:  'react-chat-widget',
-      type: 'umd',
+      name: 'react-chat-widget',
+      type: 'umd'
     },
     clean: true
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin()],
     alias: {
       react: path.resolve(__dirname, './node_modules/react'),
       'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
@@ -31,8 +34,16 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x?)$/,
-        exclude: /\/(node_modules|dev)\//,
-        use: ['babel-loader', 'ts-loader']
+        exclude: /\/node_modules\//,
+        use: 'babel-loader'
+      },
+      {
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true
+        }
       },
       {
         enforce: 'pre',
@@ -75,16 +86,13 @@ module.exports = {
     ]
   },
   plugins: [
-    /**
-     * Known issue for the CSS Extract Plugin in Ubuntu 16.04: You'll need to install
-     * the following package: sudo apt-get install libpng16-dev
-     */
     new MiniCssExtractPlugin({
       filename: 'styles.css'
     }),
     new webpack.ProvidePlugin({
       'react': 'React'
-    })
+    }),
+    new BundleDeclarationsWebpackPlugin()
   ],
   externals: {
     react: {
@@ -94,10 +102,10 @@ module.exports = {
       amd: 'react'
     },
     'react-dom': {
-        root: 'ReactDOM',
-        commonjs2: 'react-dom',
-        commonjs: 'react-dom',
-        amd: 'react-dom'
+      root: 'ReactDOM',
+      commonjs2: 'react-dom',
+      commonjs: 'react-dom',
+      amd: 'react-dom'
     }
   },
   optimization: {
@@ -106,10 +114,10 @@ module.exports = {
       new TerserPlugin({
         terserOptions: {
           output: {
-            comments: false,
-          },
+            comments: false
+          }
         },
-        extractComments: false,
+        extractComments: false
       })
     ]
   }

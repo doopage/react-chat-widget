@@ -19,10 +19,37 @@
       "dom.iterable",
       "esnext"
     ],
+    "paths": {
+      "@constants": [
+        "src/constants"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@actions": [
+        "src/store/actions"
+      ],
+      "@selectors": [
+        "src/store/selectors"
+      ],
+      "@types": [
+        "src/store/types"
+      ],
+      "@state": [
+        "src/store/state"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ]
+    },
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "extends": "./tsconfig.paths.json",
-  "include": ["src"],
-  "exclude": ["node_modules", "lib"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib"
+  ]
 }
