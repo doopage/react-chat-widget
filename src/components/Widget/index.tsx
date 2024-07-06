@@ -40,7 +40,7 @@ function Widget({ layoutProps, handleNewUserMessage, handleQuickButtonClicked, h
   };
 
   const handleMessageSubmit = async ({ text, files }) => {
-    if (!text.trim() && !files) {
+    if (!text?.trim() && !files) {
       return;
     }
 

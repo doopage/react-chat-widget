@@ -20,7 +20,7 @@ type CProps = {
   senderProps?: Omit<SenderProps, 'sendMessage' | 'onPressEmoji' | 'onPressFile' | 'disabledInput' | 'allowSend'>;
   quickButtonsProps?: QuickButtonsProps;
   className?: string;
-  sendMessage?: (data: { text: string, files: File[] }) => void;
+  sendMessage?: (data: { text?: string, files?: File[] }) => void;
   resizable?: boolean;
   resizableProps?: ResizableProps;
   defaultSize?: { width: number, height: number };
@@ -147,7 +147,10 @@ function Conversation({
     senderRef.current?.onSelectEmoji(emoji);
   };
 
-  const onSelectFile = (files: File[]) => setFileItems(files);
+  const onSelectFile = (files: File[]) => {
+    // setFileItems(files);
+    sendMessage?.({ files });
+  };
 
   const togglePicker = () => {
     setPickerStatus(prevPickerStatus => !prevPickerStatus);
@@ -156,13 +159,13 @@ function Conversation({
   const selectFile = () => addFileRef.current?.();
 
   const handlerSendMsn = (text: string) => {
-    sendMessage?.({ text, files: fileItems });
+    sendMessage?.({ text });
     if (pickerStatus) {
       setPickerStatus(false);
     }
-    if (files && fileItems.length > 0) {
-      setFileItems([]);
-    }
+    // if (files && fileItems.length > 0) {
+    //   setFileItems([]);
+    // }
   };
 
   return (

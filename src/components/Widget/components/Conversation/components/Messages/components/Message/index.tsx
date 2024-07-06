@@ -47,16 +47,20 @@ function FileAttachment({ item }: FileProps) {
 }
 
 function Message({ message, showTimeStamp }: Props) {
-  const sanitizedHTML = markdownIt({ break: true })
-    .use(markdownItClass, {
-      img: ['rcw-message-img']
-    })
-    .use(markdownItSup)
-    .use(markdownItSanitizer)
-    .use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } })
-    .render(message.text);
+  let sanitizedHTML: string | null = null;
 
-  const attachments: React.Component[] = [];
+  if (message.text) {
+    sanitizedHTML = markdownIt({ break: true })
+      .use(markdownItClass, {
+        img: ['rcw-message-img']
+      })
+      .use(markdownItSup)
+      .use(markdownItSanitizer)
+      .use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } })
+      .render(message.text);
+  }
+
+  const attachments: React.ReactPortal[] = [];
   if (message.props?.files) {
     attachments.push(message.props.files.map((item, i) => <FileAttachment key={i} item={item} />));
   }
