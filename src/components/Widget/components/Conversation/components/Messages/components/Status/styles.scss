@@ -38,3 +38,11 @@
     width: 100%;
   }
 }
+
+.status-explained {
+  font-size: 10px;
+
+  &.error {
+    color: #EF5350;
+  }
+}

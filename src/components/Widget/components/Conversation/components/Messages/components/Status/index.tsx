@@ -21,6 +21,7 @@ export type Props = {
 
 function Status({ message, showTimeStamp, showStatus, children }: Props) {
   const hasStatus = showStatus && message.sender == 'client' && message.status && statuses[message.status];
+  const isStatusError = hasStatus && message.status === 'error';
   let statusTitle = '';
   if (hasStatus && message.status == 'error' && message.props?.error) {
     const { error } = message.props;
@@ -37,8 +38,10 @@ function Status({ message, showTimeStamp, showStatus, children }: Props) {
       {children}
       <div className="status">
         {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, 'hh:mm')}</span>}
-        {hasStatus && <div className="icon-status" title={statusTitle}><img src={statuses[message.status!]} alt={message.status} /></div>}
+        {(hasStatus) && <div className="icon-status" title={statusTitle}><img src={statuses[message.status!]} alt={message.status} /></div>}
       </div>
+      {(hasStatus && isStatusError) && <div className={`status-explained ${message.status}`}>{statusTitle}</div>
+      }
     </div>
   );
 }
