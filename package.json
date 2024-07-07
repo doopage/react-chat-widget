@@ -1,6 +1,6 @@
 {
-  "name": "@doopage/react-chat-widget",
-  "version": "3.5.1",
+  "name": "@doopage-livechat/react-chat-widget",
+  "version": "3.6.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
