@@ -1,46 +1,63 @@
-import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 
 import Badge from './components/Badge';
-import { GlobalState } from '../../../../store/types';
-import { setBadgeCount } from '../../../../store/actions';
+import { setBadgeCount } from '@actions';
 
 import './style.scss';
+import { Optional } from 'utility-types';
+import { useSelector } from '@selectors';
 
-const openLauncher = require('../../../../../assets/launcher_button.svg') as string;
-const close = require('../../../../../assets/clear-button.svg') as string;
+const openLauncherDefault = require('@assets/launcher-button.svg') as string;
+const close = require('@assets/clear-button.svg') as string;
 
-type Props = {
+export type CProps = {
   toggle: () => void;
   chatId: string;
   openLabel: string;
   closeLabel: string;
-  closeImg: string;
-  openImg: string;
+  closeImg?: string;
+  openImg?: string;
   showBadge?: boolean;
 }
 
-function Launcher({ toggle, chatId, openImg, closeImg, openLabel, closeLabel, showBadge }: Props) {
-  const dispatch = useDispatch();
-  const { showChat, badgeCount } = useSelector((state: GlobalState) => ({
-    showChat: state.behavior.showChat,
-    badgeCount: state.messages.badgeCount
+const defaultProps = {
+  chatId: 'rcw-chat-container',
+  openLabel: 'Open chat',
+  closeLabel: 'Close chat',
+  showBadge: true
+};
+
+type IProps = CProps & typeof defaultProps;
+export type Props = Optional<CProps, keyof typeof defaultProps>;
+
+function Launcher({ toggle, chatId, openImg, closeImg, openLabel, closeLabel, showBadge }: IProps) {
+  const { showChat, badgeCount } = useSelector(({ behavior, messages }) => ({
+    showChat: behavior.showChat,
+    badgeCount: messages.badgeCount
   }));
 
   const toggleChat = () => {
     toggle();
-    if (!showChat) dispatch(setBadgeCount(0));
-  }
+    if (!showChat) setBadgeCount(0);
+  };
 
   return (
-    <button type="button" className={cn('rcw-launcher', { 'rcw-hide-sm': showChat })} onClick={toggleChat} aria-controls={chatId}>
+    <button type="button" className={cn('rcw-launcher', { 'rcw-hide-sm': showChat, 'default-launcher': !openImg })} onClick={toggleChat} aria-controls={chatId}>
       {!showChat && showBadge && <Badge badge={badgeCount} />}
       {showChat ?
         <img src={closeImg || close} className="rcw-close-launcher" alt={openLabel} /> :
-        <img src={openImg || openLauncher} className="rcw-open-launcher" alt={closeLabel} />
+        <div className={cn('rcw-open-launcher', { 'default-launcher': !openImg })}>
+          {
+            openImg ?
+              <img src={openImg} alt={closeLabel} /> :
+              <img src={openLauncherDefault} alt={closeLabel} />
+          }
+        </div>
       }
     </button>
   );
 }
+
+Launcher.defaultProps = defaultProps;
 
 export default Launcher;

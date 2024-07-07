@@ -1,9 +1,4 @@
-import configureMockStore from 'redux-mock-store'
+import { ref as valtioRef } from 'valtio';
+import { StateRef } from '@utils/types';
 
-export const createMockStore = (state = {}) =>  
-  configureMockStore()({
-    behavior: { showChat: false, disabledInput: false },
-    messages: { messages: [], badgeCount: 0 },
-    preview: { visible: false },
-    ...state
-  })
+export const ref = <T extends object>(v: T): StateRef<T> => valtioRef<T>(v);

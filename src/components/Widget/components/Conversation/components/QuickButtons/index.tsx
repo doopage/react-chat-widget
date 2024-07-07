@@ -1,18 +1,17 @@
-import { useSelector } from 'react-redux';
-
-import { GlobalState, QuickButtonTypes } from 'src/store/types';
-import { AnyFunction } from 'src/utils/types';
+import { QuickButtonTypes } from '@types';
+import { AnyFunction, Snapshot } from '@utils/types';
 
 import './style.scss';
+import { useSelector } from '@selectors';
 
-type Props = {
+export type Props = {
   onQuickButtonClicked?: AnyFunction;
 }
 
 function QuickButtons({ onQuickButtonClicked }: Props) {
-  const buttons = useSelector((state: GlobalState) => state.quickButtons.quickButtons);
+  const buttons = useSelector(({ quickButtons }) => quickButtons.quickButtons);
 
-  const getComponentToRender = (button: QuickButtonTypes) => {
+  const getComponentToRender = (button: Snapshot<QuickButtonTypes>) => {
     const ComponentToRender = button.component;
     return (
       <ComponentToRender
@@ -20,7 +19,7 @@ function QuickButtons({ onQuickButtonClicked }: Props) {
         button={button}
       />
     );
-  }
+  };
 
   if (!buttons.length) return null;
 
@@ -31,7 +30,7 @@ function QuickButtons({ onQuickButtonClicked }: Props) {
           <li className="quick-list-button" key={`${button.label}-${index}`}>
             {getComponentToRender(button)}
           </li>
-          )
+        )
         }
       </ul>
     </div>

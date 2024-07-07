@@ -1,0 +1,91 @@
+@import 'variables/colors';
+
+.rcw-file-picker {
+  display: none;
+  overflow-x: scroll;
+  white-space: nowrap;
+
+  &.show {
+    display: block;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+  }
+
+  .rcw-file-input {
+    display: none;
+  }
+
+  .rcw-file {
+    display: inline-block;
+    position: relative;
+    height: 68px;
+
+    img.rcw-file-icon {
+      height: 50px;
+      width: 100%;
+    }
+
+    div.rcw-file-name {
+      font-size: 12px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    button.rcw-file-remove {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      padding: 0;
+      border: 0;
+      background: #ccc;
+      border-radius: 100%;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+
+      img {
+        height: 100%;
+      }
+    }
+  }
+
+  .rcw-file + .rcw-file {
+    margin-left: 10px;
+  }
+
+  .rcw-file-type-unknown {
+    width: 50px;
+
+    button.rcw-file-remove {
+      top: -5px;
+    }
+  }
+
+  .rcw-file-type-image {
+    img {
+      height: 50px;
+    }
+
+    button.rcw-file-remove {
+      top: -8px;
+      right: -8px;
+    }
+  }
+
+  .rcw-file-add {
+    width: 50px;
+
+    button {
+      border: 1px solid rgba(0, 0, 0, .1);
+      cursor: pointer;
+      width: 50px;
+
+      img.rcw-file-icon {
+        height: 47px;
+      }
+    }
+  }
+}

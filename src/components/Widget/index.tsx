@@ -1,96 +1,64 @@
-import { useDispatch } from 'react-redux';
+import { addUserMessage, toggleChat } from '@actions';
+import { AnyFunction } from '@utils/types';
 
-import { toggleChat, addUserMessage } from '../../store/actions';
-import { isWidgetOpened } from '../../store/dispatcher';
-import { AnyFunction } from '../../utils/types';
-import { ResizableProps } from '@types';
+import WidgetLayout, { Props as LayoutProps } from './layout';
+import { mergeProps } from '@utils/props';
+import { isWidgetOpened } from '@selectors';
+import { useEffect, useRef } from 'react';
 
-import WidgetLayout from './layout';
-
-type Props = {
-  title: string;
-  titleAvatar?: string;
-  subtitle: string;
-  senderPlaceHolder: string;
-  profileAvatar?: string;
-  profileClientAvatar?: string;
-  showCloseButton: boolean;
-  fullScreenMode: boolean;
-  autofocus: boolean;
-  customLauncher?: AnyFunction;
-  handleNewUserMessage: AnyFunction;
+export type Props = {
+  layoutProps?: Omit<LayoutProps, 'onToggleConversation' | 'onSendMessage' | 'onQuickButtonClicked' | 'onTextInputChange'>;
+  handleNewUserMessage: (data: { text: string, files: File }) => void | Promise<void>;
   handleQuickButtonClicked?: AnyFunction;
   handleTextInputChange?: (event: any) => void;
   disableRichTextInput?: boolean;
-  chatId: string;
-  handleToggle?: AnyFunction;
-  launcherOpenLabel: string;
-  launcherCloseLabel: string;
-  launcherOpenImg: string;
-  launcherCloseImg: string;
-  sendButtonAlt: string;
-  showTimeStamp: boolean;
-  imagePreview?: boolean;
-  zoomStep?: number;
-  handleSubmit?: AnyFunction;
-  showBadge?: boolean;
-  resizable?: boolean;
-  resizableProps?: ResizableProps;
-  emojis?: boolean;
+  handleToggle?: (state: boolean) => Promise<boolean>;
+  handleSubmit?: (data: { text: string, files: File }) => void | Error | Promise<void | Error>;
+  onResize?: (w: number, h: number) => void;
 }
 
-function Widget({
-  title,
-  titleAvatar,
-  subtitle,
-  senderPlaceHolder,
-  profileAvatar,
-  profileClientAvatar,
-  showCloseButton,
-  fullScreenMode,
-  autofocus,
-  customLauncher,
-  handleNewUserMessage,
-  handleQuickButtonClicked,
-  handleTextInputChange,
-  disableRichTextInput,
-  chatId,
-  handleToggle,
-  launcherOpenLabel,
-  launcherCloseLabel,
-  launcherCloseImg,
-  launcherOpenImg,
-  sendButtonAlt,
-  showTimeStamp,
-  imagePreview,
-  zoomStep,
-  handleSubmit,
-  showBadge,
-  resizable,
-  resizableProps,
-  emojis
-}: Props) {
-  const dispatch = useDispatch();
+function Widget({ layoutProps, handleNewUserMessage, handleQuickButtonClicked, handleTextInputChange, disableRichTextInput, handleToggle, handleSubmit, onResize }: Props) {
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  const toggleConversation = () => {
-    dispatch(toggleChat());
-    handleToggle ? handleToggle(isWidgetOpened()) : null;
-  }
+  useEffect(() => {
+    if (!rootRef.current || !onResize) {
+      return;
+    }
+    const s = new ResizeObserver(() => {
+      onResize?.(rootRef.current!.clientWidth, rootRef.current!.clientHeight);
+    });
+    s.observe(rootRef.current);
+  }, [rootRef, onResize]);
 
-  const handleMessageSubmit = (userInput) => {
-    if (!userInput.trim()) {      
-      return;      
+  const toggleConversation = async () => {
+    if (handleToggle) {
+      if (!await handleToggle(isWidgetOpened())) {
+        return;
+      }
+    }
+    toggleChat();
+  };
+
+  const handleMessageSubmit = async ({ text, files }) => {
+    if (!text?.trim() && !files) {
+      return;
     }
 
-    handleSubmit?.(userInput);
-    dispatch(addUserMessage(userInput));
-    handleNewUserMessage(userInput);
-  }
+    if (handleSubmit) {
+      const error = await handleSubmit({ text, files });
+      if (error) {
+        addUserMessage(text, { status: 'error', props: { files, error } });
+        return;
+      }
+    }
+    addUserMessage(text, { status: 'prepare', props: { files } });
+    return handleNewUserMessage({ text, files });
+  };
 
   const onQuickButtonClicked = (event, value) => {
     event.preventDefault();
-    handleQuickButtonClicked?.(value)
-  }
+    handleQuickButtonClicked?.(value);
+  };
 
   function defaultTextInputHandler(event) {
     const target = event.target;
@@ -104,33 +72,19 @@ function Widget({
 
   return (
     <WidgetLayout
+      rootRef={rootRef}
+      {...mergeProps<LayoutProps>({
+        conversationProps: {
+          sendMessage: handleMessageSubmit,
+          senderProps: {
+            onTextInputChange: disableRichTextInput ? defaultTextInputHandler : handleTextInputChange
+          },
+          quickButtonsProps: {
+            onQuickButtonClicked: onQuickButtonClicked
+          }
+        }
+      }, layoutProps ?? {})}
       onToggleConversation={toggleConversation}
-      onSendMessage={handleMessageSubmit}
-      onQuickButtonClicked={onQuickButtonClicked}
-      title={title}
-      titleAvatar={titleAvatar}
-      subtitle={subtitle}
-      senderPlaceHolder={senderPlaceHolder}
-      profileAvatar={profileAvatar}
-      profileClientAvatar={profileClientAvatar}
-      showCloseButton={showCloseButton}
-      fullScreenMode={fullScreenMode}
-      autofocus={autofocus}
-      customLauncher={customLauncher}
-      onTextInputChange={disableRichTextInput ? defaultTextInputHandler : handleTextInputChange}
-      chatId={chatId}
-      launcherOpenLabel={launcherOpenLabel}
-      launcherCloseLabel={launcherCloseLabel}
-      launcherCloseImg={launcherCloseImg}
-      launcherOpenImg={launcherOpenImg}
-      sendButtonAlt={sendButtonAlt}
-      showTimeStamp={showTimeStamp}
-      imagePreview={imagePreview}
-      zoomStep={zoomStep}
-      showBadge={showBadge}
-      resizable={resizable}
-      resizableProps={resizableProps}
-      emojis={emojis}
     />
   );
 }
