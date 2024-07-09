@@ -98,6 +98,7 @@ export declare function setQuickButtons(buttons: Array<{
 	label: string;
 	value: string | number;
 }>): void;
+export declare function setResponseUser(user: ResponseUser): void;
 export declare function toggleChat(): void;
 export declare function toggleInputDisabled(): void;
 export declare function toggleMsgLoader(): void;
