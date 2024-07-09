@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { addResponseMessage, setMessageStatus, setQuickButtons, toggleInputDisabled, toggleMsgLoader } from '@actions';
 import Widget from '../src/root';
-import { setResponseUser } from '../src/store/modules/messages';
+import { setResponseUser } from '../src';
 
 const doopageIcon = require('@assets/doopage-icon.png') as string;
 

@@ -10,7 +10,8 @@ import {
   renderCustomComponent,
   setBadgeCount,
   setMessages,
-  setMessageStatus
+  setMessageStatus,
+  setResponseUser
 } from './modules/messages';
 import { setQuickButtons } from './modules/quick-buttons';
 import { toggleChat, toggleInputDisabled, toggleMsgLoader } from './modules/behavior';
@@ -32,5 +33,6 @@ export {
   openFullscreenPreview,
   closeFullscreenPreview,
   setMessages,
-  setMessageStatus
+  setMessageStatus,
+  setResponseUser
 };
