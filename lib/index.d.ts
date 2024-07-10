@@ -285,7 +285,7 @@ type Props$7 = {
 	handleQuickButtonClicked?: AnyFunction;
 	handleTextInputChange?: (event: any) => void;
 	disableRichTextInput?: boolean;
-	handleToggle?: (state: boolean) => Promise<boolean>;
+	handleToggle?: (state: boolean) => boolean;
 	handleSubmit?: (data: {
 		text?: string;
 		files?: File[];

@@ -12,7 +12,7 @@ export type Props = {
   handleQuickButtonClicked?: AnyFunction;
   handleTextInputChange?: (event: any) => void;
   disableRichTextInput?: boolean;
-  handleToggle?: (state: boolean) => Promise<boolean>;
+  handleToggle?: (state: boolean) => boolean;
   handleSubmit?: (data: { text?: string, files?: File[] }) => void | Error | Promise<void | Error>;
   onResize?: (w: number, h: number) => void;
 }
@@ -32,7 +32,7 @@ function Widget({ layoutProps, handleNewUserMessage, handleQuickButtonClicked, h
 
   const toggleConversation = async () => {
     if (handleToggle) {
-      if (!await handleToggle(isWidgetOpened())) {
+      if (!handleToggle(!isWidgetOpened())) {
         return;
       }
     }
