@@ -40,7 +40,13 @@ function Status({ message, showTimeStamp, showStatus, children }: Props) {
         {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, 'hh:mm')}</span>}
         {(hasStatus) && <div className="icon-status" title={statusTitle}><img src={statuses[message.status!]} alt={message.status} /></div>}
       </div>
-      {(hasStatus && isStatusError) && <div className={`status-explained ${message.status}`}>{statusTitle}</div>
+      {(hasStatus && isStatusError) &&
+        <div
+          className={cn(`status-explained ${message.status}`, { 'can-retry': !!message.props.retry })}
+          onClick={message.props.retry}
+        >
+          {statusTitle}
+        </div>
       }
     </div>
   );
