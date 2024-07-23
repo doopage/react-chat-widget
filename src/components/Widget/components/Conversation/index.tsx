@@ -2,19 +2,18 @@ import { useEffect, useRef, useState } from 'react';
 import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
 import cn from 'classnames';
 
-import Header, { Props as HeaderProps } from './components/Header';
-import Messages, { Props as MessagesProps } from './components/Messages';
-import Sender, { ISenderRef, Props as SenderProps } from './components/Sender';
+import Header, { CProps as HeaderProps } from './components/Header';
+import Messages, { CProps as MessagesProps } from './components/Messages';
+import Sender, { ISenderRef, CProps as SenderProps } from './components/Sender';
 import QuickButtons, { Props as QuickButtonsProps } from './components/QuickButtons';
 import { ResizableProps } from '@types';
 
 import './style.scss';
-import { Optional } from 'utility-types';
 import FilePicker from './components/FilePicker';
 import { clone } from 'lodash';
 import { useSelector } from '@selectors';
 
-type CProps = {
+export type CProps = {
   headerProps?: HeaderProps;
   messagesProps?: MessagesProps;
   senderProps?: Omit<SenderProps, 'sendMessage' | 'onPressEmoji' | 'onPressFile' | 'disabledInput' | 'allowSend'>;
@@ -35,17 +34,6 @@ const minSize = {
   height: 300
 };
 
-const defaultProps = {
-  resizableProps: {
-    heightOffset: 105,
-    widthOffset: 35
-  } as ResizableProps,
-  defaultSize: clone(minSize)
-};
-
-type IProps = CProps & typeof defaultProps;
-export type Props = Optional<CProps, keyof typeof defaultProps>;
-
 function Conversation({
                         headerProps,
                         messagesProps,
@@ -54,13 +42,16 @@ function Conversation({
                         className,
                         sendMessage,
                         resizable,
-                        resizableProps,
-                        defaultSize,
+                        resizableProps = {
+                          heightOffset: 105,
+                          widthOffset: 35
+                        },
+                        defaultSize = clone(minSize),
                         onResize,
                         emojis,
                         files,
                         disabledInput: propDisabledInput
-                      }: IProps) {
+                      }: CProps) {
   const containerDivRef = useRef<HTMLElement | null>(null);
   const boundResizeRef = useRef<(event: MouseEvent) => void>(() => {
   });
@@ -202,13 +193,11 @@ function Conversation({
         sendMessage={handlerSendMsn}
         onPressEmoji={emojis ? togglePicker : null}
         onPressFile={files ? selectFile : null}
-        disabledInput={propDisabledInput || disableInput || (files && fileItems.length > 0)}
-        allowSend={files && fileItems.length > 0}
+        disabledInput={!!propDisabledInput || disableInput || (!!files && fileItems.length > 0)}
+        allowSend={!!files && fileItems.length > 0}
       />
     </div>
   );
 }
-
-Conversation.defaultProps = defaultProps;
 
 export default Conversation;

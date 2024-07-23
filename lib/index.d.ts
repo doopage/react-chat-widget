@@ -1,58 +1,10 @@
 import React$1 from 'react';
 import { ComponentType, ElementType, Ref } from 'react';
-import { Optional, Primitive } from 'utility-types';
+import { Primitive } from 'utility-types';
 
-declare const defaultProps$1: {
-	showTimeStamp: boolean;
-};
-declare const defaultProps$2: {
-	placeholder: string;
-	buttonAlt: string;
-	autofocus: boolean;
-	disabledInput: boolean;
-	allowSend: boolean;
-};
-declare const defaultProps$3: {
-	resizableProps: ResizableProps;
-	defaultSize: {
-		width: number;
-		height: number;
-	};
-};
-declare const defaultProps$4: {
-	chatId: string;
-	openLabel: string;
-	closeLabel: string;
-	showBadge: boolean;
-};
-declare const defaultProps$5: {
-	fullScreenMode: boolean;
-	imagePreview: boolean;
-	zoomStep: number;
-};
-declare const defaultProps$6: {
-	primaryColor: string;
-	messageClientColor: string;
-	messageClientTextColor: string;
-	messageResponseColor: string;
-	messageResponseTextColor: string;
-};
-declare const defaultProps: {
-	title: string;
-	showCloseButton: boolean;
-};
-declare function Message$1({ message, showTimeStamp }: Props$8): import("react/jsx-runtime").JSX.Element;
-declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, headerPaddingTop, headerPaddingBottom }: IProps$1): import("react/jsx-runtime").JSX.Element;
-declare function Snippet({ message, showTimeStamp }: Props$9): import("react/jsx-runtime").JSX.Element;
-declare namespace Root {
-	var defaultProps: {
-		primaryColor: string;
-		messageClientColor: string;
-		messageClientTextColor: string;
-		messageResponseColor: string;
-		messageResponseTextColor: string;
-	};
-}
+declare function Message$1({ message, showTimeStamp }: Props$2): import("react/jsx-runtime").JSX.Element;
+declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, headerPaddingTop, headerPaddingBottom }: CProps$6): import("react/jsx-runtime").JSX.Element;
+declare function Snippet({ message, showTimeStamp }: Props$3): import("react/jsx-runtime").JSX.Element;
 export declare const Component: {
 	Message: typeof Message$1;
 	Snippet: typeof Snippet;
@@ -167,13 +119,12 @@ export type BaseMessage = {
 	props?: any;
 };
 export type CProps = {
-	title: string;
+	title?: string;
 	subtitle?: string;
 	toggleChat?: () => void;
-	showCloseButton: boolean;
+	showCloseButton?: boolean;
 	titleAvatar?: string;
 };
-export type IProps = CProps & typeof defaultProps;
 export type Message = MessageTypes | Link | CustomCompMessage;
 export type MessageOptions = {
 	id?: string;
@@ -181,7 +132,9 @@ export type MessageOptions = {
 	props?: any;
 };
 export type Nullable<T> = T | null;
-export type Props = Optional<IProps, keyof typeof defaultProps>;
+export type Props = {
+	onQuickButtonClicked?: AnyFunction;
+};
 export type QuickButtonTypes = {
 	label: string;
 	value: string | number;
@@ -201,27 +154,27 @@ export type StateRef<T> = T & {
 	$$valtioSnapshot: T;
 };
 type CProps$1 = {
-	showTimeStamp: boolean;
+	showTimeStamp?: boolean;
 	profileAvatar?: string;
 	profileClientAvatar?: string;
 };
 type CProps$2 = {
 	senderRef?: React$1.Ref<ISenderRef>;
-	placeholder: string;
-	disabledInput: boolean;
+	placeholder?: string;
+	disabledInput?: boolean;
 	allowSend: boolean;
-	autofocus: boolean;
+	autofocus?: boolean;
 	sendMessage: (event: string) => void;
-	buttonAlt: string;
+	buttonAlt?: string;
 	onPressEmoji: (() => void) | null;
 	onPressFile: (() => void) | null;
 	onTextInputChange?: (event: any) => void;
 };
 type CProps$3 = {
-	headerProps?: Props;
-	messagesProps?: Props$1;
-	senderProps?: Omit<Props$2, "sendMessage" | "onPressEmoji" | "onPressFile" | "disabledInput" | "allowSend">;
-	quickButtonsProps?: Props$3;
+	headerProps?: CProps;
+	messagesProps?: CProps$1;
+	senderProps?: Omit<CProps$2, "sendMessage" | "onPressEmoji" | "onPressFile" | "disabledInput" | "allowSend">;
+	quickButtonsProps?: Props;
 	className?: string;
 	sendMessage?: (data: {
 		text?: string;
@@ -240,17 +193,17 @@ type CProps$3 = {
 };
 type CProps$4 = {
 	toggle: () => void;
-	chatId: string;
-	openLabel: string;
-	closeLabel: string;
+	chatId?: string;
+	openLabel?: string;
+	closeLabel?: string;
 	closeImg?: string;
 	openImg?: string;
 	showBadge?: boolean;
 };
 type CProps$5 = {
 	rootRef?: React$1.Ref<HTMLDivElement>;
-	conversationProps?: Props$4;
-	launcherProps?: Omit<Props$5, "toggle">;
+	conversationProps?: CProps$3;
+	launcherProps?: Omit<CProps$4, "toggle">;
 	onToggleConversation: () => void;
 	fullScreenMode?: boolean;
 	customLauncher?: AnyFunction;
@@ -258,7 +211,7 @@ type CProps$5 = {
 	zoomStep?: number;
 };
 type CProps$6 = {
-	widgetProps: Props$7;
+	widgetProps: Props$1;
 	primaryColor?: string;
 	messageClientColor?: string;
 	messageClientTextColor?: string;
@@ -267,17 +220,8 @@ type CProps$6 = {
 	headerPaddingTop?: string;
 	headerPaddingBottom?: string;
 };
-type IProps$1 = CProps$6 & typeof defaultProps$6;
-type Props$1 = Optional<CProps$1, keyof typeof defaultProps$1>;
-type Props$2 = Optional<CProps$2, keyof typeof defaultProps$2>;
-type Props$3 = {
-	onQuickButtonClicked?: AnyFunction;
-};
-type Props$4 = Optional<CProps$3, keyof typeof defaultProps$3>;
-type Props$5 = Optional<CProps$4, keyof typeof defaultProps$4>;
-type Props$6 = Optional<CProps$5, keyof typeof defaultProps$5>;
-type Props$7 = {
-	layoutProps?: Omit<Props$6, "onToggleConversation" | "onSendMessage" | "onQuickButtonClicked" | "onTextInputChange">;
+type Props$1 = {
+	layoutProps?: Omit<CProps$5, "onToggleConversation" | "onSendMessage" | "onQuickButtonClicked" | "onTextInputChange">;
 	handleNewUserMessage: (data: {
 		text?: string;
 		files?: File[];
@@ -292,11 +236,11 @@ type Props$7 = {
 	}) => void | Error | Promise<void | Error>;
 	onResize?: (w: number, h: number) => void;
 };
-type Props$8 = {
+type Props$2 = {
 	message: MessageTypes;
 	showTimeStamp: boolean;
 };
-type Props$9 = {
+type Props$3 = {
 	message: Link;
 	showTimeStamp: boolean;
 };

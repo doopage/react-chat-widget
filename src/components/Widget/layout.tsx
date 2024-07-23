@@ -3,13 +3,12 @@ import cn from 'classnames';
 import { AnyFunction } from '@utils/types';
 import { openFullscreenPreview } from '@actions';
 
-import Conversation, { Props as ConversationProps } from './components/Conversation';
-import Launcher, { Props as LauncherProps } from './components/Launcher';
+import Conversation, { CProps as ConversationProps } from './components/Conversation';
+import Launcher, { CProps as LauncherProps } from './components/Launcher';
 import FullScreenPreview from './components/FullScreenPreview';
 
 import './style.scss';
 import { useSelector } from '@selectors';
-import { Optional } from 'utility-types';
 
 export type CProps = {
   rootRef?: React.Ref<HTMLDivElement>;
@@ -22,16 +21,7 @@ export type CProps = {
   zoomStep?: number;
 }
 
-const defaultProps = {
-  fullScreenMode: false,
-  imagePreview: false,
-  zoomStep: 80
-};
-
-type IProps = CProps & typeof defaultProps;
-export type Props = Optional<CProps, keyof typeof defaultProps>;
-
-function WidgetLayout({ rootRef, conversationProps, launcherProps, onToggleConversation, fullScreenMode, customLauncher, imagePreview, zoomStep }: IProps) {
+function WidgetLayout({ rootRef, conversationProps, launcherProps, onToggleConversation, fullScreenMode = false, customLauncher, imagePreview = false, zoomStep = 80 }: CProps) {
   const { showChat, visible } = useSelector(({ behavior, preview }) => ({
     showChat: behavior.showChat,
     visible: preview.visible
@@ -102,7 +92,5 @@ function WidgetLayout({ rootRef, conversationProps, launcherProps, onToggleConve
     </div>
   );
 }
-
-WidgetLayout.defaultProps = defaultProps;
 
 export default WidgetLayout;

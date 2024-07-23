@@ -1,7 +1,7 @@
 import { addUserMessage, toggleChat } from '@actions';
 import { AnyFunction } from '@utils/types';
 
-import WidgetLayout, { Props as LayoutProps } from './layout';
+import WidgetLayout, { CProps as LayoutProps } from './layout';
 import { mergeProps } from '@utils/props';
 import { isWidgetOpened } from '@selectors';
 import { useEffect, useRef } from 'react';

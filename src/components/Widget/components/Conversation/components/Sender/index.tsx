@@ -3,7 +3,6 @@ import cn from 'classnames';
 
 import { getCaretIndex, getSelection, insertNodeAtCaret, isFirefox, updateCaret } from '@utils/content-editable';
 import './style.scss';
-import { Optional } from 'utility-types';
 import { useSelector } from '@selectors';
 
 const send = require('@assets/send_button.svg') as string;
@@ -16,31 +15,31 @@ export interface ISenderRef {
   onSelectEmoji: (event: any) => void;
 }
 
-type CProps = {
+export type CProps = {
   senderRef?: Ref<ISenderRef>,
-  placeholder: string;
-  disabledInput: boolean;
+  placeholder?: string;
+  disabledInput?: boolean;
   allowSend: boolean;
-  autofocus: boolean;
+  autofocus?: boolean;
   sendMessage: (event: string) => void;
-  buttonAlt: string;
+  buttonAlt?: string;
   onPressEmoji: (() => void) | null;
   onPressFile: (() => void) | null;
   onTextInputChange?: (event: any) => void;
 }
 
-const defaultProps = {
-  placeholder: 'Type a message...',
-  buttonAlt: 'Send',
-  autofocus: true,
-  disabledInput: false,
-  allowSend: false
-};
-
-type IProps = CProps & typeof defaultProps;
-export type Props = Optional<CProps, keyof typeof defaultProps>;
-
-function Sender({ senderRef, sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt, onPressEmoji, onPressFile, allowSend }: IProps) {
+function Sender({
+                  senderRef,
+                  sendMessage,
+                  placeholder = 'Type a message...',
+                  disabledInput = false,
+                  autofocus = true,
+                  onTextInputChange,
+                  buttonAlt = 'Send',
+                  onPressEmoji,
+                  onPressFile,
+                  allowSend = false
+                }: CProps) {
   const showChat = useSelector(({ behavior }) => behavior.showChat);
   const inputRef = useRef<HTMLDivElement>(null!);
   const refContainer = useRef<HTMLDivElement>(null);
@@ -181,7 +180,5 @@ function Sender({ senderRef, sendMessage, placeholder, disabledInput, autofocus,
     </div>
   );
 }
-
-Sender.defaultProps = defaultProps;
 
 export default Sender;

@@ -8,24 +8,16 @@ import { MESSAGE_SENDER } from '@constants';
 
 import Loader from './components/Loader';
 import './styles.scss';
-import { Optional } from 'utility-types';
 import { useSelector } from '@selectors';
 import { Snapshot } from '@utils/types';
 
-type CProps = {
-  showTimeStamp: boolean,
+export type CProps = {
+  showTimeStamp?: boolean,
   profileAvatar?: string;
   profileClientAvatar?: string;
 }
 
-const defaultProps = {
-  showTimeStamp: true
-};
-
-type IProps = CProps & typeof defaultProps;
-export type Props = Optional<CProps, keyof typeof defaultProps>;
-
-function Messages({ profileAvatar, profileClientAvatar, showTimeStamp }: IProps) {
+function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true }: CProps) {
   const { messages, typing, showChat, badgeCount } = useSelector(({ behavior, messages }) => ({
     messages: messages.messages,
     badgeCount: messages.badgeCount,
@@ -79,7 +71,5 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp }: IProps)
     </div>
   );
 }
-
-Messages.defaultProps = defaultProps;
 
 export default Messages;

@@ -4,7 +4,6 @@ import Badge from './components/Badge';
 import { setBadgeCount } from '@actions';
 
 import './style.scss';
-import { Optional } from 'utility-types';
 import { useSelector } from '@selectors';
 
 const openLauncherDefault = require('@assets/launcher-button.svg') as string;
@@ -12,25 +11,15 @@ const close = require('@assets/clear-button.svg') as string;
 
 export type CProps = {
   toggle: () => void;
-  chatId: string;
-  openLabel: string;
-  closeLabel: string;
+  chatId?: string;
+  openLabel?: string;
+  closeLabel?: string;
   closeImg?: string;
   openImg?: string;
   showBadge?: boolean;
 }
 
-const defaultProps = {
-  chatId: 'rcw-chat-container',
-  openLabel: 'Open chat',
-  closeLabel: 'Close chat',
-  showBadge: true
-};
-
-type IProps = CProps & typeof defaultProps;
-export type Props = Optional<CProps, keyof typeof defaultProps>;
-
-function Launcher({ toggle, chatId, openImg, closeImg, openLabel, closeLabel, showBadge }: IProps) {
+function Launcher({ toggle, chatId = 'rcw-chat-container', openImg, closeImg, openLabel = 'Open chat', closeLabel = 'Close chat', showBadge = true }: CProps) {
   const { showChat, badgeCount } = useSelector(({ behavior, messages }) => ({
     showChat: behavior.showChat,
     badgeCount: messages.badgeCount
@@ -57,7 +46,5 @@ function Launcher({ toggle, chatId, openImg, closeImg, openLabel, closeLabel, sh
     </button>
   );
 }
-
-Launcher.defaultProps = defaultProps;
 
 export default Launcher;

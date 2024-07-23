@@ -1,26 +1,17 @@
 import './style.scss';
-import { Optional } from 'utility-types';
 import { useSelector } from '@selectors';
 
 const close = require('@assets/clear-button.svg') as string;
 
-type CProps = {
-  title: string;
+export type CProps = {
+  title?: string;
   subtitle?: string;
   toggleChat?: () => void;
-  showCloseButton: boolean;
+  showCloseButton?: boolean;
   titleAvatar?: string;
 }
 
-const defaultProps = {
-  title: 'DooPage',
-  showCloseButton: true
-};
-
-type IProps = CProps & typeof defaultProps;
-export type Props = Optional<IProps, keyof typeof defaultProps>;
-
-function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: IProps) {
+function Header({ title = 'DooPage', subtitle, toggleChat, showCloseButton = true, titleAvatar }: CProps) {
   const user = useSelector(({ messages }) => messages.responseUser);
 
   return (
@@ -52,7 +43,5 @@ function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: I
     </div>
   );
 }
-
-Header.defaultProps = defaultProps;
 
 export default Header;

@@ -1,6 +1,5 @@
 import Widget, { Props as WidgetProps } from './components/Widget';
 import { useEffect } from 'react';
-import { Optional } from 'utility-types';
 
 type CProps = {
   widgetProps: WidgetProps;
@@ -13,28 +12,16 @@ type CProps = {
   headerPaddingBottom?: string;
 };
 
-
-const defaultProps = {
-  primaryColor: '#ff9800',
-  messageClientColor: '#2979ff',
-  messageClientTextColor: '#ffffff',
-  messageResponseColor: '#f1f0f0',
-  messageResponseTextColor: '#555555'
-};
-
-type IProps = CProps & typeof defaultProps;
-export type Props = Optional<CProps, keyof typeof defaultProps>;
-
 function Root({
                 widgetProps,
-                primaryColor,
-                messageClientColor,
-                messageClientTextColor,
-                messageResponseColor,
-                messageResponseTextColor,
+                primaryColor = '#ff9800',
+                messageClientColor = '#2979ff',
+                messageClientTextColor = '#ffffff',
+                messageResponseColor = '#f1f0f0',
+                messageResponseTextColor = '#555555',
                 headerPaddingTop,
                 headerPaddingBottom
-              }: IProps) {
+              }: CProps) {
   useEffect(() => {
     const r = document.querySelector(':root') as HTMLHtmlElement;
     primaryColor && r.style.setProperty('--primary-color', primaryColor);
@@ -51,7 +38,5 @@ function Root({
     />
   );
 }
-
-Root.defaultProps = defaultProps;
 
 export default Root;

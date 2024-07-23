@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import { Optional } from 'utility-types';
 import './style.scss';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -18,16 +17,6 @@ type CProps = {
   showName?: boolean;
   imageOnly?: boolean;
 }
-
-const defaultProps = {
-  maxItem: 3,
-  showButton: true,
-  showIcon: true,
-  showName: true
-};
-
-type IProps = CProps & typeof defaultProps;
-export type Props = Optional<CProps, keyof typeof defaultProps>;
 
 type FileProps = {
   item: File;
@@ -101,7 +90,7 @@ function FileAddButton({ onSelect, addFileRef, showButton }: FileAddProps) {
 
 const isImage = (file: File): boolean => file.type.startsWith('image/');
 
-function FilePicker({ items, height, maxItem, showButton, onSelectFile, addFileRef, imageOnly }: IProps) {
+function FilePicker({ items, height, maxItem = 3, showButton = true, onSelectFile, addFileRef, imageOnly }: CProps) {
   const removeIndex = (item: File) => {
     const newItems = items.filter(x => x !== item);
     onSelectFile?.(newItems.slice(-maxItem));
@@ -126,7 +115,5 @@ function FilePicker({ items, height, maxItem, showButton, onSelectFile, addFileR
     </aside>
   );
 }
-
-FilePicker.defaultProps = defaultProps;
 
 export default FilePicker;
