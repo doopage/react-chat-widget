@@ -40,8 +40,7 @@ module.exports = {
             before: [
               ReactRefreshTypeScript()
             ]
-          }),
-          transpileOnly: true
+          })
         }
       },
       {
