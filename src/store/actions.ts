@@ -14,10 +14,11 @@ import {
   setResponseUser
 } from './modules/messages';
 import { setQuickButtons } from './modules/quick-buttons';
-import { toggleChat, toggleInputDisabled, toggleMsgLoader } from './modules/behavior';
+import { addToggleChatListener, toggleChat, toggleInputDisabled, toggleMsgLoader } from './modules/behavior';
 
 export {
   toggleChat,
+  addToggleChatListener,
   toggleInputDisabled,
   addUserMessage,
   addResponseMessage,

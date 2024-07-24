@@ -1,5 +1,5 @@
 import { BehaviorState } from '@types';
-import { proxy } from 'valtio';
+import { proxy, subscribe } from 'valtio';
 
 const initialState: BehaviorState = {
   showChat: false,
@@ -11,6 +11,16 @@ const state = proxy(initialState);
 
 export function toggleChat() {
   state.showChat = !state.showChat;
+}
+
+export function addToggleChatListener(f: (s: boolean) => void) {
+  return subscribe(state, (changes) => {
+    for (const [event, path, value] of changes) {
+      if (event === 'set' && path.includes('showChat')) {
+        f(value as boolean);
+      }
+    }
+  });
 }
 
 export function toggleInputDisabled() {

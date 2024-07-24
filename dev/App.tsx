@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { addResponseMessage, setMessageStatus, setQuickButtons, toggleInputDisabled, toggleMsgLoader } from '@actions';
+import { addResponseMessage, addToggleChatListener, setMessageStatus, setQuickButtons, toggleInputDisabled, toggleMsgLoader } from '@actions';
 import Widget from '../src/root';
 import { setResponseUser } from '../src';
 
@@ -8,6 +8,8 @@ const doopageIcon = require('@assets/doopage-icon.png') as string;
 
 export default class App extends Component {
   componentDidMount() {
+    addToggleChatListener((state) => console.log('@@@ addToggleChatListener', state));
+
     // addResponseMessage('Livechat của DooPage, siêu xịn sò ^^');
     // addLinkSnippet({ link: 'https://doopage.com', title: 'DooPage' });
     // addResponseMessage('![](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)');

@@ -26,6 +26,7 @@ export declare const ref: <T extends object>(v: T) => StateRef<T>;
 export declare const useSelector: <T>(selector: (state: Snapshot<GlobalState>) => T) => T;
 export declare function addLinkSnippet(link: LinkParams, id?: string, props?: any): void;
 export declare function addResponseMessage(text: string, { id, status, props }?: MessageOptions): void;
+export declare function addToggleChatListener(f: (s: boolean) => void): () => void;
 export declare function addUserMessage(text: string, { id, status, props }?: MessageOptions): void;
 export declare function closeFullscreenPreview(): void;
 export declare function createComponentMessage(component: React$1.ComponentType, props: any, showAvatar: boolean, id?: string): CustomCompMessage;
