@@ -4,13 +4,12 @@ import cn from 'classnames';
 
 import Header, { CProps as HeaderProps } from './components/Header';
 import Messages, { CProps as MessagesProps } from './components/Messages';
-import Sender, { ISenderRef, CProps as SenderProps } from './components/Sender';
+import Sender, { CProps as SenderProps, ISenderRef } from './components/Sender';
 import QuickButtons, { Props as QuickButtonsProps } from './components/QuickButtons';
 import { ResizableProps } from '@types';
 
 import './style.scss';
 import FilePicker from './components/FilePicker';
-import { clone } from 'lodash';
 import { useSelector } from '@selectors';
 
 export type CProps = {
@@ -46,7 +45,7 @@ function Conversation({
                           heightOffset: 105,
                           widthOffset: 35
                         },
-                        defaultSize = clone(minSize),
+                        defaultSize = minSize,
                         onResize,
                         emojis,
                         files,
@@ -79,8 +78,8 @@ function Conversation({
   };
 
   useEffect(() => {
-    setSize(defaultSize.width, defaultSize.height);
-  }, [defaultSize]);
+    resizable && setSize(defaultSize.width, defaultSize.height);
+  }, [defaultSize, resizable]);
 
   const initResize = (e) => {
     if (resizable) {
