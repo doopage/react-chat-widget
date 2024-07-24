@@ -1,17 +1,17 @@
 import './style.scss';
 import { useSelector } from '@selectors';
+import { toggleChat } from '@actions';
 
 const close = require('@assets/clear-button.svg') as string;
 
 export type CProps = {
   title?: string;
   subtitle?: string;
-  toggleChat?: () => void;
   showCloseButton?: boolean;
   titleAvatar?: string;
 }
 
-function Header({ title = 'DooPage', subtitle, toggleChat, showCloseButton = true, titleAvatar }: CProps) {
+function Header({ title = 'DooPage', subtitle, showCloseButton = true, titleAvatar }: CProps) {
   const user = useSelector(({ messages }) => messages.responseUser);
 
   return (

@@ -121,7 +121,6 @@ export type BaseMessage = {
 export type CProps = {
 	title?: string;
 	subtitle?: string;
-	toggleChat?: () => void;
 	showCloseButton?: boolean;
 	titleAvatar?: string;
 };
