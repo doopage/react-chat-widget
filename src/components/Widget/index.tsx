@@ -24,10 +24,20 @@ function Widget({ layoutProps, handleNewUserMessage, handleQuickButtonClicked, h
     if (!rootRef.current || !onResize) {
       return;
     }
+    const el = rootRef.current!;
     const s = new ResizeObserver(() => {
-      onResize?.(rootRef.current!.clientWidth, rootRef.current!.clientHeight);
+      let width = el.clientWidth;
+      let height = el.clientHeight;
+      if (width === 0 && height === 0) {
+        const launcher = el.querySelector('.rcw-launcher');
+        if (launcher) {
+          width = launcher.clientWidth;
+          height = launcher.clientHeight;
+        }
+      }
+      onResize!(width, height);
     });
-    s.observe(rootRef.current);
+    s.observe(el);
   }, [rootRef, onResize]);
 
   const toggleConversation = async () => {
