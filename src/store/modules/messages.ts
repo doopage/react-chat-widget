@@ -27,6 +27,10 @@ export function addResponseMessage(text: string, { id, status, props }: MessageO
   state.badgeCount += 1;
 }
 
+export function addSystemMessage(text: string, { id, status, props }: MessageOptions = {}) {
+  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.SYSTEM, id, status, props)];
+}
+
 export function addLinkSnippet(link: LinkParams, id?: string, props?: any) {
   state.messages = [...state.messages, createLinkSnippet(link, id, props)];
 }
@@ -74,7 +78,7 @@ export function setMessageStatus(id: string, status: string, props: any = null):
   const m = findMessageByCustomId(id);
   if (m) {
     m.status = status;
-    if(props) {
+    if (props) {
       Object.assign(m, props);
     }
     return true;

@@ -2,6 +2,7 @@ import { closeFullscreenPreview, openFullscreenPreview } from './modules/fullscr
 import {
   addLinkSnippet,
   addResponseMessage,
+  addSystemMessage,
   addUserMessage,
   deleteMessages,
   dropMessages,
@@ -22,6 +23,7 @@ export {
   toggleInputDisabled,
   addUserMessage,
   addResponseMessage,
+  addSystemMessage,
   toggleMsgLoader,
   addLinkSnippet,
   renderCustomComponent,

@@ -1,6 +1,7 @@
 export const MESSAGE_SENDER = {
   CLIENT: 'client',
-  RESPONSE: 'response'
+  RESPONSE: 'response',
+  SYSTEM: 'system'
 };
 
 export const MESSAGES_TYPES = {

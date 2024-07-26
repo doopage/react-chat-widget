@@ -3,6 +3,8 @@ import markdownItSup from 'markdown-it-sup';
 import markdownItSanitizer from 'markdown-it-sanitizer';
 import markdownItClass from '@toycode/markdown-it-class';
 import markdownItLinkAttributes from 'markdown-it-link-attributes';
+import { imgSize } from '@mdit/plugin-img-size';
+import { attrs } from '@mdit/plugin-attrs';
 
 import { MessageTypes } from '@types';
 
@@ -36,11 +38,11 @@ function FileAttachment({ item }: FileProps) {
   }, [item]);
   switch (type) {
     case 'image': {
-      const sanitizedHTML = markdownIt({ break: true }).use(markdownItClass, { img: ['rcw-message-img'] }).render(`![](${href})`);
+      const sanitizedHTML = markdownIt().use(markdownItClass, { img: ['rcw-message-img'] }).render(`![](${href})`);
       return <div className="rcw-message-text is-attachment" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
     }
     default: {
-      const sanitizedHTML = markdownIt({ break: true }).use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } }).render(`[${name}](${href})`);
+      const sanitizedHTML = markdownIt().use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } }).render(`[${name}](${href})`);
       return <div className="rcw-message-text is-attachment" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
     }
   }
@@ -50,13 +52,14 @@ function Message({ message, showTimeStamp }: Props) {
   let sanitizedHTML: string | null = null;
 
   if (message.text) {
-    sanitizedHTML = markdownIt({ break: true })
+    sanitizedHTML = markdownIt({ html: true, breaks: true })
       .use(markdownItClass, {
         img: ['rcw-message-img']
       })
       .use(markdownItSup)
       .use(markdownItSanitizer)
       .use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } })
+      .use(imgSize).use(attrs)
       .render(message.text);
   }
 
