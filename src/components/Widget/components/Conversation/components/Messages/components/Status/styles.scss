@@ -41,7 +41,10 @@
 
 .status-explained {
   font-size: 10px;
-  cursor: pointer;
+
+  &.can-retry {
+    cursor: pointer;
+  }
 
   &.error {
     color: #EF5350;
