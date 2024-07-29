@@ -11,7 +11,7 @@ export type CProps = {
   titleAvatar?: string;
 }
 
-function Header({ title = 'DooPage', subtitle, showCloseButton = true, titleAvatar }: CProps) {
+function Header({ title, subtitle, showCloseButton = true, titleAvatar }: CProps) {
   const user = useSelector(({ messages }) => messages.responseUser);
 
   return (
