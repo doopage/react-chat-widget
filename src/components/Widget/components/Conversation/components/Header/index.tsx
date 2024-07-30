@@ -2,7 +2,7 @@ import './style.scss';
 import { useSelector } from '@selectors';
 import { toggleChat } from '@actions';
 
-const close = require('@assets/clear-button.svg') as string;
+const close = require('@assets/close.svg') as string;
 
 export type CProps = {
   title?: string;
