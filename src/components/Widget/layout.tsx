@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import { AnyFunction } from '@utils/types';
 import { openFullscreenPreview } from '@actions';
@@ -13,7 +13,7 @@ import { useSelector } from '@selectors';
 export type CProps = {
   rootRef?: React.Ref<HTMLDivElement>;
   conversationProps?: ConversationProps;
-  launcherProps?: Omit<LauncherProps, 'toggle'>;
+  launcherProps?: Omit<LauncherProps, 'toggle' | 'isLoading'>;
   onToggleConversation: () => void;
   fullScreenMode?: boolean;
   customLauncher?: AnyFunction;
@@ -22,6 +22,7 @@ export type CProps = {
 }
 
 function WidgetLayout({ rootRef, conversationProps, launcherProps, onToggleConversation, fullScreenMode = false, customLauncher, imagePreview = false, zoomStep = 80 }: CProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const { showChat, visible } = useSelector(({ behavior, preview }) => ({
     showChat: behavior.showChat,
     visible: preview.visible
@@ -69,6 +70,12 @@ function WidgetLayout({ rootRef, conversationProps, launcherProps, onToggleConve
     document.body.setAttribute('style', `overflow: ${visible || fullScreenMode ? 'hidden' : 'auto'}`);
   }, [fullScreenMode, visible]);
 
+  const toggleHandler = async () => {
+    setIsLoading(true);
+    onToggleConversation();
+    setIsLoading(false);
+  };
+
   return (
     <div
       ref={rootRef}
@@ -82,9 +89,9 @@ function WidgetLayout({ rootRef, conversationProps, launcherProps, onToggleConve
         <Conversation {...conversationProps} className={showChat ? 'active' : 'hidden'} />
       }
       {customLauncher ?
-        customLauncher(onToggleConversation) :
+        customLauncher(toggleHandler) :
         !fullScreenMode &&
-        <Launcher {...launcherProps} toggle={onToggleConversation} />
+        <Launcher {...launcherProps} toggle={toggleHandler} isLoading={isLoading} />
       }
       {
         imagePreview && <FullScreenPreview fullScreenMode={fullScreenMode} zoomStep={zoomStep} />

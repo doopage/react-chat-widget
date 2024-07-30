@@ -7,6 +7,7 @@ import './style.scss';
 import { useSelector } from '@selectors';
 
 const openLauncherDefault = require('@assets/launcher-button.svg') as string;
+const loading = require('@assets/loading.svg') as string;
 const close = require('@assets/clear-button.svg') as string;
 
 export type CProps = {
@@ -17,9 +18,10 @@ export type CProps = {
   closeImg?: string;
   openImg?: string;
   showBadge?: boolean;
+  isLoading?: boolean;
 }
 
-function Launcher({ toggle, chatId = 'rcw-chat-container', openImg, closeImg, openLabel = 'Open chat', closeLabel = 'Close chat', showBadge = true }: CProps) {
+function Launcher({ toggle, chatId = 'rcw-chat-container', openImg, closeImg, openLabel = 'Open chat', closeLabel = 'Close chat', showBadge = true, isLoading = false }: CProps) {
   const { showChat, badgeCount } = useSelector(({ behavior, messages }) => ({
     showChat: behavior.showChat,
     badgeCount: messages.badgeCount
@@ -35,11 +37,13 @@ function Launcher({ toggle, chatId = 'rcw-chat-container', openImg, closeImg, op
       {!showChat && showBadge && <Badge badge={badgeCount} />}
       {showChat ?
         <img src={closeImg || close} className="rcw-close-launcher" alt={openLabel} /> :
-        <div className={cn('rcw-open-launcher', { 'default-launcher': !openImg })}>
+        <div className={cn('rcw-open-launcher', { 'default-launcher': !openImg && !isLoading, 'loading': isLoading })}>
           {
-            openImg ?
-              <img src={openImg} alt={closeLabel} /> :
-              <img src={openLauncherDefault} alt={closeLabel} />
+            isLoading ?
+              <img src={loading} alt={closeLabel} /> :
+              (openImg ?
+                <img src={openImg} alt={closeLabel} /> :
+                <img src={openLauncherDefault} alt={closeLabel} />)
           }
         </div>
       }
