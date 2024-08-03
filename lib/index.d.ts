@@ -207,7 +207,7 @@ type CProps$5 = {
 	rootRef?: React$1.Ref<HTMLDivElement>;
 	conversationProps?: CProps$3;
 	launcherProps?: Omit<CProps$4, "toggle" | "isLoading">;
-	onToggleConversation: () => void;
+	onToggleConversation: () => Promise<void>;
 	fullScreenMode?: boolean;
 	customLauncher?: AnyFunction;
 	imagePreview?: boolean;
