@@ -201,11 +201,12 @@ type CProps$4 = {
 	closeImg?: string;
 	openImg?: string;
 	showBadge?: boolean;
+	isLoading?: boolean;
 };
 type CProps$5 = {
 	rootRef?: React$1.Ref<HTMLDivElement>;
 	conversationProps?: CProps$3;
-	launcherProps?: Omit<CProps$4, "toggle">;
+	launcherProps?: Omit<CProps$4, "toggle" | "isLoading">;
 	onToggleConversation: () => void;
 	fullScreenMode?: boolean;
 	customLauncher?: AnyFunction;
