@@ -89,6 +89,13 @@ export default class App extends Component {
           handleQuickButtonClicked: this.handleQuickButtonClicked,
           disableRichTextInput: true,
           handleSubmit: this.handleSubmit,
+          handleToggle: async (isOpened: boolean): Promise<boolean> => {
+            console.log('@@@handleToggle', isOpened);
+            if (isOpened) {
+              await new Promise(done => setTimeout(done, 1500));
+            }
+            return true;
+          },
           onResize: (w, h) => {
             console.log('@@@Resize', w, h);
           }

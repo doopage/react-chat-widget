@@ -14,7 +14,7 @@ export type CProps = {
   rootRef?: React.Ref<HTMLDivElement>;
   conversationProps?: ConversationProps;
   launcherProps?: Omit<LauncherProps, 'toggle' | 'isLoading'>;
-  onToggleConversation: () => void;
+  onToggleConversation: () => Promise<void>;
   fullScreenMode?: boolean;
   customLauncher?: AnyFunction;
   imagePreview?: boolean;
@@ -72,7 +72,7 @@ function WidgetLayout({ rootRef, conversationProps, launcherProps, onToggleConve
 
   const toggleHandler = async () => {
     setIsLoading(true);
-    onToggleConversation();
+    await onToggleConversation();
     setIsLoading(false);
   };
 
