@@ -51,7 +51,7 @@ export default class App extends Component {
     }
     toggleInputDisabled();
     setResponseUser({
-      avatar: 'https://cdn-icons-png.flaticon.com/512/5277/5277459.png',
+      avatar: 'https://doopage-dev.s3.amazonaws.com/media/image/avatar/b369b63252b44f77b63d.jpeg',
       name: 'Chien Nguyen',
       message: 'Trực tuyến',
       online: Math.random() < .5
@@ -69,8 +69,8 @@ export default class App extends Component {
                 subtitle: 'Livechat'
               },
               messagesProps: {
-                profileAvatar: 'https://cdn-icons-png.flaticon.com/512/5277/5277459.png'
-                // profileClientAvatar: 'https://cdn-icons-png.flaticon.com/512/5277/5277459.png'
+                profileAvatar: 'https://doopage-dev.s3.amazonaws.com/media/image/avatar/b369b63252b44f77b63d.jpeg',
+                profileClientAvatar: 'https://doopage-dev.s3.amazonaws.com/media/image/avatar/b369b63252b44f77b63d.jpeg',
               },
               senderProps: {
                 placeholder: 'Escribe aquí ...'
