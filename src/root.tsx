@@ -17,7 +17,7 @@ function Root({
                 primaryColor = '#ff9800',
                 messageClientColor = '#2979ff',
                 messageClientTextColor = '#ffffff',
-                messageResponseColor = '#f1f0f0',
+                messageResponseColor = '#ffffff',
                 messageResponseTextColor = '#555555',
                 headerPaddingTop,
                 headerPaddingBottom

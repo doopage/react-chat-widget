@@ -32,6 +32,8 @@
   .rcw-message-text {
     @include message-bubble(var(--message-response-color));
     color: var(--message-response-text-color);
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 2px 0 rgba(255, 152, 0, 0.5);
   }
 }
 
