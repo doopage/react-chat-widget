@@ -7,7 +7,8 @@ import { ComponentType } from 'react';
 const initialState: MessagesState = {
   responseUser: null,
   messages: [],
-  badgeCount: 0
+  badgeCount: 0,
+  popupMessage: null,
 };
 
 const state = proxy(initialState);
@@ -88,6 +89,10 @@ export function setMessageStatus(id: string, status: string, props: any = null):
 
 export function setResponseUser(user: ResponseUser) {
   state.responseUser = user;
+}
+
+export function setPopupMessage(message: string) {
+  state.popupMessage = message;
 }
 
 export default state;

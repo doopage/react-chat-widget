@@ -59,6 +59,7 @@ export interface MessagesState {
   responseUser: ResponseUser | null;
   messages: Message[];
   badgeCount: number;
+  popupMessage: string | null;
 }
 
 export interface QuickButtonsState {

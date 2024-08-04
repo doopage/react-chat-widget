@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './App.scss';
 
-import { addResponseMessage, addSystemMessage, addToggleChatListener, setMessageStatus, setQuickButtons, toggleInputDisabled, toggleMsgLoader } from '@actions';
+import { addResponseMessage, addSystemMessage, addToggleChatListener, setMessageStatus, setPopupMessage, setQuickButtons, toggleInputDisabled, toggleMsgLoader } from '@actions';
 import Widget from '../src/root';
 import { setResponseUser } from '../src';
 
@@ -11,6 +11,8 @@ const doopageIcon = require('@assets/doopage-icon.png') as string;
 export default class App extends Component {
   componentDidMount() {
     addToggleChatListener((state) => console.log('@@@ addToggleChatListener', state));
+
+    setPopupMessage('Chào mừng');
 
     // addResponseMessage('Livechat của DooPage, siêu xịn sò ^^');
     // addLinkSnippet({ link: 'https://doopage.com', title: 'DooPage' });
@@ -70,7 +72,7 @@ export default class App extends Component {
               },
               messagesProps: {
                 profileAvatar: 'https://doopage-dev.s3.amazonaws.com/media/image/avatar/b369b63252b44f77b63d.jpeg',
-                profileClientAvatar: 'https://doopage-dev.s3.amazonaws.com/media/image/avatar/b369b63252b44f77b63d.jpeg',
+                profileClientAvatar: 'https://doopage-dev.s3.amazonaws.com/media/image/avatar/b369b63252b44f77b63d.jpeg'
               },
               senderProps: {
                 placeholder: 'Escribe aquí ...'

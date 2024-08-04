@@ -12,6 +12,7 @@ import {
   setBadgeCount,
   setMessages,
   setMessageStatus,
+  setPopupMessage,
   setResponseUser
 } from './modules/messages';
 import { setQuickButtons } from './modules/quick-buttons';
@@ -37,5 +38,6 @@ export {
   closeFullscreenPreview,
   setMessages,
   setMessageStatus,
-  setResponseUser
+  setResponseUser,
+  setPopupMessage
 };

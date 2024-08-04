@@ -5,6 +5,8 @@ import { setBadgeCount } from '@actions';
 
 import './style.scss';
 import { useSelector } from '@selectors';
+import React, { useEffect } from 'react';
+import Popup from './components/Popup';
 
 const openLauncherDefault = require('@assets/launcher-button.svg') as string;
 const loading = require('@assets/loading.svg') as string;
@@ -18,13 +20,25 @@ export type CProps = {
   closeImg?: string;
   openImg?: string;
   showBadge?: boolean;
+  showPopup?: boolean;
   isLoading?: boolean;
 }
 
-function Launcher({ toggle, chatId = 'rcw-chat-container', openImg, closeImg, openLabel = 'Open chat', closeLabel = 'Close chat', showBadge = true, isLoading = false }: CProps) {
-  const { showChat, badgeCount } = useSelector(({ behavior, messages }) => ({
+function Launcher({
+                    toggle,
+                    chatId = 'rcw-chat-container',
+                    openImg,
+                    closeImg,
+                    openLabel = 'Open chat',
+                    closeLabel = 'Close chat',
+                    showBadge = true,
+                    showPopup = true,
+                    isLoading = false
+                  }: CProps) {
+  const { showChat, badgeCount, popupMessage } = useSelector(({ behavior, messages }) => ({
     showChat: behavior.showChat,
-    badgeCount: messages.badgeCount
+    badgeCount: messages.badgeCount,
+    popupMessage: messages.popupMessage
   }));
 
   const toggleChat = () => {
@@ -32,7 +46,12 @@ function Launcher({ toggle, chatId = 'rcw-chat-container', openImg, closeImg, op
     if (!showChat) setBadgeCount(0);
   };
 
-  return (
+  useEffect(() => {
+    console.log([!showChat, showPopup, popupMessage]);
+  });
+
+  return <>
+    {!showChat && showPopup && popupMessage && <Popup text={popupMessage} />}
     <button type="button" className={cn('rcw-launcher', { 'rcw-hide-sm': showChat, 'default-launcher': !openImg })} onClick={toggleChat} aria-controls={chatId}>
       {!showChat && showBadge && <Badge badge={badgeCount} />}
       {showChat ?
@@ -48,7 +67,7 @@ function Launcher({ toggle, chatId = 'rcw-chat-container', openImg, closeImg, op
         </div>
       }
     </button>
-  );
+  </>;
 }
 
 export default Launcher;
