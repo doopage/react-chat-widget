@@ -5,7 +5,7 @@ import { setBadgeCount } from '@actions';
 
 import './style.scss';
 import { useSelector } from '@selectors';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Popup from './components/Popup';
 
 const openLauncherDefault = require('@assets/launcher-button.svg') as string;
@@ -45,10 +45,6 @@ function Launcher({
     toggle();
     if (!showChat) setBadgeCount(0);
   };
-
-  useEffect(() => {
-    console.log([!showChat, showPopup, popupMessage]);
-  });
 
   return <>
     {!showChat && showPopup && popupMessage && <Popup text={popupMessage} />}
