@@ -2,9 +2,9 @@ import React$1 from 'react';
 import { ComponentType, ElementType, Ref } from 'react';
 import { Primitive } from 'utility-types';
 
-declare function Message$1({ message, showTimeStamp }: Props$2): import("react/jsx-runtime").JSX.Element;
+declare function Message$1({ message, showTimeStamp }: Props$3): import("react/jsx-runtime").JSX.Element;
 declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, headerPaddingTop, headerPaddingBottom }: CProps$6): import("react/jsx-runtime").JSX.Element;
-declare function Snippet({ message, showTimeStamp }: Props$3): import("react/jsx-runtime").JSX.Element;
+declare function Snippet({ message, showTimeStamp }: Props$4): import("react/jsx-runtime").JSX.Element;
 export declare const Component: {
 	Message: typeof Message$1;
 	Snippet: typeof Snippet;
@@ -205,6 +205,7 @@ type CProps$4 = {
 	showBadge?: boolean;
 	showPopup?: boolean;
 	isLoading?: boolean;
+	popupProps?: Omit<Props$1, "text">;
 };
 type CProps$5 = {
 	rootRef?: React$1.Ref<HTMLDivElement>;
@@ -217,7 +218,7 @@ type CProps$5 = {
 	zoomStep?: number;
 };
 type CProps$6 = {
-	widgetProps: Props$1;
+	widgetProps: Props$2;
 	primaryColor?: string;
 	messageClientColor?: string;
 	messageClientTextColor?: string;
@@ -227,6 +228,10 @@ type CProps$6 = {
 	headerPaddingBottom?: string;
 };
 type Props$1 = {
+	text: string;
+	onResize?: (w: number, h: number) => void;
+};
+type Props$2 = {
 	layoutProps?: Omit<CProps$5, "onToggleConversation" | "onSendMessage" | "onQuickButtonClicked" | "onTextInputChange">;
 	handleNewUserMessage: (data: {
 		text?: string;
@@ -242,11 +247,11 @@ type Props$1 = {
 	}) => void | Error | Promise<void | Error>;
 	onResize?: (w: number, h: number) => void;
 };
-type Props$2 = {
+type Props$3 = {
 	message: MessageTypes;
 	showTimeStamp: boolean;
 };
-type Props$3 = {
+type Props$4 = {
 	message: Link;
 	showTimeStamp: boolean;
 };

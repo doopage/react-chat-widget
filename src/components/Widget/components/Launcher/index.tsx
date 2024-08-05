@@ -6,7 +6,7 @@ import { setBadgeCount } from '@actions';
 import './style.scss';
 import { useSelector } from '@selectors';
 import React from 'react';
-import Popup from './components/Popup';
+import Popup, { Props as PopupProps } from './components/Popup';
 
 const openLauncherDefault = require('@assets/launcher-button.svg') as string;
 const loading = require('@assets/loading.svg') as string;
@@ -22,6 +22,7 @@ export type CProps = {
   showBadge?: boolean;
   showPopup?: boolean;
   isLoading?: boolean;
+  popupProps?: Omit<PopupProps, 'text'>;
 }
 
 function Launcher({
@@ -33,7 +34,8 @@ function Launcher({
                     closeLabel = 'Close chat',
                     showBadge = true,
                     showPopup = true,
-                    isLoading = false
+                    isLoading = false,
+                    popupProps = {}
                   }: CProps) {
   const { showChat, badgeCount, popupMessage } = useSelector(({ behavior, messages }) => ({
     showChat: behavior.showChat,
@@ -47,7 +49,7 @@ function Launcher({
   };
 
   return <>
-    {!showChat && showPopup && popupMessage && <Popup text={popupMessage} />}
+    {!showChat && showPopup && popupMessage && <Popup text={popupMessage} {...popupProps} />}
     <button type="button" className={cn('rcw-launcher', { 'rcw-hide-sm': showChat, 'default-launcher': !openImg })} onClick={toggleChat} aria-controls={chatId}>
       {!showChat && showBadge && <Badge badge={badgeCount} />}
       {showChat ?

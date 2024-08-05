@@ -12,7 +12,7 @@ export default class App extends Component {
   componentDidMount() {
     addToggleChatListener((state) => console.log('@@@ addToggleChatListener', state));
 
-    setPopupMessage('Chào mừng');
+    setPopupMessage('Chào mừng\n'.repeat(1));
 
     // addResponseMessage('Livechat của DooPage, siêu xịn sò ^^');
     // addLinkSnippet({ link: 'https://doopage.com', title: 'DooPage' });
@@ -84,6 +84,11 @@ export default class App extends Component {
             },
             launcherProps: {
               // openImg: doopageIcon
+              popupProps: {
+                onResize: (w, h) => {
+                  console.log('@@@popup resize', [w, h]);
+                }
+              }
             },
             imagePreview: true
           },
