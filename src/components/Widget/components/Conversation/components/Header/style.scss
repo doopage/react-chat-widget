@@ -34,7 +34,7 @@
   }
 
   .avatar {
-    width: 40px;
+    //width: 40px;
     height: 40px;
     border-radius: 100%;
     margin-right: 10px;
@@ -47,7 +47,7 @@
     margin-left: 10px;
     padding: 5px 0;
 
-    > .avatar {
+    .avatar {
       position: relative;
       border: 2px solid #ffffff;
 
@@ -72,6 +72,19 @@
 
         &.status-offline {
           background-color: #808080;
+        }
+      }
+    }
+
+
+    .avatars {
+      position: relative;
+
+      .avatar {
+        display: inline-block;
+
+        &.in-avatars:not(:first-child) {
+          margin-left: -45px;
         }
       }
     }

@@ -23,10 +23,19 @@ function Header({ title, subtitle, showCloseButton = true, titleAvatar }: CProps
       }
       {user
         ? <div className="rcw-user">
-          <div className="avatar">
-            <img src={user.avatar} alt="profile" />
-            {typeof user.online == 'boolean' && <div className={`status status-${user.online ? 'online' : 'offline'}`} />}
-          </div>
+          {typeof user.avatar === 'string'
+            ? (<div className="avatar">
+              <img src={user.avatar} alt="profile" />
+            </div>)
+            : (<div className="avatars">
+              {user.avatar.map((src, index) => (
+                <div className="avatar in-avatars" style={{ zIndex: user.avatar.length - index }}>
+                  <img src={src} key={index} alt="profile" />
+                </div>
+              ))}
+            </div>)
+          }
+          {typeof user.online == 'boolean' && <div className={`status status-${user.online ? 'online' : 'offline'}`} />}
           <div className="info">
             <span className="name">{user.name}</span>
             <span className="message">{user.message}</span>

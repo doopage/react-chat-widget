@@ -145,7 +145,7 @@ export type QuickButtonTypes = {
 	component: StateRef<React$1.ElementType>;
 };
 export type ResponseUser = {
-	avatar: string;
+	avatar: string | string[];
 	name: string;
 	message?: string;
 	online?: boolean;

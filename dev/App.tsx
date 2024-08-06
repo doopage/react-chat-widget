@@ -51,9 +51,21 @@ export default class App extends Component {
     if (text == 'hi' && (!files || files.length <= 0)) {
       return new Error('Uh oh, please write a bit more.');
     }
+    if (text == 'avatars') {
+      setResponseUser({
+        avatar: [
+          'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',
+          'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',
+          'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512'
+        ],
+        name: 'Coffee Coding',
+        message: '3 người đang online'
+      });
+      return;
+    }
     toggleInputDisabled();
     setResponseUser({
-      avatar: 'https://doopage-dev.s3.amazonaws.com/media/image/avatar/b369b63252b44f77b63d.jpeg',
+      avatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',
       name: 'Chien Nguyen',
       message: 'Trực tuyến',
       online: Math.random() < .5
@@ -71,8 +83,8 @@ export default class App extends Component {
                 subtitle: 'Livechat'
               },
               messagesProps: {
-                profileAvatar: 'https://doopage-dev.s3.amazonaws.com/media/image/avatar/b369b63252b44f77b63d.jpeg',
-                profileClientAvatar: 'https://doopage-dev.s3.amazonaws.com/media/image/avatar/b369b63252b44f77b63d.jpeg'
+                profileAvatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',
+                profileClientAvatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512'
               },
               senderProps: {
                 placeholder: 'Escribe aquí ...'

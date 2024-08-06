@@ -49,7 +49,7 @@ export interface BehaviorState {
 export type Message = MessageTypes | Link | CustomCompMessage;
 
 export type ResponseUser = {
-  avatar: string;
+  avatar: string | string[];
   name: string;
   message?: string;
   online?: boolean;
