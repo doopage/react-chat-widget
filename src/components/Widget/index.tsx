@@ -77,6 +77,10 @@ function Widget({ layoutProps, handleNewUserMessage, handleQuickButtonClicked, h
     if (target && target.textContent) {
       // Clean the input to retain only plain text
       target.textContent = target.textContent.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+        if (/[\u{00C0}-\u{00FF}\u{1EA0}-\u{1EFF}]/u.test(i)) {
+          // Vietnamese
+          return i;
+        }
         return '&#' + i.charCodeAt(0) + ';';
       });
     }
