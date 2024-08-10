@@ -37,14 +37,14 @@ function Header({ title, subtitle, showCloseButton = true, titleAvatar }: CProps
             </div>)
           }
           <div className="info">
-            <span className="name">{user.name}</span>
+            <span className="name">{user.name ?? <>&nbsp;</>}</span>
             <span className="message">{user.message}</span>
           </div>
         </div>
         : <>
           <p className="rcw-title">
             {titleAvatar && <img src={titleAvatar} className="avatar" alt="profile" />}
-            {title ? title : <>&nbsp;</>}
+            {title ?? <>&nbsp;</>}
           </p>
           {subtitle && <span className="rcw-subtitle">{subtitle}</span>}
         </>
