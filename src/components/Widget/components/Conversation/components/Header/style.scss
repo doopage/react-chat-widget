@@ -13,6 +13,11 @@
     flex-direction: column;
     text-align: center;
     padding: var(--header-padding-top, 5px) 0 var(--header-padding-bottom, 5px);
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   .rcw-title {
