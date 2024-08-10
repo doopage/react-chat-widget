@@ -50,7 +50,7 @@ export type Message = MessageTypes | Link | CustomCompMessage;
 
 export type ResponseUser = {
   avatar: string | string[];
-  name: string;
+  name?: string;
   message?: string;
   online?: boolean;
 }

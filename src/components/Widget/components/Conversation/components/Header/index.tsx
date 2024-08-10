@@ -44,7 +44,7 @@ function Header({ title, subtitle, showCloseButton = true, titleAvatar }: CProps
         : <>
           <p className="rcw-title">
             {titleAvatar && <img src={titleAvatar} className="avatar" alt="profile" />}
-            {title}
+            {title ? title : <>&nbsp;</>}
           </p>
           {subtitle && <span className="rcw-subtitle">{subtitle}</span>}
         </>
