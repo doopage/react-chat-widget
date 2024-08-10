@@ -146,7 +146,7 @@ export type QuickButtonTypes = {
 };
 export type ResponseUser = {
 	avatar: string | string[];
-	name: string;
+	name?: string;
 	message?: string;
 	online?: boolean;
 };
