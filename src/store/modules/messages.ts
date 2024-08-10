@@ -8,7 +8,7 @@ const initialState: MessagesState = {
   responseUser: null,
   messages: [],
   badgeCount: 0,
-  popupMessage: null,
+  popupMessage: null
 };
 
 const state = proxy(initialState);
@@ -91,7 +91,7 @@ export function setResponseUser(user: ResponseUser) {
   state.responseUser = user;
 }
 
-export function setPopupMessage(message: string) {
+export function setPopupMessage(message: string | string[] | null) {
   state.popupMessage = message;
 }
 

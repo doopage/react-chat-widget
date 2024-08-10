@@ -12,7 +12,11 @@ export default class App extends Component {
   componentDidMount() {
     addToggleChatListener((state) => console.log('@@@ addToggleChatListener', state));
 
-    setPopupMessage('Chào mừng\n'.repeat(1));
+    setPopupMessage([
+      'Chào mừng A\n'.repeat(100),
+      'Chào mừng B\n'.repeat(1),
+      'Chào mừng C\n'.repeat(1),
+    ]);
 
     // addResponseMessage('Livechat của DooPage, siêu xịn sò ^^');
     // addLinkSnippet({ link: 'https://doopage.com', title: 'DooPage' });

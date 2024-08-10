@@ -2,7 +2,7 @@ import './style.scss';
 import { useEffect, useState } from 'react';
 
 export type Props = {
-  text: string;
+  text: string | readonly string[];
   onResize?: (w: number, h: number) => void;
 }
 
@@ -12,7 +12,7 @@ function Popup({ text, onResize }: Props) {
   useEffect(() => {
     const el = document.querySelector('.rcw-popup') as HTMLElement | null;
     if (el) {
-      el.style.top = `-${el.clientHeight + 5}px`;
+      // el.style.bottom = `-${el.clientHeight + 5}px`;
     }
     onResize?.(el?.clientWidth ?? 0, el?.clientHeight ?? 0);
   }, [text, isClosed, onResize]);
@@ -21,9 +21,13 @@ function Popup({ text, onResize }: Props) {
     return null;
   }
 
+  const texts = Array.isArray(text) ? text : [text];
+
   return <div className="rcw-popup">
-    <button className="close-btn" onClick={() => setIsClosed(true)}>X</button>
-    <p>{text}</p>
+    <div className="close-container">
+      <button className="close-btn" onClick={() => setIsClosed(true)}>X</button>
+    </div>
+    {texts.map((text, i) => <p key={i}>{text.length > 100 ? text.slice(0, 100) + ' ...' : text}</p>)}
   </div>;
 }
 

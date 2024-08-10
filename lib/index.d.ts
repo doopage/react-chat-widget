@@ -49,7 +49,7 @@ export declare function scrollToBottom(messagesDiv: HTMLDivElement | null): void
 export declare function setBadgeCount(count: number): void;
 export declare function setMessageStatus(id: string, status: string, props?: any): boolean;
 export declare function setMessages(messages: Message[]): void;
-export declare function setPopupMessage(message: string): void;
+export declare function setPopupMessage(message: string | string[] | null): void;
 export declare function setQuickButtons(buttons: Array<{
 	label: string;
 	value: string | number;
@@ -101,7 +101,7 @@ export interface MessagesState {
 	responseUser: ResponseUser | null;
 	messages: Message[];
 	badgeCount: number;
-	popupMessage: string | null;
+	popupMessage: string | string[] | null;
 }
 export interface QuickButtonsState {
 	quickButtons: QuickButtonTypes[];
@@ -228,7 +228,7 @@ type CProps$6 = {
 	headerPaddingBottom?: string;
 };
 type Props$1 = {
-	text: string;
+	text: string | readonly string[];
 	onResize?: (w: number, h: number) => void;
 };
 type Props$2 = {

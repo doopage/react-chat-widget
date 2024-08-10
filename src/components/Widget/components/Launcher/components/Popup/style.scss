@@ -2,36 +2,30 @@
 
 .rcw-popup {
   font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
-  position: absolute;
-  top: 0;
-  right: -5px;
+  position: fixed;
   width: 300px;
-  max-height: 125px;
-  background: #ffffff;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
-  padding: 10px 5px;
-  border-radius: 30px;
-  z-index: 1;
+  bottom: 80px;
+  right: 20px;
 
-  .close-btn {
-    position: absolute;
-    cursor: pointer;
-    top: 10px;
-    right: 10px;
-    background-color: #e5e5e5;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    border: none;
-    font-size: 12px;
-    opacity: .5;
+  .close-container {
+    text-align: right;
+
+    .close-btn {
+      cursor: pointer;
+      background-color: #e5e5e5;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: none;
+      font-size: 12px;
+      opacity: .5;
+    }
   }
 
   p {
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+    padding: 10px 5px;
+    border-radius: 30px;
     text-align: center;
-    overflow: hidden;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
   }
 }
