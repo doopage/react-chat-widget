@@ -3,11 +3,13 @@ import { ComponentType, ElementType, Ref } from 'react';
 import { Primitive } from 'utility-types';
 
 declare function Message$1({ message, showTimeStamp }: Props$3): import("react/jsx-runtime").JSX.Element;
+declare function Message$2({ message, showTimeStamp, children }: Props$5): import("react/jsx-runtime").JSX.Element;
 declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, headerPaddingTop, headerPaddingBottom }: CProps$6): import("react/jsx-runtime").JSX.Element;
 declare function Snippet({ message, showTimeStamp }: Props$4): import("react/jsx-runtime").JSX.Element;
 export declare const Component: {
 	Message: typeof Message$1;
 	Snippet: typeof Snippet;
+	Custom: typeof Message$2;
 };
 export declare const MESSAGES_TYPES: {
 	TEXT: string;
@@ -26,14 +28,14 @@ export declare const MESSAGE_SENDER: {
 export declare const ref: <T extends object>(v: T) => StateRef<T>;
 export declare const useSelector: <T>(selector: (state: Snapshot<GlobalState>) => T) => T;
 export declare function addLinkSnippet(link: LinkParams, id?: string, props?: any): void;
-export declare function addResponseMessage(text: string, { id, status, props }?: MessageOptions): void;
-export declare function addSystemMessage(text: string, { id, status, props }?: MessageOptions): void;
+export declare function addResponseMessage(text: string, { id, status, props }?: MessageOptions, overrides?: Partial<MessageTypes>): void;
+export declare function addSystemMessage(text: string, { id, status, props }?: MessageOptions, overrides?: Partial<MessageTypes>): void;
 export declare function addToggleChatListener(f: (s: boolean) => void): () => void;
-export declare function addUserMessage(text: string, { id, status, props }?: MessageOptions): void;
+export declare function addUserMessage(text: string, { id, status, props }?: MessageOptions, overrides?: Partial<MessageTypes>): void;
 export declare function closeFullscreenPreview(): void;
 export declare function createComponentMessage(component: React$1.ComponentType, props: any, showAvatar: boolean, id?: string): CustomCompMessage;
 export declare function createLinkSnippet(link: LinkParams, id?: string, props?: any): Link;
-export declare function createNewMessage(text: string, sender: string, id?: string, status?: string, props?: any): MessageTypes;
+export declare function createNewMessage(text: string, sender: string, id?: string, status?: string, props?: any, overrides?: Partial<MessageTypes>): MessageTypes;
 export declare function createQuickButton(button: {
 	label: string;
 	value: string | number;
@@ -254,6 +256,11 @@ type Props$3 = {
 type Props$4 = {
 	message: Link;
 	showTimeStamp: boolean;
+};
+type Props$5 = {
+	message: MessageTypes;
+	showTimeStamp: boolean;
+	children?: React$1.ReactNode;
 };
 
 export {
