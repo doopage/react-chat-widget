@@ -4,6 +4,7 @@ import { CustomCompMessage, Link, LinkParams, MessageTypes as MessageI, QuickBut
 
 import Message from '../components/Widget/components/Conversation/components/Messages/components/Message';
 import Snippet from '../components/Widget/components/Conversation/components/Messages/components/Snippet';
+import Custom from '../components/Widget/components/Conversation/components/Messages/components/Custom';
 import QuickButton from '../components/Widget/components/Conversation/components/QuickButtons/components/QuickButton';
 
 import { MESSAGE_BOX_SCROLL_DURATION, MESSAGE_SENDER, MESSAGES_TYPES } from '@constants';
@@ -14,7 +15,8 @@ export function createNewMessage(
   sender: string,
   id?: string,
   status?: string,
-  props?: any
+  props?: any,
+  overrides?: Partial<MessageI>
 ): MessageI {
   return {
     type: MESSAGES_TYPES.TEXT,
@@ -26,7 +28,8 @@ export function createNewMessage(
     showAvatar: true,
     status,
     customId: id,
-    unread: sender === MESSAGE_SENDER.RESPONSE
+    unread: sender === MESSAGE_SENDER.RESPONSE,
+    ...overrides
   };
 }
 
@@ -104,4 +107,4 @@ export function scrollToBottom(messagesDiv: HTMLDivElement | null) {
   if (scrollOffset) scrollWithSlowMotion(messagesDiv, scrollTop, scrollOffset);
 }
 
-export const Component = { Message, Snippet };
+export const Component = { Message, Snippet, Custom };

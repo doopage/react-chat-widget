@@ -5,6 +5,8 @@ import './App.scss';
 import { addResponseMessage, addSystemMessage, addToggleChatListener, setMessageStatus, setPopupMessage, setQuickButtons, toggleInputDisabled, toggleMsgLoader } from '@actions';
 import Widget from '../src/root';
 import { setResponseUser } from '../src';
+import { ref } from 'valtio';
+import Custom from '../src/components/Widget/components/Conversation/components/Messages/components/Custom';
 
 const doopageIcon = require('@assets/doopage-icon.png') as string;
 
@@ -15,7 +17,7 @@ export default class App extends Component {
     setPopupMessage([
       'Chào mừng A\n'.repeat(100),
       'Chào mừng B\n'.repeat(1),
-      'Chào mừng C\n'.repeat(1),
+      'Chào mừng C\n'.repeat(1)
     ]);
 
     // addResponseMessage('Livechat của DooPage, siêu xịn sò ^^');
@@ -23,12 +25,7 @@ export default class App extends Component {
     // addResponseMessage('![](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)');
     // addResponseMessage('![vertical](https://d2sofvawe08yqg.cloudfront.net/reintroducing-react/hero2x?1556470143)');
     addResponseMessage('Xin chào :D');
-    addSystemMessage(
-      'Bất cứ lúc nào, bạn có thể tiếp tục hội thoại ở đây: ' +
-      '![](https://s3.amazonaws.com/upload.uxpin/files/793532/789453/image-722b79b6cde920eab2c2c83f742f7f10-6ee28a.png =110x110){.no-response-qr}' +
-      `*hoặc*{.no-response-text-center}` +
-      '![](https://s3.amazonaws.com/upload.uxpin/files/793532/789453/image-538a05b9ed235f80cf4245a0c8379263-cc48e4.png =110x110){.no-response-qr}'
-    );
+    addSystemMessage('ABC', {}, { component: ref(Custom) });
   }
 
   handleNewUserMessage = ({ id, text, files }: any) => {
