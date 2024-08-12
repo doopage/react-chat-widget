@@ -25,7 +25,7 @@ function Popup({ text, onResize }: Props) {
 
   return <div className="rcw-popup">
     <div className="close-container">
-      <button className="close-btn" onClick={() => setIsClosed(true)}>X</button>
+      <button className="close-btn" onClick={() => setIsClosed(true)}>&times;</button>
     </div>
     {texts.map((text, i) => <p key={i}>{text.length > 100 ? text.slice(0, 100) + ' ...' : text}</p>)}
   </div>;
