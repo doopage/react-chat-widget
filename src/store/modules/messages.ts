@@ -1,4 +1,4 @@
-import { LinkParams, Message, MessagesState, ResponseUser } from '@types';
+import { LinkParams, Message, MessagesState, MessageTypes, ResponseUser } from '@types';
 import { createComponentMessage, createLinkSnippet, createNewMessage } from '@utils/messages';
 import { MESSAGE_SENDER } from '@constants';
 import { proxy } from 'valtio';
@@ -19,17 +19,17 @@ type MessageOptions = {
   props?: any;
 }
 
-export function addUserMessage(text: string, { id, status, props }: MessageOptions = {}) {
-  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.CLIENT, id, status, props)];
+export function addUserMessage(text: string, { id, status, props }: MessageOptions = {}, overrides?: Partial<MessageTypes>) {
+  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.CLIENT, id, status, props, overrides)];
 }
 
-export function addResponseMessage(text: string, { id, status, props }: MessageOptions = {}) {
-  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.RESPONSE, id, status, props)];
+export function addResponseMessage(text: string, { id, status, props }: MessageOptions = {}, overrides?: Partial<MessageTypes>) {
+  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.RESPONSE, id, status, props, overrides)];
   state.badgeCount += 1;
 }
 
-export function addSystemMessage(text: string, { id, status, props }: MessageOptions = {}) {
-  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.SYSTEM, id, status, props)];
+export function addSystemMessage(text: string, { id, status, props }: MessageOptions = {}, overrides?: Partial<MessageTypes>) {
+  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.SYSTEM, id, status, props, overrides)];
 }
 
 export function addLinkSnippet(link: LinkParams, id?: string, props?: any) {
