@@ -148,10 +148,10 @@ function Sender({
 
   return (
     <div ref={refContainer} className="rcw-sender">
-      {onPressFile && <button className="rcw-picker-btn" type="submit" onClick={handlerPressFile}>
+      {onPressFile && <button className="rcw-picker-btn file-picker-btn" type="submit" onClick={handlerPressFile}>
         <img src={file} className="rcw-picker-icon" alt="" />
       </button>}
-      {onPressEmoji && <button className="rcw-picker-btn" type="submit" onClick={handlerPressEmoji}>
+      {onPressEmoji && <button className="rcw-picker-btn emoji-picker-btn" type="submit" onClick={handlerPressEmoji}>
         <img src={emoji} className="rcw-picker-icon" alt="" />
       </button>}
       <div className={cn('rcw-new-message', {

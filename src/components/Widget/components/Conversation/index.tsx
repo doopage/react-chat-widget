@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
 import cn from 'classnames';
 
 import Header, { CProps as HeaderProps } from './components/Header';
@@ -11,6 +10,7 @@ import { ResizableProps } from '@types';
 import './style.scss';
 import FilePicker from './components/FilePicker';
 import { useSelector } from '@selectors';
+import EmojiPickerPopup from './components/EmojiPickerPopup';
 
 export type CProps = {
   headerProps?: HeaderProps;
@@ -166,16 +166,10 @@ function Conversation({
       <Header {...headerProps} />
       <Messages {...messagesProps} />
       <QuickButtons {...quickButtonsProps} />
-      {emojis && pickerStatus && (<EmojiPicker
+      {emojis && pickerStatus && (<EmojiPickerPopup
         onEmojiClick={onSelectEmoji}
-        emojiStyle={EmojiStyle.NATIVE}
-        searchDisabled
-        width="100%"
-        height={350}
-        previewConfig={{
-          showPreview: false
-        }
-        }
+        height={300}
+        bottom={70}
       />)}
       {files && (<FilePicker
         items={fileItems}
