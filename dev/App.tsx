@@ -120,6 +120,8 @@ export default class App extends Component {
             console.log('@@@Resize', w, h);
           }
         }}
+        anchorBottom={120}
+        anchorRight={120}
       />
     );
   }

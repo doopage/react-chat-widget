@@ -8,6 +8,8 @@ type CProps = {
   messageClientTextColor?: string;
   messageResponseColor?: string;
   messageResponseTextColor?: string;
+  anchorBottom?: number | string;
+  anchorRight?: number | string;
   headerPaddingTop?: string;
   headerPaddingBottom?: string;
 };
@@ -19,6 +21,8 @@ function Root({
                 messageClientTextColor = '#ffffff',
                 messageResponseColor = '#ffffff',
                 messageResponseTextColor = '#555555',
+                anchorBottom = '20px',
+                anchorRight = '20px',
                 headerPaddingTop,
                 headerPaddingBottom
               }: CProps) {
@@ -31,6 +35,8 @@ function Root({
     messageResponseTextColor && r.style.setProperty('--message-response-text-color', messageResponseTextColor);
     headerPaddingTop && r.style.setProperty('--header-padding-top', headerPaddingTop);
     headerPaddingBottom && r.style.setProperty('--header-padding-bottom', headerPaddingBottom);
+    anchorBottom && r.style.setProperty('--anchor-bottom', typeof anchorBottom === 'number' ? `${anchorBottom}px` : anchorBottom);
+    anchorRight && r.style.setProperty('--anchor-right', typeof anchorRight === 'number' ? `${anchorRight}px` : anchorRight);
   }, [primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, headerPaddingTop, headerPaddingBottom]);
   return (
     <Widget

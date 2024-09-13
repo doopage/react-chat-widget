@@ -4,8 +4,8 @@
   font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
   position: fixed;
   width: 300px;
-  bottom: 80px;
-  right: 20px;
+  bottom: calc(var(--anchor-bottom, 20px) + 60px);
+  right: var(--anchor-right, 20px);
 
   .close-container {
     text-align: right;
