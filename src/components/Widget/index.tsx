@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
 
 export type Props = {
   layoutProps?: Omit<LayoutProps, 'onToggleConversation' | 'onSendMessage' | 'onQuickButtonClicked' | 'onTextInputChange'>;
-  handleNewUserMessage: (data: { text?: string, files?: File[] }) => void | Promise<void>;
+  handleNewUserMessage?: (data: { text?: string, files?: File[] }) => void | Promise<void>;
   handleQuickButtonClicked?: AnyFunction;
   handleTextInputChange?: (event: any) => void;
   disableRichTextInput?: boolean;
@@ -64,7 +64,7 @@ function Widget({ layoutProps, handleNewUserMessage, handleQuickButtonClicked, h
       }
     }
     addUserMessage(msgText, { status: 'prepare', props: { files } });
-    return handleNewUserMessage({ text, files });
+    return handleNewUserMessage?.({ text, files });
   };
 
   const onQuickButtonClicked = (event, value) => {
