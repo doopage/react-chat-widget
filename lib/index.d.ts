@@ -237,7 +237,7 @@ type Props$1 = {
 };
 type Props$2 = {
 	layoutProps?: Omit<CProps$5, "onToggleConversation" | "onSendMessage" | "onQuickButtonClicked" | "onTextInputChange">;
-	handleNewUserMessage: (data: {
+	handleNewUserMessage?: (data: {
 		text?: string;
 		files?: File[];
 	}) => void | Promise<void>;
