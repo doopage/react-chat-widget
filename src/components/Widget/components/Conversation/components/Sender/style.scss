@@ -52,6 +52,16 @@
   height: 24px;
 }
 
+.rcw-input-placeholder {
+  position: absolute;
+  color: rgba(0, 0, 0, .5);
+  opacity: 0;
+
+  &.show {
+    opacity: 1;
+  }
+}
+
 .rcw-input {
   display: block;
   line-height: 20px;

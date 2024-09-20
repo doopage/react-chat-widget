@@ -158,7 +158,7 @@ function Sender({
         'rcw-message-disable': disabledInput
       })
       }>
-        {/*<div>{placeholder}</div>*/}
+        <div className={cn('rcw-input-placeholder', { 'show': !isTextReady })}>{placeholder}</div>
         <div
           spellCheck
           contentEditable
