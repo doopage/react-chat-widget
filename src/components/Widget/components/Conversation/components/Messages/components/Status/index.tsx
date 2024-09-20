@@ -1,9 +1,9 @@
-import format from 'date-fns/format';
-
 import './styles.scss';
 import React from 'react';
 import cn from 'classnames';
 import { MessageTypes } from '@types';
+import { format_time } from '@utils/time';
+import { format } from 'date-fns';
 
 const statuses = {
   prepare: require('@assets/status-prepare.svg') as string,
@@ -37,7 +37,7 @@ function Status({ message, showTimeStamp, showStatus, children }: Props) {
     <div className={cn(`rcw-${message.sender}`, { 'has-status': hasStatus, [`status-${message.status}`]: message.status })}>
       {children}
       <div className="status">
-        {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, 'hh:mm')}</span>}
+        {showTimeStamp && <span className="rcw-timestamp" title={format(message.timestamp, 'hh:mm:ss, dd MMM, yyyy')}>{format_time(message.timestamp)}</span>}
         {(hasStatus) && <div className="icon-status" title={statusTitle}><img src={statuses[message.status!]} alt={message.status} /></div>}
       </div>
       {(hasStatus && isStatusError) &&
