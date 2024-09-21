@@ -128,8 +128,14 @@ export type BaseMessage = {
 export type CProps = {
 	title?: string;
 	subtitle?: string;
+	showMenuButton?: boolean;
 	showCloseButton?: boolean;
 	titleAvatar?: string;
+	menus?: Array<{
+		icon: string;
+		title: string;
+		onClick: () => void;
+	}>;
 };
 export type Message = MessageTypes | Link | CustomCompMessage;
 export type MessageOptions = {
@@ -196,6 +202,7 @@ type CProps$3 = {
 	emojis?: boolean;
 	files?: boolean;
 	disabledInput?: boolean;
+	copyright?: string;
 };
 type CProps$4 = {
 	toggle: () => void;
