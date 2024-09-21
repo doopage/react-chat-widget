@@ -81,7 +81,24 @@ export default class App extends Component {
             conversationProps: {
               headerProps: {
                 title: 'DooPage ABC',
-                subtitle: 'Livechat'
+                subtitle: 'Livechat',
+                menus: [
+                  {
+                    title: 'Mở cửa sổ mới',
+                    icon: require('@assets/icon-smiley.svg'),
+                    onClick: () => alert('OK')
+                  },
+                  {
+                    title: 'Tải bản ghi',
+                    icon: require('@assets/icon-smiley.svg'),
+                    onClick: () => alert('OK')
+                  },
+                  {
+                    title: 'Về chúng tôi',
+                    icon: require('@assets/icon-smiley.svg'),
+                    onClick: () => alert('OK')
+                  }
+                ]
               },
               messagesProps: {
                 profileAvatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',

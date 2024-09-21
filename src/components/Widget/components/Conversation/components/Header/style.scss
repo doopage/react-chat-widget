@@ -42,6 +42,42 @@
       //display: none;
     }
 
+    .menu-popup {
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      top: 20px;
+      right: 40px;
+      width: 150px;
+      border-radius: 2px;
+      background-color: #ffffff;
+      color: #000000;
+      box-shadow: 0 1px 4px 2px rgba(0, 0, 0, 0.2);
+
+      li {
+        text-align: left;
+        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #eeeeee;
+        }
+
+        img {
+          width: 24px;
+          height: 24px;
+        }
+
+        span {
+          font-size: 12px;
+          margin-left: 5px;
+        }
+      }
+    }
+
     .rcw-close-button {
       @include close-button-fs;
       //display: none;

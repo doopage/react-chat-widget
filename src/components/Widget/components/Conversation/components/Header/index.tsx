@@ -1,6 +1,7 @@
 import './style.scss';
 import { useSelector } from '@selectors';
 import { toggleChat } from '@actions';
+import { useState } from 'react';
 
 const menu = require('@assets/menu.svg') as string;
 const close = require('@assets/close.svg') as string;
@@ -11,18 +12,40 @@ export type CProps = {
   showMenuButton?: boolean;
   showCloseButton?: boolean;
   titleAvatar?: string;
+  menus?: Array<{
+    icon: string;
+    title: string;
+    onClick: () => void;
+  }>,
 }
 
-function Header({ title, subtitle, showMenuButton = true, showCloseButton = true, titleAvatar }: CProps) {
+function Header({ title, subtitle, showMenuButton = true, showCloseButton = true, titleAvatar, menus }: CProps) {
   const user = useSelector(({ messages }) => messages.responseUser);
+
+  const [showMenu, setShowMenu] = useState(false);
+
+  const clickMenuHandler = (f: () => void) => {
+    return () => {
+      setShowMenu(false);
+      return f();
+    };
+  };
 
   return (
     <div className="rcw-header">
       {(showMenuButton || showCloseButton) && <div className="buttons">
-        {showMenuButton &&
-          <button className="rcw-menu-button" onClick={toggleChat}>
-            <img src={menu} className="rcw-menu" alt="menu" />
-          </button>
+        {showMenuButton && menus &&
+          <>
+            <button className="rcw-menu-button" onClick={() => setShowMenu(!showMenu)}>
+              <img src={menu} className="rcw-menu" alt="menu" />
+            </button>
+            {showMenu && <ul className="menu-popup">
+              {menus.map(({ icon, title, onClick }, i) => <li key={i} onClick={clickMenuHandler(onClick)}>
+                <img src={icon} />
+                <span>{title}</span>
+              </li>)}
+            </ul>}
+          </>
         }
         {showCloseButton &&
           <button className="rcw-close-button" onClick={toggleChat}>
