@@ -34,9 +34,18 @@
     padding: 0;
   }
 
-  .rcw-close-button {
-    @include close-button-fs;
-    //display: none;
+  .buttons {
+    @include header-button-fs;
+
+    .rcw-menu-button {
+      @include menu-button-fs;
+      //display: none;
+    }
+
+    .rcw-close-button {
+      @include close-button-fs;
+      //display: none;
+    }
   }
 
   .avatar {
@@ -121,8 +130,16 @@
     @include title-fs;
   }
 
-  .rcw-close-button {
-    @include close-button-fs;
+  .buttons {
+    @include header-button-fs;
+
+    .rcw-menu-button {
+      @include menu-button-fs;
+    }
+
+    .rcw-close-button {
+      @include close-button-fs;
+    }
   }
 
   .rcw-close {
@@ -142,8 +159,16 @@
       @include title-fs;
     }
 
-    .rcw-close-button {
-      @include close-button-fs;
+    .buttons {
+      @include header-button-fs;
+
+      .rcw-menu-button {
+        @include menu-button-fs;
+      }
+
+      .rcw-close-button {
+        @include close-button-fs;
+      }
     }
 
     .rcw-close {

@@ -27,14 +27,28 @@
   padding: 0 0 15px 0;
 }
 
-@mixin close-button-fs {
-  background-color: var(--primary-color);
-  border: 0;
-  display: block;
+@mixin header-button-fs {
+  display: flex;
   position: absolute;
   right: 5px;
   top: 10px;
-  width: 40px;
+}
+
+@mixin menu-button-fs {
+  background-color: var(--primary-color);
+  border: 0;
+  padding: 0;
+  display: block;
+  width: 30px;
+  cursor: pointer;
+}
+
+@mixin close-button-fs {
+  background-color: var(--primary-color);
+  border: 0;
+  padding: 0;
+  display: block;
+  width: 30px;
   cursor: pointer;
 }
 

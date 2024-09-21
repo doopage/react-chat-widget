@@ -2,25 +2,34 @@ import './style.scss';
 import { useSelector } from '@selectors';
 import { toggleChat } from '@actions';
 
+const menu = require('@assets/menu.svg') as string;
 const close = require('@assets/close.svg') as string;
 
 export type CProps = {
   title?: string;
   subtitle?: string;
+  showMenuButton?: boolean;
   showCloseButton?: boolean;
   titleAvatar?: string;
 }
 
-function Header({ title, subtitle, showCloseButton = true, titleAvatar }: CProps) {
+function Header({ title, subtitle, showMenuButton = true, showCloseButton = true, titleAvatar }: CProps) {
   const user = useSelector(({ messages }) => messages.responseUser);
 
   return (
     <div className="rcw-header">
-      {showCloseButton &&
-        <button className="rcw-close-button" onClick={toggleChat}>
-          <img src={close} className="rcw-close" alt="close" />
-        </button>
-      }
+      {(showMenuButton || showCloseButton) && <div className="buttons">
+        {showMenuButton &&
+          <button className="rcw-menu-button" onClick={toggleChat}>
+            <img src={menu} className="rcw-menu" alt="menu" />
+          </button>
+        }
+        {showCloseButton &&
+          <button className="rcw-close-button" onClick={toggleChat}>
+            <img src={close} className="rcw-close" alt="close" />
+          </button>
+        }
+      </div>}
       {user
         ? <div className="rcw-user">
           {typeof user.avatar === 'string'
