@@ -93,7 +93,8 @@ export default class App extends Component {
               resizable: true,
               resizableProps: { heightOffset: 105, widthOffset: 35 },
               emojis: true,
-              files: true
+              files: true,
+              copyright: '&copy; 2024 LiveChat, Inc. All rights reserved.'
             },
             launcherProps: {
               // openImg: doopageIcon

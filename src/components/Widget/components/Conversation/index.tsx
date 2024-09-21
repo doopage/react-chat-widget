@@ -26,6 +26,7 @@ export type CProps = {
   emojis?: boolean;
   files?: boolean;
   disabledInput?: boolean;
+  copyright?: string;
 };
 
 const minSize = {
@@ -49,7 +50,8 @@ function Conversation({
                         onResize,
                         emojis,
                         files,
-                        disabledInput: propDisabledInput
+                        disabledInput: propDisabledInput,
+                        copyright
                       }: CProps) {
   const containerDivRef = useRef<HTMLElement | null>(null);
   const boundResizeRef = useRef<(event: MouseEvent) => void>(() => {
@@ -165,6 +167,7 @@ function Conversation({
       {resizable && <div data-resizer="top" className="rcw-conversation-y-resizer" onMouseDown={initResize} />}
       <Header {...headerProps} />
       <Messages {...messagesProps} />
+      {copyright && <div className="copyright" dangerouslySetInnerHTML={{ __html: copyright }} />}
       <QuickButtons {...quickButtonsProps} />
       {emojis && pickerStatus && (<EmojiPickerPopup
         onEmojiClick={onSelectEmoji}
