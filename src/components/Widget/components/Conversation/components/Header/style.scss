@@ -35,7 +35,8 @@
   }
 
   .rcw-close-button {
-    display: none;
+    @include close-button-fs;
+    //display: none;
   }
 
   .avatar {
