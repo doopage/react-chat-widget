@@ -37,7 +37,7 @@ function Root({
     headerPaddingBottom && r.style.setProperty('--header-padding-bottom', headerPaddingBottom);
     anchorBottom && r.style.setProperty('--anchor-bottom', typeof anchorBottom === 'number' ? `${anchorBottom}px` : anchorBottom);
     anchorRight && r.style.setProperty('--anchor-right', typeof anchorRight === 'number' ? `${anchorRight}px` : anchorRight);
-  }, [primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, headerPaddingTop, headerPaddingBottom]);
+  }, [primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, headerPaddingTop, headerPaddingBottom, anchorBottom, anchorRight]);
   return (
     <Widget
       {...widgetProps}
