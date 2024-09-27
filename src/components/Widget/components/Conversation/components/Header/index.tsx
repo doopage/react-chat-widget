@@ -2,6 +2,7 @@ import './style.scss';
 import { useSelector } from '@selectors';
 import { toggleChat } from '@actions';
 import { useState } from 'react';
+import Overlay from '@components/Overlay';
 
 const menu = require('@assets/menu.svg') as string;
 const close = require('@assets/close.svg') as string;
@@ -39,12 +40,15 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
             <button className="rcw-menu-button" onClick={() => setShowMenu(!showMenu)}>
               <img src={menu} className="rcw-menu" alt="menu" />
             </button>
-            {showMenu && <ul className="menu-popup">
-              {menus.map(({ icon, title, onClick }, i) => <li key={i} onClick={clickMenuHandler(onClick)}>
-                <img src={icon} />
-                <span>{title}</span>
-              </li>)}
-            </ul>}
+            {showMenu && <>
+              <Overlay onClick={() => setShowMenu(false)} />
+              <ul className="menu-popup">
+                {menus.map(({ icon, title, onClick }, i) => <li key={i} onClick={clickMenuHandler(onClick)}>
+                  <img src={icon} />
+                  <span>{title}</span>
+                </li>)}
+              </ul>
+            </>}
           </>
         }
         {showCloseButton &&
