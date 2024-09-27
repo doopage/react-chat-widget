@@ -2,7 +2,17 @@ import React, { Component } from 'react';
 
 import './App.scss';
 
-import { addResponseMessage, addSystemMessage, addToggleChatListener, setMessageStatus, setPopupMessage, setQuickButtons, toggleInputDisabled, toggleMsgLoader } from '@actions';
+import {
+  addResponseMessage,
+  addSystemMessage,
+  addToggleChatListener,
+  setMessageStatus,
+  setPopupMessage,
+  setQuickButtons,
+  showPopup,
+  toggleInputDisabled,
+  toggleMsgLoader
+} from '@actions';
 import Widget from '../src/root';
 import { setResponseUser } from '../src';
 import { ref } from 'valtio';
@@ -96,7 +106,7 @@ export default class App extends Component {
                   {
                     title: 'Về chúng tôi',
                     icon: require('@assets/icon-smiley.svg'),
-                    onClick: () => alert('OK')
+                    onClick: () => showPopup(() => <>Popup</>, {top: 20})
                   }
                 ]
               },

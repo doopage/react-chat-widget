@@ -25,6 +25,12 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
 
   const [showMenu, setShowMenu] = useState(false);
 
+  const { isShowChat, popupStyles, PopupComponent } = useSelector(({ popup }) => ({
+    isShowChat: popup.showPopup,
+    popupStyles: popup.styles,
+    PopupComponent: popup.component
+  }));
+
   const clickMenuHandler = (f: () => void) => {
     return () => {
       setShowMenu(false);
@@ -85,6 +91,14 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
           {subtitle && <span className="rcw-subtitle">{subtitle}</span>}
         </>
       }
+      {isShowChat && <>
+        <div className="popup-container">
+          <Overlay onClick={() => setShowMenu(false)} />
+          <div className="popup" style={popupStyles}>
+            {PopupComponent && <PopupComponent />}
+          </div>
+        </div>
+      </>}
     </div>
   );
 }
