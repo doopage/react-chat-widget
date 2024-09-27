@@ -1,6 +1,6 @@
 import './style.scss';
 import { useSelector } from '@selectors';
-import { toggleChat } from '@actions';
+import { hidePopup, toggleChat } from '@actions';
 import { useState } from 'react';
 import Overlay from '@components/Overlay';
 
@@ -25,8 +25,8 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
 
   const [showMenu, setShowMenu] = useState(false);
 
-  const { isShowChat, popupStyles, PopupComponent } = useSelector(({ popup }) => ({
-    isShowChat: popup.showPopup,
+  const { isShowPopup, popupStyles, PopupComponent } = useSelector(({ popup }) => ({
+    isShowPopup: popup.showPopup,
     popupStyles: popup.styles,
     PopupComponent: popup.component
   }));
@@ -91,9 +91,9 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
           {subtitle && <span className="rcw-subtitle">{subtitle}</span>}
         </>
       }
-      {isShowChat && <>
+      {isShowPopup && <>
         <div className="popup-container">
-          <Overlay onClick={() => setShowMenu(false)} />
+          <Overlay onClick={() => hidePopup()} />
           <div className="popup" style={popupStyles}>
             {PopupComponent && <PopupComponent />}
           </div>
