@@ -85,8 +85,8 @@ function WidgetLayout({ rootRef, conversationProps, launcherProps, onToggleConve
         'rcw-close-widget-container ': !showChat
       })}
     >
-      {showChat &&
-        <Conversation {...conversationProps} className={showChat ? 'active' : 'hidden'} />
+      {(showChat || fullScreenMode) &&
+        <Conversation {...conversationProps} className={(showChat || fullScreenMode) ? 'active' : 'hidden'} />
       }
       {customLauncher ?
         customLauncher(toggleHandler) :

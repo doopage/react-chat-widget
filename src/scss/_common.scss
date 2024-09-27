@@ -11,10 +11,10 @@
 // Full screen mixins
 
 @mixin widget-container-fs {
-  height: 100vh;
+  height: 100vh !important;
   margin: 0;
   max-width: none;
-  width: 100%;
+  width: 100% !important;
 }
 
 @mixin header-fs {
