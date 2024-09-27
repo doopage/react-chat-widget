@@ -1,4 +1,4 @@
-import { ElementType } from 'react';
+import { CSSProperties, ElementType } from 'react';
 import { StateRef } from '@utils/types';
 
 type BaseMessage = {
@@ -46,6 +46,12 @@ export interface BehaviorState {
   messageLoader: boolean;
 }
 
+export interface PopupState {
+  showPopup: boolean;
+  styles: CSSProperties;
+  component: StateRef<ElementType> | null;
+}
+
 export type Message = MessageTypes | Link | CustomCompMessage;
 
 export type ResponseUser = {
@@ -82,6 +88,7 @@ export interface GlobalState {
   behavior: BehaviorState;
   quickButtons: QuickButtonsState;
   preview: FullscreenPreviewState;
+  popup: PopupState;
 }
 
 export interface ResizableProps {

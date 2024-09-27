@@ -17,6 +17,7 @@ import {
 } from './modules/messages';
 import { setQuickButtons } from './modules/quick-buttons';
 import { addToggleChatListener, toggleChat, toggleInputDisabled, toggleMsgLoader } from './modules/behavior';
+import { hidePopup, showPopup } from './modules/popup';
 
 export {
   toggleChat,
@@ -39,5 +40,7 @@ export {
   setMessages,
   setMessageStatus,
   setResponseUser,
-  setPopupMessage
+  setPopupMessage,
+  showPopup,
+  hidePopup
 };
