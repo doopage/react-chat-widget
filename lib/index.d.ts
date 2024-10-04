@@ -1,5 +1,5 @@
 import React$1 from 'react';
-import { ComponentType, ElementType, Ref } from 'react';
+import { CSSProperties, ComponentType, ElementType, Ref } from 'react';
 import { Primitive } from 'utility-types';
 
 declare function Message$1({ message, showTimeStamp }: Props$3): import("react/jsx-runtime").JSX.Element;
@@ -43,6 +43,7 @@ export declare function createQuickButton(button: {
 export declare function deleteMessages(count: number, id?: string): void;
 export declare function dropMessages(): void;
 export declare function hideAvatar(index: number): void;
+export declare function hidePopup(): void;
 export declare function isWidgetOpened(): boolean;
 export declare function markAllMessagesRead(): void;
 export declare function openFullscreenPreview(payload: ImageState): void;
@@ -57,6 +58,7 @@ export declare function setQuickButtons(buttons: Array<{
 	value: string | number;
 }>): void;
 export declare function setResponseUser(user: ResponseUser): void;
+export declare function showPopup(component: React$1.FC, styles?: React$1.CSSProperties): void;
 export declare function toggleChat(): void;
 export declare function toggleInputDisabled(): void;
 export declare function toggleMsgLoader(): void;
@@ -76,6 +78,7 @@ export interface GlobalState {
 	behavior: BehaviorState;
 	quickButtons: QuickButtonsState;
 	preview: FullscreenPreviewState;
+	popup: PopupState;
 }
 export interface ISenderRef {
 	onSelectEmoji: (event: any) => void;
@@ -104,6 +107,11 @@ export interface MessagesState {
 	messages: Message[];
 	badgeCount: number;
 	popupMessage: string | string[] | null;
+}
+export interface PopupState {
+	showPopup: boolean;
+	styles: React$1.CSSProperties;
+	component: StateRef<React$1.ElementType> | null;
 }
 export interface QuickButtonsState {
 	quickButtons: QuickButtonTypes[];
