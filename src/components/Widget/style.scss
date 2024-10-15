@@ -28,6 +28,11 @@
 }
 
 .rcw-close-widget-container {
-  height: max-content !important;
-  width: max-content !important;
+  height: max-content;
+  width: max-content;
+
+  &:not(.rcw-full-screen) {
+    height: max-content !important;
+    width: max-content !important;
+  }
 }
