@@ -52,6 +52,12 @@ export interface PopupState {
   component: StateRef<ElementType> | null;
 }
 
+export interface SuggestionsState {
+  showSuggestion: boolean;
+  right: Record<string, () => void>;
+  bottom: Record<string, () => void>;
+}
+
 export type Message = MessageTypes | Link | CustomCompMessage;
 
 export type ResponseUser = {
@@ -89,6 +95,7 @@ export interface GlobalState {
   quickButtons: QuickButtonsState;
   preview: FullscreenPreviewState;
   popup: PopupState;
+  suggestions: SuggestionsState;
 }
 
 export interface ResizableProps {

@@ -10,6 +10,7 @@ import {
   setPopupMessage,
   setQuickButtons,
   showPopup,
+  showSuggestions,
   toggleInputDisabled,
   toggleMsgLoader
 } from '@actions';
@@ -46,6 +47,16 @@ export default class App extends Component {
       toggleMsgLoader();
       if (text === 'menu') {
         setQuickButtons([{ label: 'Apple', value: 'apple' }, { label: 'Orange', value: 'orange' }, { label: 'Pear', value: 'pear' }, { label: 'Banana', value: 'banana' }]);
+      } else if (text == 'suggestions') {
+        const right = {
+          'Chế độ bảo hành': () => alert('Chọn A'),
+          'Thông tin sản phẩm': () => alert('Chọn B'),
+          'Tôi muốn gặp tư vấn viên': () => alert('Chọn C')
+        };
+        const bottom = {
+          'Quan tâm <img src="https://s3.amazonaws.com/upload.uxpin/files/793532/789453/uxpmod_9cfef642227c4e5cb6c4cb256b1f2dcc_140256163_IMG_5751_229a96-3e9982eee04f5e916e71ffaea58217df-a6073e.JPG"> Áo caro newyork, paris, london': () => alert('Chọn Z')
+        };
+        showSuggestions(right, bottom);
       } else {
         addResponseMessage(text, { props: { files } });
       }
@@ -106,19 +117,26 @@ export default class App extends Component {
                   {
                     title: 'Về chúng tôi',
                     icon: require('@assets/icon-smiley.svg'),
-                    onClick: () => showPopup(() => <>Popup</>, {top: 20})
+                    onClick: () => showPopup(() => <>Popup</>, { top: 20 })
                   }
                 ]
               },
               messagesProps: {
                 profileAvatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',
-                profileClientAvatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512'
+                profileClientAvatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',
+                suggestionsProps: {
+                  onClick: (text, next) => {
+                    alert('Bạn đã chọn: ' + text);
+                    next();
+                  }
+                }
               },
               senderProps: {
                 placeholder: 'Escribe aquí ...'
               },
               resizable: true,
               resizableProps: { heightOffset: 105, widthOffset: 35 },
+              defaultSize: { width: 700, height: 500 },
               emojis: true,
               files: true,
               copyright: '&copy; 2024 LiveChat, Inc. All rights reserved.'

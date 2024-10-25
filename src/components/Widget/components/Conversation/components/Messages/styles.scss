@@ -9,6 +9,8 @@
   overflow-y: scroll;
   width: 100%;
   -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
 }
 
 .rcw-full-screen {

@@ -7,6 +7,7 @@ import { markAllMessagesRead, setBadgeCount } from '@actions';
 import { MESSAGE_SENDER } from '@constants';
 
 import Loader from './components/Loader';
+import Suggestions, { CProps as SuggestionsProps } from './components/Suggestions';
 import './styles.scss';
 import { useSelector } from '@selectors';
 import { Snapshot } from '@utils/types';
@@ -15,14 +16,16 @@ export type CProps = {
   showTimeStamp?: boolean,
   profileAvatar?: string;
   profileClientAvatar?: string;
+  suggestionsProps?: SuggestionsProps;
 }
 
-function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true }: CProps) {
-  const { messages, typing, showChat, badgeCount } = useSelector(({ behavior, messages }) => ({
+function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, suggestionsProps }: CProps) {
+  const { messages, typing, showChat, badgeCount, showSuggestion } = useSelector(({ behavior, messages, suggestions }) => ({
     messages: messages.messages,
     badgeCount: messages.badgeCount,
     typing: behavior.messageLoader,
-    showChat: behavior.showChat
+    showChat: behavior.showChat,
+    showSuggestion: suggestions.showSuggestion
   }));
 
   const messageRef = useRef<HTMLDivElement | null>(null);
@@ -68,6 +71,8 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true }: 
         </div>
       )}
       <Loader typing={typing} />
+      <div style={{ flexGrow: 1 }} />
+      {showSuggestion && <Suggestions {...suggestionsProps} />}
     </div>
   );
 }
