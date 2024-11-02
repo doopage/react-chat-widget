@@ -4,7 +4,7 @@ import { Primitive } from 'utility-types';
 
 declare function Message$1({ message, showTimeStamp }: Props$3): import("react/jsx-runtime").JSX.Element;
 declare function Message$2({ message, showTimeStamp, className, children }: Props$5): import("react/jsx-runtime").JSX.Element;
-declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, anchorBottom, anchorRight, headerPaddingTop, headerPaddingBottom }: CProps$6): import("react/jsx-runtime").JSX.Element;
+declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, anchorBottom, anchorRight, headerPaddingTop, headerPaddingBottom }: CProps$7): import("react/jsx-runtime").JSX.Element;
 declare function Snippet({ message, showTimeStamp }: Props$4): import("react/jsx-runtime").JSX.Element;
 export declare const Component: {
 	Message: typeof Message$1;
@@ -44,6 +44,7 @@ export declare function deleteMessages(count: number, id?: string): void;
 export declare function dropMessages(): void;
 export declare function hideAvatar(index: number): void;
 export declare function hidePopup(): void;
+export declare function hideSuggestions(): void;
 export declare function isWidgetOpened(): boolean;
 export declare function markAllMessagesRead(): void;
 export declare function openFullscreenPreview(payload: ImageState): void;
@@ -59,6 +60,7 @@ export declare function setQuickButtons(buttons: Array<{
 }>): void;
 export declare function setResponseUser(user: ResponseUser): void;
 export declare function showPopup(component: React$1.FC, styles?: React$1.CSSProperties): void;
+export declare function showSuggestions(right: Record<string, () => void>, bottom: Record<string, () => void>): void;
 export declare function toggleChat(): void;
 export declare function toggleInputDisabled(): void;
 export declare function toggleMsgLoader(): void;
@@ -79,6 +81,7 @@ export interface GlobalState {
 	quickButtons: QuickButtonsState;
 	preview: FullscreenPreviewState;
 	popup: PopupState;
+	suggestions: SuggestionsState;
 }
 export interface ISenderRef {
 	onSelectEmoji: (event: any) => void;
@@ -119,6 +122,11 @@ export interface QuickButtonsState {
 export interface ResizableProps {
 	heightOffset?: number;
 	widthOffset?: number;
+}
+export interface SuggestionsState {
+	showSuggestion: boolean;
+	right: Record<string, () => void>;
+	bottom: Record<string, () => void>;
 }
 export type AnyFunction = (...args: any[]) => any;
 export type BaseMessage = {
@@ -174,11 +182,15 @@ export type StateRef<T> = T & {
 	$$valtioSnapshot: T;
 };
 type CProps$1 = {
+	onClick?: (text: string, next: () => void) => void;
+};
+type CProps$2 = {
 	showTimeStamp?: boolean;
 	profileAvatar?: string;
 	profileClientAvatar?: string;
+	suggestionsProps?: CProps$1;
 };
-type CProps$2 = {
+type CProps$3 = {
 	senderRef?: React$1.Ref<ISenderRef>;
 	placeholder?: string;
 	disabledInput?: boolean;
@@ -190,10 +202,10 @@ type CProps$2 = {
 	onPressFile: (() => void) | null;
 	onTextInputChange?: (event: any) => void;
 };
-type CProps$3 = {
+type CProps$4 = {
 	headerProps?: CProps;
-	messagesProps?: CProps$1;
-	senderProps?: Omit<CProps$2, "sendMessage" | "onPressEmoji" | "onPressFile" | "disabledInput" | "allowSend">;
+	messagesProps?: CProps$2;
+	senderProps?: Omit<CProps$3, "sendMessage" | "onPressEmoji" | "onPressFile" | "disabledInput" | "allowSend">;
 	quickButtonsProps?: Props;
 	className?: string;
 	sendMessage?: (data: {
@@ -212,7 +224,7 @@ type CProps$3 = {
 	disabledInput?: boolean;
 	copyright?: string;
 };
-type CProps$4 = {
+type CProps$5 = {
 	toggle: () => void;
 	chatId?: string;
 	openLabel?: string;
@@ -224,17 +236,17 @@ type CProps$4 = {
 	isLoading?: boolean;
 	popupProps?: Omit<Props$1, "text">;
 };
-type CProps$5 = {
+type CProps$6 = {
 	rootRef?: React$1.Ref<HTMLDivElement>;
-	conversationProps?: CProps$3;
-	launcherProps?: Omit<CProps$4, "toggle" | "isLoading">;
+	conversationProps?: CProps$4;
+	launcherProps?: Omit<CProps$5, "toggle" | "isLoading">;
 	onToggleConversation: () => Promise<void>;
 	fullScreenMode?: boolean;
 	customLauncher?: AnyFunction;
 	imagePreview?: boolean;
 	zoomStep?: number;
 };
-type CProps$6 = {
+type CProps$7 = {
 	widgetProps: Props$2;
 	primaryColor?: string;
 	messageClientColor?: string;
@@ -251,7 +263,7 @@ type Props$1 = {
 	onResize?: (w: number, h: number) => void;
 };
 type Props$2 = {
-	layoutProps?: Omit<CProps$5, "onToggleConversation" | "onSendMessage" | "onQuickButtonClicked" | "onTextInputChange">;
+	layoutProps?: Omit<CProps$6, "onToggleConversation" | "onSendMessage" | "onQuickButtonClicked" | "onTextInputChange">;
 	handleNewUserMessage?: (data: {
 		text?: string;
 		files?: File[];
