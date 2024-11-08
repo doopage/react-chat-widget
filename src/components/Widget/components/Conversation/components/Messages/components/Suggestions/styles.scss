@@ -23,6 +23,10 @@
     &.align-bottom {
       margin-left: auto;
       margin-right: auto;
+      white-space: nowrap;
+      max-width: calc(100% - 40px);
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       img {
         height: 1em;
