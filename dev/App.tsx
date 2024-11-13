@@ -118,6 +118,20 @@ export default class App extends Component {
                     title: 'Về chúng tôi',
                     icon: require('@assets/icon-smiley.svg'),
                     onClick: () => showPopup(() => <>Popup</>, { top: 20 })
+                  },
+                  {
+                    title: 'Ngôn ngữ',
+                    icon: require('@assets/icon-smiley.svg'),
+                    selects: [
+                      {
+                        title: 'Tiếng anh',
+                        onClick: () => showPopup(() => <>Popup</>, { top: 20 })
+                      },
+                      {
+                        title: 'Tiếng việt',
+                        onClick: () => showPopup(() => <>Popup</>, { top: 20 })
+                      }
+                    ]
                   }
                 ]
               },

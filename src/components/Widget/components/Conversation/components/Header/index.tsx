@@ -3,6 +3,7 @@ import { useSelector } from '@selectors';
 import { hidePopup, toggleChat } from '@actions';
 import { useState } from 'react';
 import Overlay from '@components/Overlay';
+import cn from 'classnames';
 
 const menu = require('@assets/menu.svg') as string;
 const close = require('@assets/close.svg') as string;
@@ -16,7 +17,12 @@ export type CProps = {
   menus?: Array<{
     icon: string;
     title: string;
-    onClick: () => void;
+    onClick?: () => void;
+    selects?: Array<{
+      icon?: string;
+      title: string;
+      onClick: () => void;
+    }>,
   }>,
 }
 
@@ -49,9 +55,18 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
             {showMenu && <>
               <Overlay onClick={() => setShowMenu(false)} />
               <ul className="menu-popup">
-                {menus.map(({ icon, title, onClick }, i) => <li key={i} onClick={clickMenuHandler(onClick)}>
+                {menus.map(({ icon, title, onClick, selects }, i) => <li key={i} className={cn('menu-item', {'has-submenu': selects})} onClick={onClick && clickMenuHandler(onClick)}>
                   <img src={icon} />
                   <span>{title}</span>
+                  {selects && <>
+                    <div className="right-anchor" dangerouslySetInnerHTML={{ __html: '&blacktriangleright;' }}/>
+                    <ul className="menu-submenu">
+                      {selects.map(({ icon, title, onClick }) => <li key={i} onClick={onClick}>
+                        {icon && <img src={icon} />}
+                        <span>{title}</span>
+                      </li>)}
+                    </ul>
+                  </>}
                 </li>)}
               </ul>
             </>}
