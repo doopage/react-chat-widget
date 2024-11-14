@@ -59,9 +59,9 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
                   <img src={icon} />
                   <span>{title}</span>
                   {selects && <>
-                    <div className="right-anchor" dangerouslySetInnerHTML={{ __html: '&blacktriangleright;' }}/>
+                    <div className="right-anchor" dangerouslySetInnerHTML={{ __html: '&blacktriangleright;' }} />
                     <ul className="menu-submenu">
-                      {selects.map(({ icon, title, onClick }) => <li key={i} onClick={onClick}>
+                      {selects.map(({ icon, title, onClick }, j) => <li key={j} onClick={onClick}>
                         {icon && <img src={icon} />}
                         <span>{title}</span>
                       </li>)}
