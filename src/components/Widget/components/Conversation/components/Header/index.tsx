@@ -1,7 +1,7 @@
 import './style.scss';
 import { useSelector } from '@selectors';
 import { hidePopup, toggleChat } from '@actions';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import Overlay from '@components/Overlay';
 import cn from 'classnames';
 
@@ -9,18 +9,18 @@ const menu = require('@assets/menu.svg') as string;
 const close = require('@assets/close.svg') as string;
 
 export type CProps = {
-  title?: string;
+  title?: string | ReactElement;
   subtitle?: string;
   showMenuButton?: boolean;
   showCloseButton?: boolean;
   titleAvatar?: string;
   menus?: Array<{
     icon: string;
-    title: string;
+    title: string | ReactElement;
     onClick?: () => void;
     selects?: Array<{
       icon?: string;
-      title: string;
+      title: string | ReactElement;
       onClick: () => void;
     }>,
   }>,
