@@ -14,7 +14,7 @@ import {
   setMessageStatus,
   setPopupMessage,
   setResponseUser,
-  setStateLocale
+  setStatusLocale
 } from './modules/messages';
 import { setQuickButtons } from './modules/quick-buttons';
 import { addToggleChatListener, toggleChat, toggleInputDisabled, toggleMsgLoader } from './modules/behavior';
@@ -47,5 +47,5 @@ export {
   hidePopup,
   hideSuggestions,
   showSuggestions,
-  setStateLocale
+  setStatusLocale
 };
