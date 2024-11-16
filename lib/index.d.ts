@@ -59,7 +59,7 @@ export declare function setQuickButtons(buttons: Array<{
 	value: string | number;
 }>): void;
 export declare function setResponseUser(user: ResponseUser): void;
-export declare function setStateLocale(locale: string): void;
+export declare function setStatusLocale(locale: string): void;
 export declare function showPopup(component: React$1.FC, styles?: React$1.CSSProperties): void;
 export declare function showSuggestions(right: Record<string, () => void>, bottom: Record<string, () => void>): void;
 export declare function toggleChat(): void;
