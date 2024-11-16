@@ -4,7 +4,6 @@ import cn from 'classnames';
 import { MessageTypes } from '@types';
 import { format_time } from '@utils/time';
 import { format } from 'date-fns';
-import { useSelector } from '@selectors';
 
 const statuses = {
   prepare: require('@assets/status-prepare.svg') as string,
@@ -17,11 +16,11 @@ export type Props = {
   message: MessageTypes;
   showTimeStamp: boolean;
   showStatus?: boolean;
+  locale?: string;
   children: React.ReactNode;
 }
 
-function Status({ message, showTimeStamp, showStatus, children }: Props) {
-  const locale = useSelector(({ messages }) => messages.statusLocale);
+function Status({ message, showTimeStamp, showStatus, locale, children }: Props) {
   const hasStatus = showStatus && message.sender == 'client' && message.status && statuses[message.status];
   const isStatusError = hasStatus && message.status === 'error';
   let statusTitle = '';

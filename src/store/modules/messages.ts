@@ -1,8 +1,5 @@
-import { LinkParams, Message, MessagesState, MessageTypes, ResponseUser } from '@types';
-import { createComponentMessage, createLinkSnippet, createNewMessage } from '@utils/messages';
-import { MESSAGE_SENDER } from '@constants';
+import { Message, MessagesState, ResponseUser } from '@types';
 import { proxy } from 'valtio';
-import { ComponentType } from 'react';
 
 const initialState: MessagesState = {
   responseUser: null,
@@ -12,33 +9,6 @@ const initialState: MessagesState = {
 };
 
 const state = proxy(initialState);
-
-type MessageOptions = {
-  id?: string;
-  status?: string;
-  props?: any;
-}
-
-export function addUserMessage(text: string, { id, status, props }: MessageOptions = {}, overrides?: Partial<MessageTypes>) {
-  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.CLIENT, id, status, props, overrides)];
-}
-
-export function addResponseMessage(text: string, { id, status, props }: MessageOptions = {}, overrides?: Partial<MessageTypes>) {
-  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.RESPONSE, id, status, props, overrides)];
-  state.badgeCount += 1;
-}
-
-export function addSystemMessage(text: string, { id, status, props }: MessageOptions = {}, overrides?: Partial<MessageTypes>) {
-  state.messages = [...state.messages, createNewMessage(text, MESSAGE_SENDER.SYSTEM, id, status, props, overrides)];
-}
-
-export function addLinkSnippet(link: LinkParams, id?: string, props?: any) {
-  state.messages = [...state.messages, createLinkSnippet(link, id, props)];
-}
-
-export function renderCustomComponent(component: ComponentType, props: any, showAvatar: boolean, id?: string) {
-  state.messages = [...state.messages, createComponentMessage(component, props, showAvatar, id)];
-}
 
 export function dropMessages() {
   state.messages = [];

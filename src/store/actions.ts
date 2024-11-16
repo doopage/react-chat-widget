@@ -1,14 +1,9 @@
 import { closeFullscreenPreview, openFullscreenPreview } from './modules/fullscreen-preview';
 import {
-  addLinkSnippet,
-  addResponseMessage,
-  addSystemMessage,
-  addUserMessage,
   deleteMessages,
   dropMessages,
   hideAvatar,
   markAllMessagesRead,
-  renderCustomComponent,
   setBadgeCount,
   setMessages,
   setMessageStatus,
@@ -16,6 +11,7 @@ import {
   setResponseUser,
   setStatusLocale
 } from './modules/messages';
+import { addLinkSnippet, addResponseMessage, addSystemMessage, addUserMessage, renderCustomComponent } from './modules/messages-creater';
 import { setQuickButtons } from './modules/quick-buttons';
 import { addToggleChatListener, toggleChat, toggleInputDisabled, toggleMsgLoader } from './modules/behavior';
 import { hidePopup, showPopup } from './modules/popup';

@@ -11,6 +11,7 @@ import { MessageTypes } from '@types';
 import './styles.scss';
 import React, { useEffect, useState } from 'react';
 import Status from '../Status';
+import { useSelector } from '@selectors';
 
 export type Props = {
   message: MessageTypes;
@@ -49,6 +50,8 @@ function FileAttachment({ item }: FileProps) {
 }
 
 function Message({ message, showTimeStamp }: Props) {
+  const locale = useSelector(({ messages }) => messages?.statusLocale);
+
   let sanitizedHTML: string | null = null;
 
   if (message.text) {
@@ -69,7 +72,7 @@ function Message({ message, showTimeStamp }: Props) {
   }
 
   return (
-    <Status message={message} showTimeStamp={showTimeStamp} showStatus>
+    <Status message={message} showTimeStamp={showTimeStamp} locale={locale} showStatus>
       {sanitizedHTML && <div className="rcw-message-text" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />}
       {attachments}
     </Status>
