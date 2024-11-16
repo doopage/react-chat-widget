@@ -1,5 +1,5 @@
 import React$1 from 'react';
-import { CSSProperties, ComponentType, ElementType, Ref } from 'react';
+import { CSSProperties, ComponentType, ElementType, ReactElement, Ref } from 'react';
 import { Primitive } from 'utility-types';
 
 declare function Message$1({ message, showTimeStamp }: Props$3): import("react/jsx-runtime").JSX.Element;
@@ -59,6 +59,7 @@ export declare function setQuickButtons(buttons: Array<{
 	value: string | number;
 }>): void;
 export declare function setResponseUser(user: ResponseUser): void;
+export declare function setStateLocale(locale: string): void;
 export declare function showPopup(component: React$1.FC, styles?: React$1.CSSProperties): void;
 export declare function showSuggestions(right: Record<string, () => void>, bottom: Record<string, () => void>): void;
 export declare function toggleChat(): void;
@@ -110,6 +111,7 @@ export interface MessagesState {
 	messages: Message[];
 	badgeCount: number;
 	popupMessage: string | string[] | null;
+	statusLocale?: string;
 }
 export interface PopupState {
 	showPopup: boolean;
@@ -142,18 +144,18 @@ export type BaseMessage = {
 	props?: any;
 };
 export type CProps = {
-	title?: string;
+	title?: string | React$1.ReactElement;
 	subtitle?: string;
 	showMenuButton?: boolean;
 	showCloseButton?: boolean;
 	titleAvatar?: string;
 	menus?: Array<{
 		icon: string;
-		title: string;
+		title: string | React$1.ReactElement;
 		onClick?: () => void;
 		selects?: Array<{
 			icon?: string;
-			title: string;
+			title: string | React$1.ReactElement;
 			onClick: () => void;
 		}>;
 	}>;
