@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { MessageTypes } from '@types';
 import { format_time } from '@utils/time';
 import { format } from 'date-fns';
+import { useSelector } from '@selectors';
 
 const statuses = {
   prepare: require('@assets/status-prepare.svg') as string,
@@ -20,6 +21,7 @@ export type Props = {
 }
 
 function Status({ message, showTimeStamp, showStatus, children }: Props) {
+  const locale = useSelector(({ messages }) => messages.statusLocale);
   const hasStatus = showStatus && message.sender == 'client' && message.status && statuses[message.status];
   const isStatusError = hasStatus && message.status === 'error';
   let statusTitle = '';
@@ -37,7 +39,7 @@ function Status({ message, showTimeStamp, showStatus, children }: Props) {
     <div className={cn(`rcw-${message.sender}`, { 'has-status': hasStatus, [`status-${message.status}`]: message.status })}>
       {children}
       <div className="status">
-        {showTimeStamp && <span className="rcw-timestamp" title={format(message.timestamp, 'hh:mm:ss, dd MMM, yyyy')}>{format_time(message.timestamp)}</span>}
+        {showTimeStamp && <span className="rcw-timestamp" title={format(message.timestamp, 'hh:mm:ss, dd MMM, yyyy')}>{format_time(message.timestamp, locale)}</span>}
         {(hasStatus) && <div className="icon-status" title={statusTitle}><img src={statuses[message.status!]} alt={message.status} /></div>}
       </div>
       {(hasStatus && isStatusError) &&

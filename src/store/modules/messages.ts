@@ -95,4 +95,8 @@ export function setPopupMessage(message: string | string[] | null) {
   state.popupMessage = message;
 }
 
+export function setStateLocale(locale: string) {
+  state.statusLocale = locale;
+}
+
 export default state;

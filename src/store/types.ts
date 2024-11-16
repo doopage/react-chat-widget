@@ -72,6 +72,7 @@ export interface MessagesState {
   messages: Message[];
   badgeCount: number;
   popupMessage: string | string[] | null;
+  statusLocale?: string;
 }
 
 export interface QuickButtonsState {
