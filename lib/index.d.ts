@@ -150,7 +150,12 @@ export type CProps = {
 	menus?: Array<{
 		icon: string;
 		title: string;
-		onClick: () => void;
+		onClick?: () => void;
+		selects?: Array<{
+			icon?: string;
+			title: string;
+			onClick: () => void;
+		}>;
 	}>;
 };
 export type Message = MessageTypes | Link | CustomCompMessage;
