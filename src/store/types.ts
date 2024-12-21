@@ -73,6 +73,7 @@ export interface MessagesState {
   badgeCount: number;
   popupMessage: string | string[] | null;
   statusLocale?: string;
+  voiceLocale?: string;
 }
 
 export interface QuickButtonsState {

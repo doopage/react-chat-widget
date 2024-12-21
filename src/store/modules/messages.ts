@@ -69,4 +69,8 @@ export function setStatusLocale(locale: string) {
   state.statusLocale = locale;
 }
 
+export function setVoiceLocale(locale: string) {
+  state.voiceLocale = locale;
+}
+
 export default state;

@@ -12,7 +12,9 @@ import {
   showPopup,
   showSuggestions,
   toggleInputDisabled,
-  toggleMsgLoader
+  toggleMsgLoader,
+  setStatusLocale,
+  setVoiceLocale,
 } from '@actions';
 import Widget from '../src/root';
 import { setResponseUser } from '../src';
@@ -23,6 +25,9 @@ const doopageIcon = require('@assets/doopage-icon.png') as string;
 
 export default class App extends Component {
   componentDidMount() {
+    setStatusLocale('vi');
+    setVoiceLocale('vi');
+
     addToggleChatListener((state) => console.log('@@@ addToggleChatListener', state));
 
     setPopupMessage([

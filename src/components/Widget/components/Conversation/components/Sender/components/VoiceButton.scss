@@ -1,0 +1,16 @@
+@import 'variables/sizes';
+@import 'variables/colors';
+
+.rcw-micro {
+  background: $grey-2;
+  border: 0;
+  cursor: pointer;
+
+  &.active {
+    color: #35e65d;
+  }
+
+  .rcw-micro-icon {
+    height: 25px;
+  }
+}

@@ -9,7 +9,8 @@ import {
   setMessageStatus,
   setPopupMessage,
   setResponseUser,
-  setStatusLocale
+  setStatusLocale,
+  setVoiceLocale
 } from './modules/messages';
 import { addLinkSnippet, addResponseMessage, addSystemMessage, addUserMessage, renderCustomComponent } from './modules/messages-creater';
 import { setQuickButtons } from './modules/quick-buttons';
@@ -43,5 +44,6 @@ export {
   hidePopup,
   hideSuggestions,
   showSuggestions,
-  setStatusLocale
+  setStatusLocale,
+  setVoiceLocale
 };

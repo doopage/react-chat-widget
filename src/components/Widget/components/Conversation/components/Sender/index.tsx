@@ -2,6 +2,7 @@ import { Ref, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import cn from 'classnames';
 
 import { getCaretIndex, getSelection, insertNodeAtCaret, isFirefox, updateCaret } from '@utils/content-editable';
+import VoiceButton from './components/VoiceButton';
 import './style.scss';
 import { useSelector } from '@selectors';
 
@@ -26,6 +27,7 @@ export type CProps = {
   onPressEmoji: (() => void) | null;
   onPressFile: (() => void) | null;
   onTextInputChange?: (event: any) => void;
+  onVoiceInputChange?: (text: string, isFinal: boolean) => void;
 }
 
 function Sender({
@@ -35,6 +37,7 @@ function Sender({
                   disabledInput = false,
                   autofocus = true,
                   onTextInputChange,
+                  onVoiceInputChange,
                   buttonAlt = 'Send',
                   onPressEmoji,
                   onPressFile,
@@ -69,6 +72,15 @@ function Sender({
   const handlerOnChange = (event) => {
     setIsTextReady(inputRef.current?.innerHTML.length > 0);
     onTextInputChange && onTextInputChange(event);
+  };
+
+  const handlerOnSpeech = (text, isFinal) => {
+    if (!inputRef.current) {
+      return;
+    }
+    inputRef.current.innerHTML = text;
+    setIsTextReady(text.length > 0);
+    onVoiceInputChange && onVoiceInputChange(text, isFinal);
   };
 
   const handlerSendMessage = () => {
@@ -174,6 +186,7 @@ function Sender({
         <div className="rcw-input-fake" role="textbox">&nbsp;</div>
 
       </div>
+      <VoiceButton onChange={handlerOnSpeech} />
       <button type="submit" className={cn('rcw-send', { active: isSendActive })} onClick={handlerSendMessage} disabled={!enter && !allowSend}>
         <img src={isSendActive ? sendActive : send} className="rcw-send-icon" alt={buttonAlt} />
       </button>
