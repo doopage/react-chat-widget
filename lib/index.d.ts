@@ -60,6 +60,7 @@ export declare function setQuickButtons(buttons: Array<{
 }>): void;
 export declare function setResponseUser(user: ResponseUser): void;
 export declare function setStatusLocale(locale: string): void;
+export declare function setVoiceLocale(locale: string): void;
 export declare function showPopup(component: React$1.FC, styles?: React$1.CSSProperties): void;
 export declare function showSuggestions(right: Record<string, () => void>, bottom: Record<string, () => void>): void;
 export declare function toggleChat(): void;
@@ -112,6 +113,7 @@ export interface MessagesState {
 	badgeCount: number;
 	popupMessage: string | string[] | null;
 	statusLocale?: string;
+	voiceLocale?: string;
 }
 export interface PopupState {
 	showPopup: boolean;
@@ -208,6 +210,7 @@ type CProps$3 = {
 	onPressEmoji: (() => void) | null;
 	onPressFile: (() => void) | null;
 	onTextInputChange?: (event: any) => void;
+	onVoiceInputChange?: (text: string, isFinal: boolean) => void;
 };
 type CProps$4 = {
 	headerProps?: CProps;
