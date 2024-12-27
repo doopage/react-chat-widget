@@ -181,7 +181,8 @@ function Conversation({
         height={100}
         maxItem={1}
         showButton={false}
-        imageOnly
+        allowImage
+        allowVideo
       />)}
       <Sender
         {...senderProps}

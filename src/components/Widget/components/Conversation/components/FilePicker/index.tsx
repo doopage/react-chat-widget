@@ -15,7 +15,8 @@ type CProps = {
   showButton?: boolean;
   showIcon?: boolean;
   showName?: boolean;
-  imageOnly?: boolean;
+  allowImage?: boolean;
+  allowVideo?: boolean;
 }
 
 type FileProps = {
@@ -27,6 +28,9 @@ type FileAddProps = {
   onSelect?: (items: FileList) => void;
   addFileRef?: React.MutableRefObject<() => void>;
   showButton?: boolean;
+  multiple?: boolean;
+  allowImage?: boolean;
+  allowVideo?: boolean;
 }
 
 type FileRemoveProps = {
@@ -55,6 +59,20 @@ function FileImage({ item, onRemove }: FileProps) {
   );
 }
 
+function FileVideo({ item, onRemove }: FileProps) {
+  const [url, setUrl] = useState<string | null>(null);
+  useEffect(() => {
+    setUrl(URL.createObjectURL(item));
+  }, [item]);
+  return (
+    <div className="rcw-file rcw-file-type-image">
+      {onRemove && <FileRemove onClick={onRemove} />}
+      {url && <video src={url} />}
+      <div className="rcw-file-name">&nbsp;</div>
+    </div>
+  );
+}
+
 function FileUnknown({ item, onRemove }: FileProps) {
   return (
     <div className="rcw-file rcw-file-type-unknown">
@@ -65,7 +83,7 @@ function FileUnknown({ item, onRemove }: FileProps) {
   );
 }
 
-function FileAddButton({ onSelect, addFileRef, showButton }: FileAddProps) {
+function FileAddButton({ onSelect, addFileRef, showButton, multiple, allowImage, allowVideo }: FileAddProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => inputRef.current?.click();
   const handleFile = () => {
@@ -75,6 +93,15 @@ function FileAddButton({ onSelect, addFileRef, showButton }: FileAddProps) {
   useEffect(() => {
     addFileRef && (addFileRef.current = handleClick);
   }, [addFileRef]);
+
+  const accepts: string[] = [];
+  if (allowImage) {
+    accepts.push('image/*');
+  }
+  if (allowVideo) {
+    accepts.push('video/*');
+  }
+
   return (
     <div className="rcw-file rcw-file-add">
       {showButton && <>
@@ -83,14 +110,16 @@ function FileAddButton({ onSelect, addFileRef, showButton }: FileAddProps) {
         </button>
         <div className="rcw-file-name">&nbsp;</div>
       </>}
-      <input type="file" className="rcw-file-input" accept="image/*" ref={inputRef} onChange={handleFile} />
+      <input type="file" className="rcw-file-input" accept={accepts.join(',')} multiple={multiple} ref={inputRef} onChange={handleFile} />
     </div>
   );
 }
 
 const isImage = (file: File): boolean => file.type.startsWith('image/');
 
-function FilePicker({ items, height, maxItem = 3, showButton = true, onSelectFile, addFileRef, imageOnly }: CProps) {
+const isVideo = (file: File): boolean => file.type.startsWith('video/');
+
+function FilePicker({ items, height, maxItem = 3, showButton = true, onSelectFile, addFileRef, allowImage, allowVideo }: CProps) {
   const removeIndex = (item: File) => {
     const newItems = items.filter(x => x !== item);
     onSelectFile?.(newItems.slice(-maxItem));
@@ -101,17 +130,26 @@ function FilePicker({ items, height, maxItem = 3, showButton = true, onSelectFil
         if (isImage(item)) {
           return <FileImage key={i} item={item} onRemove={() => removeIndex(item)} />;
         }
+        if (isVideo(item)) {
+          return <FileVideo key={i} item={item} onRemove={() => removeIndex(item)} />;
+        }
         return <FileUnknown key={i} item={item} onRemove={() => removeIndex(item)} />;
       })}
-      <FileAddButton showButton={items.length ? items.length < maxItem : showButton} addFileRef={addFileRef} onSelect={files => {
-        let newItems = [...items, ...files];
-        if (imageOnly) {
-          newItems = newItems.filter(item => isImage(item));
-        }
-        if (newItems.length > 0) {
-          onSelectFile?.(newItems.slice(-maxItem));
-        }
-      }} />
+      <FileAddButton
+        showButton={items.length ? items.length < maxItem : showButton}
+        addFileRef={addFileRef}
+        multiple={maxItem > 1}
+        allowImage={allowImage}
+        allowVideo={allowVideo}
+        onSelect={files => {
+          let newItems = [...items, ...files];
+          if (allowImage || allowVideo) {
+            newItems = newItems.filter(item => (allowImage && isImage(item)) || (allowVideo && isVideo(item)));
+          }
+          if (newItems.length > 0) {
+            onSelectFile?.(newItems.slice(-maxItem));
+          }
+        }} />
     </aside>
   );
 }

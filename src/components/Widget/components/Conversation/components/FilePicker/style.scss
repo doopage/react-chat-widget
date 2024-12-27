@@ -46,7 +46,7 @@
       top: 0;
       cursor: pointer;
 
-      img {
+      img, video {
         height: 100%;
       }
     }
@@ -64,8 +64,8 @@
     }
   }
 
-  .rcw-file-type-image {
-    img {
+  .rcw-file-type-image, .rcw-file-type-video {
+    img, video {
       height: 50px;
     }
 
