@@ -32,6 +32,8 @@ function FileAttachment({ item }: FileProps) {
       setHref(URL.createObjectURL(item));
       if (item.type.startsWith('image/')) {
         setType('image');
+      } else if (item.type.startsWith('video/')) {
+        setType('video');
       } else {
         setType(item.type);
       }
@@ -40,6 +42,10 @@ function FileAttachment({ item }: FileProps) {
   switch (type) {
     case 'image': {
       const sanitizedHTML = markdownIt().use(markdownItClass, { img: ['rcw-message-img'] }).render(`![](${href})`);
+      return <div className="rcw-message-text is-attachment" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
+    }
+    case 'video': {
+      const sanitizedHTML = markdownIt({ html: true }).use(markdownItClass, { video: ['rcw-message-video'] }).render(`<video src="${href}" controls />`);
       return <div className="rcw-message-text is-attachment" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
     }
     default: {
