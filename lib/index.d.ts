@@ -162,6 +162,15 @@ export type CProps = {
 		}>;
 	}>;
 };
+export type FileAddProps = {
+	onSelect?: (items: FileList) => void;
+	addFileRef?: React$1.MutableRefObject<() => void>;
+	showButton?: boolean;
+	multiple?: boolean;
+	allowImage?: boolean;
+	allowVideo?: boolean;
+	allowAny?: boolean;
+};
 export type Message = MessageTypes | Link | CustomCompMessage;
 export type MessageOptions = {
 	id?: string;
@@ -217,6 +226,7 @@ type CProps$4 = {
 	messagesProps?: CProps$2;
 	senderProps?: Omit<CProps$3, "sendMessage" | "onPressEmoji" | "onPressFile" | "disabledInput" | "allowSend">;
 	quickButtonsProps?: Props;
+	filePickerProps?: Omit<FileAddProps, "items" | "onSelectFile" | "addFileRef">;
 	className?: string;
 	sendMessage?: (data: {
 		text?: string;
