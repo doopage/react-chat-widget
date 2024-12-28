@@ -1,5 +1,6 @@
 import { CSSProperties, ElementType } from 'react';
 import { StateRef } from '@utils/types';
+import { CloseNotification, ShowNotification } from '@toolpad/core';
 
 type BaseMessage = {
   type: string;
@@ -58,6 +59,11 @@ export interface SuggestionsState {
   bottom: Record<string, () => void>;
 }
 
+export interface NotificationState {
+  show: ShowNotification | null;
+  close: CloseNotification | null;
+}
+
 export type Message = MessageTypes | Link | CustomCompMessage;
 
 export type ResponseUser = {
@@ -98,6 +104,7 @@ export interface GlobalState {
   preview: FullscreenPreviewState;
   popup: PopupState;
   suggestions: SuggestionsState;
+  notification: NotificationState;
 }
 
 export interface ResizableProps {

@@ -11,6 +11,7 @@ import {
   setQuickButtons,
   setStatusLocale,
   setVoiceLocale,
+  showNotification,
   showPopup,
   showSuggestions,
   toggleInputDisabled,
@@ -183,6 +184,7 @@ export default class App extends Component {
             console.log('@@@handleToggle', isOpened);
             if (isOpened) {
               await new Promise(done => setTimeout(done, 1500));
+              setTimeout(() => showNotification('Error !', { severity: 'error' }), 1000);
             }
             return true;
           },
