@@ -8,7 +8,7 @@ import QuickButtons, { Props as QuickButtonsProps } from './components/QuickButt
 import { ResizableProps } from '@types';
 
 import './style.scss';
-import FilePicker from './components/FilePicker';
+import FilePicker, { FileAddProps } from './components/FilePicker';
 import { useSelector } from '@selectors';
 import EmojiPickerPopup from './components/EmojiPickerPopup';
 
@@ -17,6 +17,7 @@ export type CProps = {
   messagesProps?: MessagesProps;
   senderProps?: Omit<SenderProps, 'sendMessage' | 'onPressEmoji' | 'onPressFile' | 'disabledInput' | 'allowSend'>;
   quickButtonsProps?: QuickButtonsProps;
+  filePickerProps?: Omit<FileAddProps, 'items' | 'onSelectFile' | 'addFileRef'>;
   className?: string;
   sendMessage?: (data: { text?: string, files?: File[] }) => void;
   resizable?: boolean;
@@ -39,6 +40,7 @@ function Conversation({
                         messagesProps,
                         senderProps,
                         quickButtonsProps,
+                        filePickerProps,
                         className,
                         sendMessage,
                         resizable,
@@ -183,6 +185,7 @@ function Conversation({
         showButton={false}
         allowImage
         allowVideo
+        {...filePickerProps}
       />)}
       <Sender
         {...senderProps}

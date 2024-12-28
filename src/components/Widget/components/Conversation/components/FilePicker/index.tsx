@@ -17,6 +17,7 @@ type CProps = {
   showName?: boolean;
   allowImage?: boolean;
   allowVideo?: boolean;
+  allowAny?: boolean;
 }
 
 type FileProps = {
@@ -24,13 +25,14 @@ type FileProps = {
   onRemove?: () => void;
 }
 
-type FileAddProps = {
+export type FileAddProps = {
   onSelect?: (items: FileList) => void;
   addFileRef?: React.MutableRefObject<() => void>;
   showButton?: boolean;
   multiple?: boolean;
   allowImage?: boolean;
   allowVideo?: boolean;
+  allowAny?: boolean;
 }
 
 type FileRemoveProps = {
@@ -83,7 +85,7 @@ function FileUnknown({ item, onRemove }: FileProps) {
   );
 }
 
-function FileAddButton({ onSelect, addFileRef, showButton, multiple, allowImage, allowVideo }: FileAddProps) {
+function FileAddButton({ onSelect, addFileRef, showButton, multiple, allowImage, allowVideo, allowAny }: FileAddProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => inputRef.current?.click();
   const handleFile = () => {
@@ -95,11 +97,15 @@ function FileAddButton({ onSelect, addFileRef, showButton, multiple, allowImage,
   }, [addFileRef]);
 
   const accepts: string[] = [];
-  if (allowImage) {
-    accepts.push('image/*');
-  }
-  if (allowVideo) {
-    accepts.push('video/*');
+  if (allowAny) {
+    accepts.push('*');
+  } else {
+    if (allowImage) {
+      accepts.push('image/*');
+    }
+    if (allowVideo) {
+      accepts.push('video/*');
+    }
   }
 
   return (
@@ -119,7 +125,7 @@ const isImage = (file: File): boolean => file.type.startsWith('image/');
 
 const isVideo = (file: File): boolean => file.type.startsWith('video/');
 
-function FilePicker({ items, height, maxItem = 3, showButton = true, onSelectFile, addFileRef, allowImage, allowVideo }: CProps) {
+function FilePicker({ items, height, maxItem = 3, showButton = true, onSelectFile, addFileRef, allowImage, allowVideo, allowAny }: CProps) {
   const removeIndex = (item: File) => {
     const newItems = items.filter(x => x !== item);
     onSelectFile?.(newItems.slice(-maxItem));
@@ -141,6 +147,7 @@ function FilePicker({ items, height, maxItem = 3, showButton = true, onSelectFil
         multiple={maxItem > 1}
         allowImage={allowImage}
         allowVideo={allowVideo}
+        allowAny={allowAny}
         onSelect={files => {
           let newItems = [...items, ...files];
           if (allowImage || allowVideo) {
