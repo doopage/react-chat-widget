@@ -28,10 +28,10 @@ function FileAttachment({ item }: FileProps) {
       return URL.createObjectURL(item);
     }
     return item.url;
-  }, item);
+  }, [item]);
   const fileType = useMemo(() => {
+    const itemType = item.type ?? item.file_type;
     if (item instanceof File) {
-      let itemType = item.type;
       if (itemType.startsWith('image/')) {
         return 'image';
       } else if (itemType.startsWith('video/')) {
@@ -40,8 +40,8 @@ function FileAttachment({ item }: FileProps) {
         return itemType;
       }
     }
-    return item.type ?? item.file_type;
-  }, item);
+    return itemType;
+  }, [item]);
   switch (fileType) {
     case 'image': {
       const sanitizedHTML = markdownIt().use(markdownItClass, { img: ['rcw-message-img'] }).render(`![](${href})`);
