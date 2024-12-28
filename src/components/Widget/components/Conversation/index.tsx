@@ -11,6 +11,7 @@ import './style.scss';
 import FilePicker, { FileAddProps } from './components/FilePicker';
 import { useSelector } from '@selectors';
 import EmojiPickerPopup from './components/EmojiPickerPopup';
+import { NotificationProvider } from '../Notification';
 
 export type CProps = {
   headerProps?: HeaderProps;
@@ -163,39 +164,41 @@ function Conversation({
   };
 
   return (
-    <div id="rcw-conversation-container" className={cn('rcw-conversation-container', className)} aria-live="polite">
-      {resizable && <div data-resizer="top-left" className="rcw-conversation-xy-resizer" onMouseDown={initResize} />}
-      {resizable && <div data-resizer="left" className="rcw-conversation-x-resizer" onMouseDown={initResize} />}
-      {resizable && <div data-resizer="top" className="rcw-conversation-y-resizer" onMouseDown={initResize} />}
-      <Header {...headerProps} />
-      <Messages {...messagesProps} />
-      {copyright && <div className="copyright" dangerouslySetInnerHTML={{ __html: copyright }} />}
-      <QuickButtons {...quickButtonsProps} />
-      {emojis && pickerStatus && (<EmojiPickerPopup
-        onEmojiClick={onSelectEmoji}
-        height={300}
-        bottom={70}
-      />)}
-      {files && (<FilePicker
-        items={fileItems}
-        onSelectFile={onSelectFile}
-        addFileRef={addFileRef}
-        height={100}
-        maxItem={1}
-        showButton={false}
-        allowImage
-        {...filePickerProps}
-      />)}
-      <Sender
-        {...senderProps}
-        senderRef={senderRef}
-        sendMessage={handlerSendMsn}
-        onPressEmoji={emojis ? togglePicker : null}
-        onPressFile={files ? selectFile : null}
-        disabledInput={!!propDisabledInput || disableInput || (!!files && fileItems.length > 0)}
-        allowSend={!!files && fileItems.length > 0}
-      />
-    </div>
+    <NotificationProvider>
+      <div id="rcw-conversation-container" className={cn('rcw-conversation-container', className)} aria-live="polite">
+        {resizable && <div data-resizer="top-left" className="rcw-conversation-xy-resizer" onMouseDown={initResize} />}
+        {resizable && <div data-resizer="left" className="rcw-conversation-x-resizer" onMouseDown={initResize} />}
+        {resizable && <div data-resizer="top" className="rcw-conversation-y-resizer" onMouseDown={initResize} />}
+        <Header {...headerProps} />
+        <Messages {...messagesProps} />
+        {copyright && <div className="copyright" dangerouslySetInnerHTML={{ __html: copyright }} />}
+        <QuickButtons {...quickButtonsProps} />
+        {emojis && pickerStatus && (<EmojiPickerPopup
+          onEmojiClick={onSelectEmoji}
+          height={300}
+          bottom={70}
+        />)}
+        {files && (<FilePicker
+          items={fileItems}
+          onSelectFile={onSelectFile}
+          addFileRef={addFileRef}
+          height={100}
+          maxItem={1}
+          showButton={false}
+          allowImage
+          {...filePickerProps}
+        />)}
+        <Sender
+          {...senderProps}
+          senderRef={senderRef}
+          sendMessage={handlerSendMsn}
+          onPressEmoji={emojis ? togglePicker : null}
+          onPressFile={files ? selectFile : null}
+          disabledInput={!!propDisabledInput || disableInput || (!!files && fileItems.length > 0)}
+          allowSend={!!files && fileItems.length > 0}
+        />
+      </div>
+    </NotificationProvider>
   );
 }
 
