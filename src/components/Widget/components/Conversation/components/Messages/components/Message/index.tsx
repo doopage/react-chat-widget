@@ -25,18 +25,21 @@ type FileProps = {
 function FileAttachment({ item }: FileProps) {
   const [name, setName] = useState(item.name);
   const [href, setHref] = useState(item.url);
-  const [type, setType] = useState(item.type);
+  const [type, setType] = useState(item.type ?? item.file_type);
   useEffect(() => {
     if (item instanceof File) {
       setName(item.name);
       setHref(URL.createObjectURL(item));
-      if (item.type.startsWith('image/')) {
+      let itemType = item.type;
+      if (itemType.startsWith('image/')) {
         setType('image');
-      } else if (item.type.startsWith('video/')) {
+      } else if (itemType.startsWith('video/')) {
         setType('video');
       } else {
-        setType(item.type);
+        setType(itemType);
       }
+    } else {
+      console.error('Invalid item', item);
     }
   }, [item]);
   switch (type) {
@@ -50,7 +53,7 @@ function FileAttachment({ item }: FileProps) {
     }
     default: {
       const sanitizedHTML = markdownIt().use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } }).render(`[${name}](${href})`);
-      return <div className="rcw-message-text is-attachment" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
+      return <div className="rcw-message-text is-attachment" data-type={type} dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
     }
   }
 }
