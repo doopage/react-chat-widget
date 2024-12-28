@@ -9,7 +9,7 @@ import { attrs } from '@mdit/plugin-attrs';
 import { MessageTypes } from '@types';
 
 import './styles.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import Status from '../Status';
 import { useSelector } from '@selectors';
 
@@ -23,26 +23,26 @@ type FileProps = {
 }
 
 function FileAttachment({ item }: FileProps) {
-  const [name, setName] = useState(item.name);
-  const [href, setHref] = useState(item.url);
-  const [type, setType] = useState(item.type ?? item.file_type);
-  useEffect(() => {
+  const href = useMemo(() => {
     if (item instanceof File) {
-      setName(item.name);
-      setHref(URL.createObjectURL(item));
+      return URL.createObjectURL(item);
+    }
+    return item.url;
+  }, item);
+  const fileType = useMemo(() => {
+    if (item instanceof File) {
       let itemType = item.type;
       if (itemType.startsWith('image/')) {
-        setType('image');
+        return 'image';
       } else if (itemType.startsWith('video/')) {
-        setType('video');
+        return 'video';
       } else {
-        setType(itemType);
+        return itemType;
       }
-    } else {
-      console.error('Invalid item', item);
     }
-  }, [item]);
-  switch (type) {
+    return item.type ?? item.file_type;
+  }, item);
+  switch (fileType) {
     case 'image': {
       const sanitizedHTML = markdownIt().use(markdownItClass, { img: ['rcw-message-img'] }).render(`![](${href})`);
       return <div className="rcw-message-text is-attachment" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
@@ -52,8 +52,8 @@ function FileAttachment({ item }: FileProps) {
       return <div className="rcw-message-text is-attachment" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
     }
     default: {
-      const sanitizedHTML = markdownIt().use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } }).render(`[${name}](${href})`);
-      return <div className="rcw-message-text is-attachment" data-type={type} dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
+      const sanitizedHTML = markdownIt().use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } }).render(`[${item.name}](${href})`);
+      return <div className="rcw-message-text is-attachment" data-type={fileType} dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
     }
   }
 }
