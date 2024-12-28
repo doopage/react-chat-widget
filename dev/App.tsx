@@ -9,12 +9,12 @@ import {
   setMessageStatus,
   setPopupMessage,
   setQuickButtons,
+  setStatusLocale,
+  setVoiceLocale,
   showPopup,
   showSuggestions,
   toggleInputDisabled,
-  toggleMsgLoader,
-  setStatusLocale,
-  setVoiceLocale,
+  toggleMsgLoader
 } from '@actions';
 import Widget from '../src/root';
 import { setResponseUser } from '../src';
@@ -152,6 +152,11 @@ export default class App extends Component {
               },
               senderProps: {
                 placeholder: 'Escribe aquí ...'
+              },
+              filePickerProps: {
+                allowImage: true,
+                allowVideo: true,
+                allowAny: true
               },
               resizable: true,
               resizableProps: { heightOffset: 105, widthOffset: 35 },

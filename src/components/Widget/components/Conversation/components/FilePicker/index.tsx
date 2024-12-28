@@ -150,7 +150,7 @@ function FilePicker({ items, height, maxItem = 3, showButton = true, onSelectFil
         allowAny={allowAny}
         onSelect={files => {
           let newItems = [...items, ...files];
-          if (allowImage || allowVideo) {
+          if (!allowAny && (allowImage || allowVideo)) {
             newItems = newItems.filter(item => (allowImage && isImage(item)) || (allowVideo && isVideo(item)));
           }
           if (newItems.length > 0) {

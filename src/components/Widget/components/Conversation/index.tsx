@@ -184,7 +184,6 @@ function Conversation({
         maxItem={1}
         showButton={false}
         allowImage
-        allowVideo
         {...filePickerProps}
       />)}
       <Sender
