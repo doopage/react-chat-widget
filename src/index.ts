@@ -1,4 +1,5 @@
 import 'react/jsx-runtime';
+import './scss/global.scss';
 
 import Widget from './root';
 
