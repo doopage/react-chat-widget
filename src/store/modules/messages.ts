@@ -5,7 +5,8 @@ const initialState: MessagesState = {
   responseUser: null,
   messages: [],
   badgeCount: 0,
-  popupMessage: null
+  popupMessage: null,
+  replyMessage: null
 };
 
 const state = proxy(initialState);
@@ -71,6 +72,10 @@ export function setStatusLocale(locale: string) {
 
 export function setVoiceLocale(locale: string) {
   state.voiceLocale = locale;
+}
+
+export function setReplyMessage(message: Message | null) {
+  state.replyMessage = message;
 }
 
 export default state;

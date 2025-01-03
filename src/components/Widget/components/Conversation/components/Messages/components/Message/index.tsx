@@ -5,17 +5,21 @@ import markdownItClass from '@toycode/markdown-it-class';
 import markdownItLinkAttributes from 'markdown-it-link-attributes';
 import { imgSize } from '@mdit/plugin-img-size';
 import { attrs } from '@mdit/plugin-attrs';
-
 import { MessageTypes } from '@types';
-
-import './styles.scss';
-import React, { useMemo } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import Status from '../Status';
+import Toolbar from '../Toolbar';
 import { useSelector } from '@selectors';
+import './styles.scss';
+
+const quoteIcon = require('@assets/quote-right.svg') as string;
 
 export type Props = {
   message: MessageTypes;
-  showTimeStamp: boolean;
+  showTimeStamp?: boolean;
+  reply?: boolean;
+  isReplyContext?: boolean;
+  isReplyMessage?: boolean;
 }
 
 type FileProps = {
@@ -58,7 +62,7 @@ function FileAttachment({ item }: FileProps) {
   }
 }
 
-function Message({ message, showTimeStamp }: Props) {
+function Message({ message, reply, showTimeStamp, isReplyContext, isReplyMessage }: Props) {
   const locale = useSelector(({ messages }) => messages?.statusLocale);
 
   let sanitizedHTML: string | null = null;
@@ -80,10 +84,109 @@ function Message({ message, showTimeStamp }: Props) {
     attachments.push(message.props.files.map((item, i) => <FileAttachment key={i} item={item} />));
   }
 
+  if (isReplyContext || isReplyMessage) {
+    if (sanitizedHTML) {
+      if (isReplyMessage) {
+        return <div dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />;
+      }
+      return (
+        <div className="reply-content-body">
+          <div className="reply-content-header">
+            <img src={quoteIcon} />
+            Trả lời
+          </div>
+          <div className="rcw-message-text" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />
+        </div>
+      );
+    }
+    if (message.props?.files) {
+      const { files } = message.props;
+      if (files.length == 1) {
+        const file = files[0];
+        const fileType = file.type ?? file.file_type;
+        if (fileType.startsWith('image/')) {
+          const href = file.url ?? URL.createObjectURL(file);
+          if (isReplyMessage) {
+            return <img className="reply-content-preview" src={href} />;
+          }
+          return (
+            <>
+              <img className="reply-content-preview" src={href} />
+              <div className="reply-content-body has-preview">
+                <div className="reply-content-header">
+                  <img src={quoteIcon} />
+                  Trả lời
+                </div>
+                <div className="rcw-message-text">
+                  [Hình ảnh]
+                </div>
+              </div>
+            </>
+          );
+        }
+        if (isReplyMessage) {
+          return <span>[File] {file.name}</span>;
+        }
+        return (
+          <div className="reply-content-body">
+            <div className="reply-content-header">
+              <img src={quoteIcon} />
+              Trả lời
+            </div>
+            <div className="rcw-message-text">
+              [File] {file.name}
+            </div>
+          </div>
+        );
+      }
+      if (isReplyMessage) {
+        return <span>[{files.length} tập tin]</span>;
+      }
+      return (
+        <div className="reply-content-body">
+          <div className="reply-content-header">
+            <img src={quoteIcon} />
+            Trả lời
+          </div>
+          <div className="rcw-message-text">
+            [{files.length} tập tin]
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="reply-content-body">
+        <div className="reply-content-header">
+          <img src={quoteIcon} />
+          Trả lời
+        </div>
+        <div>[Tin nhắn]</div>
+      </div>
+    );
+  }
+
+  let replySection: ReactElement | null = null;
+  if (sanitizedHTML && message.props?.replyMessage) {
+    replySection = <Message message={message.props.replyMessage} isReplyMessage />;
+  }
+
   return (
-    <Status message={message} showTimeStamp={showTimeStamp} locale={locale} showStatus>
-      {sanitizedHTML && <div className="rcw-message-text" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />}
-      {attachments}
+    <Status message={message} showTimeStamp={!!showTimeStamp} locale={locale} showStatus>
+      <Toolbar message={message} reply={reply}>
+        {sanitizedHTML && (replySection
+            ? (<div className="rcw-message-text">
+              <div className={`reply-section rcw-${message.sender}`}>
+                <span className="rcw-message-reply-bar" />
+                <div className="rcw-message-reply-content">
+                  {replySection}
+                </div>
+              </div>
+              <div dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />
+            </div>)
+            : <div className="rcw-message-text" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />
+        )}
+        {attachments}
+      </Toolbar>
     </Status>
   );
 }

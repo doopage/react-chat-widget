@@ -80,6 +80,7 @@ export interface MessagesState {
   popupMessage: string | string[] | null;
   statusLocale?: string;
   voiceLocale?: string;
+  replyMessage: Message | null;
 }
 
 export interface QuickButtonsState {
@@ -110,4 +111,10 @@ export interface GlobalState {
 export interface ResizableProps {
   heightOffset?: number;
   widthOffset?: number;
+}
+
+export interface MessageButton {
+  icon: string;
+  label: string;
+  onClick?: () => void;
 }

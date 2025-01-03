@@ -45,7 +45,7 @@ export default class App extends Component {
     addSystemMessage('ABC', {}, { component: ref(Custom) });
   }
 
-  handleNewUserMessage = ({ id, text, files }: any) => {
+  handleNewUserMessage = ({ id, text, files, replyMessage }: any) => {
     setTimeout(() => setMessageStatus(id, 'sent'), 1000);
     setTimeout(() => setMessageStatus(id, 'read'), 2000);
     setTimeout(() => toggleMsgLoader(), 3000);
@@ -64,7 +64,7 @@ export default class App extends Component {
         };
         showSuggestions(right, bottom);
       } else {
-        addResponseMessage(text, { props: { files } });
+        addResponseMessage(text, { props: { files, replyMessage } });
       }
       toggleInputDisabled();
     }, 5000);
@@ -164,6 +164,7 @@ export default class App extends Component {
               defaultSize: { width: 700, height: 500 },
               emojis: true,
               files: true,
+              reply: true,
               copyright: '&copy; 2024 LiveChat, Inc. All rights reserved.'
             },
             launcherProps: {

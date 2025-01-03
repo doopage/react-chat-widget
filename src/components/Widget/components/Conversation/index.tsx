@@ -5,28 +5,31 @@ import Header, { CProps as HeaderProps } from './components/Header';
 import Messages, { CProps as MessagesProps } from './components/Messages';
 import Sender, { CProps as SenderProps, ISenderRef } from './components/Sender';
 import QuickButtons, { Props as QuickButtonsProps } from './components/QuickButtons';
-import { ResizableProps } from '@types';
+import SenderContext from './components/SenderContext';
+import { Message, ResizableProps } from '@types';
 
 import './style.scss';
 import FilePicker, { FileAddProps } from './components/FilePicker';
 import { useSelector } from '@selectors';
 import EmojiPickerPopup from './components/EmojiPickerPopup';
 import { NotificationProvider } from '../Notification';
+import { setReplyMessage } from '@actions';
 
 export type CProps = {
   headerProps?: HeaderProps;
-  messagesProps?: MessagesProps;
+  messagesProps?: Omit<MessagesProps, 'reply'>;
   senderProps?: Omit<SenderProps, 'sendMessage' | 'onPressEmoji' | 'onPressFile' | 'disabledInput' | 'allowSend'>;
   quickButtonsProps?: QuickButtonsProps;
   filePickerProps?: Omit<FileAddProps, 'items' | 'onSelectFile' | 'addFileRef'>;
   className?: string;
-  sendMessage?: (data: { text?: string, files?: File[] }) => void;
+  sendMessage?: (data: { text?: string, files?: File[], replyMessage?: Message | null }) => void;
   resizable?: boolean;
   resizableProps?: ResizableProps;
   defaultSize?: { width: number, height: number };
   onResize?: (w: number, h: number) => void;
   emojis?: boolean;
   files?: boolean;
+  reply?: boolean;
   disabledInput?: boolean;
   copyright?: string;
 };
@@ -53,6 +56,7 @@ function Conversation({
                         onResize,
                         emojis,
                         files,
+                        reply,
                         disabledInput: propDisabledInput,
                         copyright
                       }: CProps) {
@@ -66,6 +70,10 @@ function Conversation({
   const [fileItems, setFileItems] = useState<File[]>([]);
   const addFileRef = useRef<() => void>(() => void 0);
   const disableInput = useSelector(({ behavior }) => behavior.disabledInput);
+
+  const { replyMessage } = useSelector(({ messages }) => ({
+    replyMessage: messages.replyMessage as Message | null
+  }));
 
   useEffect(() => {
     containerDivRef.current = document.getElementById('rcw-conversation-container');
@@ -144,7 +152,7 @@ function Conversation({
 
   const onSelectFile = (files: File[]) => {
     // setFileItems(files);
-    sendMessage?.({ files });
+    sendMessage?.({ files, replyMessage });
   };
 
   const togglePicker = () => {
@@ -154,9 +162,12 @@ function Conversation({
   const selectFile = () => addFileRef.current?.();
 
   const handlerSendMsn = (text: string) => {
-    sendMessage?.({ text });
+    sendMessage?.({ text, replyMessage });
     if (pickerStatus) {
       setPickerStatus(false);
+    }
+    if (replyMessage) {
+      setReplyMessage(null);
     }
     // if (files && fileItems.length > 0) {
     //   setFileItems([]);
@@ -170,7 +181,7 @@ function Conversation({
         {resizable && <div data-resizer="left" className="rcw-conversation-x-resizer" onMouseDown={initResize} />}
         {resizable && <div data-resizer="top" className="rcw-conversation-y-resizer" onMouseDown={initResize} />}
         <Header {...headerProps} />
-        <Messages {...messagesProps} />
+        <Messages reply={reply} {...messagesProps} />
         {copyright && <div className="copyright" dangerouslySetInnerHTML={{ __html: copyright }} />}
         <QuickButtons {...quickButtonsProps} />
         {emojis && pickerStatus && (<EmojiPickerPopup
@@ -178,6 +189,7 @@ function Conversation({
           height={300}
           bottom={70}
         />)}
+        <SenderContext replyMessage={replyMessage} />
         {files && (<FilePicker
           items={fileItems}
           onSelectFile={onSelectFile}

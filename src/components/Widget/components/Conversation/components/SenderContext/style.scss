@@ -1,0 +1,57 @@
+@import 'variables/sizes';
+@import 'variables/colors';
+
+.rcw-sender-context {
+  .rcw-sender-context-reply {
+    position: relative;
+    background: #cccccc;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+
+    .rcw-sender-context-reply-bar {
+      position: absolute;
+      display: inline-block;
+      width: 2px;
+      height: calc(100% - 20px);
+      background: #007FFF;
+    }
+
+    .rcw-sender-context-reply-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .rcw-sender-context-reply-content {
+      display: flex;
+      margin-left: 12px;
+
+      .reply-content-body {
+        &.has-preview {
+          margin-left: 10px;
+        }
+      }
+
+      .reply-content-header {
+        font-size: small;
+
+        img {
+          height: 12px;
+          width: 12px;
+          margin-right: 8px;
+        }
+      }
+
+      .reply-content-preview {
+        width: 30px;
+        height: 30px;
+        align-self: center;
+      }
+    }
+  }
+}

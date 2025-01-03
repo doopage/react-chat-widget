@@ -1,0 +1,54 @@
+@import 'variables/colors';
+@import 'common';
+
+.rcw-toolbar {
+  display: flex;
+
+  .rcw-toolbar-btns {
+    display: none;
+    align-items: center;
+
+    button {
+      height: 26px;
+      width: 26px;
+      border-radius: 50%;
+      border: none;
+      background: #f0f0f0;
+      cursor: pointer;
+    }
+  }
+
+  &:hover {
+    .rcw-toolbar-btns {
+      display: flex;
+    }
+  }
+
+  &.rcw-toolbar-response, &.rcw-toolbar-system {
+    flex-direction: row;
+
+    .rcw-toolbar-btns {
+      button {
+        margin-left: 4px;
+
+        &:first-child {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+
+  &.rcw-toolbar-client {
+    flex-direction: row-reverse;
+
+    .rcw-toolbar-btns {
+      button {
+        margin-right: 4px;
+
+        &:last-child {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

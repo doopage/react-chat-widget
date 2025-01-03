@@ -14,12 +14,27 @@ import { Snapshot } from '@utils/types';
 
 export type CProps = {
   showTimeStamp?: boolean,
+  reply?: boolean;
   profileAvatar?: string;
   profileClientAvatar?: string;
   suggestionsProps?: SuggestionsProps;
 }
 
-function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, suggestionsProps }: CProps) {
+export type RenderOptions = {
+  showTimeStamp?: boolean;
+  reply?: boolean;
+  isReplyContext?: boolean;
+}
+
+export const getComponentToRender = (message: Snapshot<Message>, opts?: RenderOptions) => {
+  const ComponentToRender = message.component;
+  if (message.type === 'component') {
+    return <ComponentToRender {...message.props} />;
+  }
+  return <ComponentToRender message={message} {...opts} />;
+};
+
+function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, reply, suggestionsProps }: CProps) {
   const { messages, typing, showChat, badgeCount, showSuggestion } = useSelector(({ behavior, messages, suggestions }) => ({
     messages: messages.messages,
     badgeCount: messages.badgeCount,
@@ -36,14 +51,6 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, su
     else setBadgeCount(messages.filter((message) => message.unread).length);
   }, [messages, badgeCount, showChat]);
 
-  const getComponentToRender = (message: Snapshot<Message>) => {
-    const ComponentToRender = message.component;
-    if (message.type === 'component') {
-      return <ComponentToRender {...message.props} />;
-    }
-    return <ComponentToRender message={message} showTimeStamp={showTimeStamp} />;
-  };
-
   // TODO: Fix this function or change to move the avatar to last message from response
   // const shouldRenderAvatar = (message: Message, index: number) => {
   //   const previousMessage = messages[index - 1];
@@ -56,6 +63,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, su
 
   return (
     <div id="rcw-messages" className="rcw-messages-container" ref={messageRef}>
+      {/*<ContextMenu />*/}
       {messages?.map((message, index) =>
         <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`}
              key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
@@ -67,7 +75,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, su
               alt="profile"
             />
           }
-          {getComponentToRender(message)}
+          {getComponentToRender(message, { reply, showTimeStamp })}
         </div>
       )}
       <Loader typing={typing} />

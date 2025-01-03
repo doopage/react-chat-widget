@@ -8,6 +8,7 @@ import {
   setMessages,
   setMessageStatus,
   setPopupMessage,
+  setReplyMessage,
   setResponseUser,
   setStatusLocale,
   setVoiceLocale
@@ -47,6 +48,7 @@ export {
   showSuggestions,
   setStatusLocale,
   setVoiceLocale,
+  setReplyMessage,
   setNotification,
   showNotification,
   closeNotification

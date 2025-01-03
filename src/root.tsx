@@ -17,7 +17,7 @@ type CProps = {
 function Root({
                 widgetProps,
                 primaryColor = '#ff9800',
-                messageClientColor = '#2979ff',
+                messageClientColor = '#007FFF',
                 messageClientTextColor = '#ffffff',
                 messageResponseColor = '#ffffff',
                 messageResponseTextColor = '#555555',

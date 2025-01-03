@@ -53,6 +53,47 @@
   &.is-attachment {
     margin-top: 5px;
   }
+
+  .reply-section {
+    position: relative;
+    border-radius: 3px;
+    margin-bottom: 10px;
+
+    .rcw-message-reply-bar {
+      position: absolute;
+      display: inline-block;
+      width: 2px;
+      height: 100%;
+      left: 0;
+    }
+
+    .rcw-message-reply-content {
+      padding: 5px 10px;
+      margin-right: auto;
+    }
+
+    &.rcw-client {
+      background: #00BFFF;
+
+      .rcw-message-reply-bar {
+        background: #073980;
+      }
+    }
+
+    &.rcw-response, &.rcw-system {
+      background: #dddddd;
+
+      .rcw-message-reply-bar {
+        background: #007FFF;
+      }
+    }
+
+    .rcw-message-reply-content {
+      .reply-content-preview {
+        height: 24px;
+      }
+    }
+  }
 }
 
 .rcw-avatar {

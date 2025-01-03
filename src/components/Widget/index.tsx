@@ -5,10 +5,11 @@ import WidgetLayout, { CProps as LayoutProps } from './layout';
 import { mergeProps } from '@utils/props';
 import { isWidgetOpened } from '@selectors';
 import { useEffect, useRef } from 'react';
+import { Message } from '@types';
 
 export type Props = {
   layoutProps?: Omit<LayoutProps, 'onToggleConversation' | 'onSendMessage' | 'onQuickButtonClicked' | 'onTextInputChange'>;
-  handleNewUserMessage?: (data: { text?: string, files?: File[] }) => void | Promise<void>;
+  handleNewUserMessage?: (data: { text?: string, files?: File[], replyMessage?: Message | null }) => void | Promise<void>;
   handleQuickButtonClicked?: AnyFunction;
   handleTextInputChange?: (event: any) => void;
   disableRichTextInput?: boolean;
@@ -49,7 +50,7 @@ function Widget({ layoutProps, handleNewUserMessage, handleQuickButtonClicked, h
     toggleChat();
   };
 
-  const handleMessageSubmit = async ({ text, files }: { text?: string, files?: File[] }) => {
+  const handleMessageSubmit = async ({ text, files, replyMessage }: { text?: string, files?: File[], replyMessage?: Message | null }) => {
     if (!text?.trim() && !files) {
       return;
     }
@@ -59,12 +60,12 @@ function Widget({ layoutProps, handleNewUserMessage, handleQuickButtonClicked, h
     if (handleSubmit) {
       const error = await handleSubmit({ text, files });
       if (error) {
-        addUserMessage(msgText, { status: 'error', props: { files, error } });
+        addUserMessage(msgText, { status: 'error', props: { files, error, replyMessage } });
         return;
       }
     }
-    addUserMessage(msgText, { status: 'prepare', props: { files } });
-    return handleNewUserMessage?.({ text, files });
+    addUserMessage(msgText, { status: 'prepare', props: { files, replyMessage } });
+    return handleNewUserMessage?.({ text, files, replyMessage });
   };
 
   const onQuickButtonClicked = (event, value) => {
