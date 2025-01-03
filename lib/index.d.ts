@@ -1,5 +1,6 @@
+import { CloseNotification, ShowNotification, ShowNotificationOptions } from '@toolpad/core';
 import React$1 from 'react';
-import { CSSProperties, ComponentType, ElementType, ReactElement, Ref } from 'react';
+import { CSSProperties, ComponentType, ElementType, ReactElement, ReactNode, Ref } from 'react';
 import { Primitive } from 'utility-types';
 
 declare function Message$1({ message, showTimeStamp }: Props$3): import("react/jsx-runtime").JSX.Element;
@@ -33,6 +34,7 @@ export declare function addSystemMessage(text: string, { id, status, props }?: M
 export declare function addToggleChatListener(f: (s: boolean) => void): () => void;
 export declare function addUserMessage(text: string, { id, status, props }?: MessageOptions, overrides?: Partial<MessageTypes>): void;
 export declare function closeFullscreenPreview(): void;
+export declare function closeNotification(key: string): void;
 export declare function createComponentMessage(component: React$1.ComponentType, props: any, showAvatar: boolean, id?: string): CustomCompMessage;
 export declare function createLinkSnippet(link: LinkParams, id?: string, props?: any): Link;
 export declare function createNewMessage(text: string, sender: string, id?: string, status?: string, props?: any, overrides?: Partial<MessageTypes>): MessageTypes;
@@ -53,6 +55,7 @@ export declare function scrollToBottom(messagesDiv: HTMLDivElement | null): void
 export declare function setBadgeCount(count: number): void;
 export declare function setMessageStatus(id: string, status: string, props?: any): boolean;
 export declare function setMessages(messages: Message[]): void;
+export declare function setNotification({ show, close }: NotificationState): void;
 export declare function setPopupMessage(message: string | string[] | null): void;
 export declare function setQuickButtons(buttons: Array<{
 	label: string;
@@ -61,6 +64,7 @@ export declare function setQuickButtons(buttons: Array<{
 export declare function setResponseUser(user: ResponseUser): void;
 export declare function setStatusLocale(locale: string): void;
 export declare function setVoiceLocale(locale: string): void;
+export declare function showNotification(message: React$1.ReactNode, options?: ShowNotificationOptions): string | null;
 export declare function showPopup(component: React$1.FC, styles?: React$1.CSSProperties): void;
 export declare function showSuggestions(right: Record<string, () => void>, bottom: Record<string, () => void>): void;
 export declare function toggleChat(): void;
@@ -84,6 +88,7 @@ export interface GlobalState {
 	preview: FullscreenPreviewState;
 	popup: PopupState;
 	suggestions: SuggestionsState;
+	notification: NotificationState;
 }
 export interface ISenderRef {
 	onSelectEmoji: (event: any) => void;
@@ -114,6 +119,10 @@ export interface MessagesState {
 	popupMessage: string | string[] | null;
 	statusLocale?: string;
 	voiceLocale?: string;
+}
+export interface NotificationState {
+	show: ShowNotification | null;
+	close: CloseNotification | null;
 }
 export interface PopupState {
 	showPopup: boolean;
