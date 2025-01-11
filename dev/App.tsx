@@ -165,6 +165,7 @@ export default class App extends Component {
               emojis: true,
               files: true,
               reply: true,
+              reaction: true,
               copyright: '&copy; 2024 LiveChat, Inc. All rights reserved.'
             },
             launcherProps: {

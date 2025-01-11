@@ -15,6 +15,7 @@ import { Snapshot } from '@utils/types';
 export type CProps = {
   showTimeStamp?: boolean,
   reply?: boolean;
+  reaction?: boolean;
   profileAvatar?: string;
   profileClientAvatar?: string;
   suggestionsProps?: SuggestionsProps;
@@ -23,6 +24,7 @@ export type CProps = {
 export type RenderOptions = {
   showTimeStamp?: boolean;
   reply?: boolean;
+  reaction?: boolean;
   isReplyContext?: boolean;
 }
 
@@ -34,7 +36,7 @@ export const getComponentToRender = (message: Snapshot<Message>, opts?: RenderOp
   return <ComponentToRender message={message} {...opts} />;
 };
 
-function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, reply, suggestionsProps }: CProps) {
+function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, reply, reaction, suggestionsProps }: CProps) {
   const { messages, typing, showChat, badgeCount, showSuggestion } = useSelector(({ behavior, messages, suggestions }) => ({
     messages: messages.messages,
     badgeCount: messages.badgeCount,
@@ -75,7 +77,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, re
               alt="profile"
             />
           }
-          {getComponentToRender(message, { reply, showTimeStamp })}
+          {getComponentToRender(message, { reply, reaction, showTimeStamp })}
         </div>
       )}
       <Loader typing={typing} />

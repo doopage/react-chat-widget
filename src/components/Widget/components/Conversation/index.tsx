@@ -17,7 +17,7 @@ import { setReplyMessage } from '@actions';
 
 export type CProps = {
   headerProps?: HeaderProps;
-  messagesProps?: Omit<MessagesProps, 'reply'>;
+  messagesProps?: Omit<MessagesProps, 'reply' | 'reaction'>;
   senderProps?: Omit<SenderProps, 'sendMessage' | 'onPressEmoji' | 'onPressFile' | 'disabledInput' | 'allowSend'>;
   quickButtonsProps?: QuickButtonsProps;
   filePickerProps?: Omit<FileAddProps, 'items' | 'onSelectFile' | 'addFileRef'>;
@@ -30,6 +30,7 @@ export type CProps = {
   emojis?: boolean;
   files?: boolean;
   reply?: boolean;
+  reaction?: boolean;
   disabledInput?: boolean;
   copyright?: string;
 };
@@ -57,6 +58,7 @@ function Conversation({
                         emojis,
                         files,
                         reply,
+                        reaction,
                         disabledInput: propDisabledInput,
                         copyright
                       }: CProps) {
@@ -181,7 +183,7 @@ function Conversation({
         {resizable && <div data-resizer="left" className="rcw-conversation-x-resizer" onMouseDown={initResize} />}
         {resizable && <div data-resizer="top" className="rcw-conversation-y-resizer" onMouseDown={initResize} />}
         <Header {...headerProps} />
-        <Messages reply={reply} {...messagesProps} />
+        <Messages reply={reply} reaction={reaction} {...messagesProps} />
         {copyright && <div className="copyright" dangerouslySetInnerHTML={{ __html: copyright }} />}
         <QuickButtons {...quickButtonsProps} />
         {emojis && pickerStatus && (<EmojiPickerPopup

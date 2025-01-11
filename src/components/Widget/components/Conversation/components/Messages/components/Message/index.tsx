@@ -18,6 +18,7 @@ export type Props = {
   message: MessageTypes;
   showTimeStamp?: boolean;
   reply?: boolean;
+  reaction?: boolean;
   isReplyContext?: boolean;
   isReplyMessage?: boolean;
 }
@@ -62,7 +63,7 @@ function FileAttachment({ item }: FileProps) {
   }
 }
 
-function Message({ message, reply, showTimeStamp, isReplyContext, isReplyMessage }: Props) {
+function Message({ message, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props) {
   const locale = useSelector(({ messages }) => messages?.statusLocale);
 
   let sanitizedHTML: string | null = null;
@@ -172,7 +173,7 @@ function Message({ message, reply, showTimeStamp, isReplyContext, isReplyMessage
 
   return (
     <Status message={message} showTimeStamp={!!showTimeStamp} locale={locale} showStatus>
-      <Toolbar message={message} reply={reply}>
+      <Toolbar message={message} reply={reply} reaction={reaction}>
         {sanitizedHTML && (replySection
             ? (<div className="rcw-message-text">
               <div className={`reply-section rcw-${message.sender}`}>

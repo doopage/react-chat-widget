@@ -6,18 +6,26 @@ import { MenuId } from './context-menu';
 import { setReplyMessage } from '@actions';
 
 const replyIcon = require('@assets/reply.svg') as string;
+const faceSmileIcon = require('@assets/face-smile.svg') as string;
 
 export type Props = {
   message: MessageTypes;
   reply?: boolean;
+  reaction?: boolean;
   children: React.ReactNode;
 }
 
-function Toolbar({ message, reply, children }: Props) {
+function Toolbar({ message, reply, reaction, children }: Props) {
   const { show } = useContextMenu({ id: MenuId });
 
   const buttons = useMemo(() => {
     const buttons: MessageButton[] = [];
+    if (reaction) {
+      buttons.push({
+        icon: faceSmileIcon,
+        label: 'Cảm xúc'
+      });
+    }
     if (reply) {
       buttons.push({
         icon: replyIcon,
@@ -26,7 +34,7 @@ function Toolbar({ message, reply, children }: Props) {
       });
     }
     return buttons;
-  }, [reply, message]);
+  }, [reply, reaction, message]);
 
   function displayMenu(event) {
     show({ event });
