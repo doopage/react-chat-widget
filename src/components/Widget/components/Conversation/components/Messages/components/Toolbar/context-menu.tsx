@@ -2,7 +2,6 @@ import Menus from '@components/Menus';
 import { useSelector } from '@selectors';
 import { setContextMenu, setReplyMessage } from '@actions';
 import React, { useMemo } from 'react';
-import './styles.scss';
 import { ContextMenuItem } from '@types';
 
 const replyIcon = require('@assets/reply.svg') as string;
