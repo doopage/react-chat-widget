@@ -1,5 +1,5 @@
 import { CSSProperties, ElementType } from 'react';
-import { StateRef } from '@utils/types';
+import { Position, StateRef } from '@utils/types';
 import { CloseNotification, ShowNotification } from '@toolpad/core';
 
 type BaseMessage = {
@@ -73,6 +73,12 @@ export type ResponseUser = {
   online?: boolean;
 }
 
+interface ContextMenuState {
+  id: string;
+  position: Position;
+  data?: any;
+}
+
 export interface MessagesState {
   responseUser: ResponseUser | null;
   messages: Message[];
@@ -81,6 +87,7 @@ export interface MessagesState {
   statusLocale?: string;
   voiceLocale?: string;
   replyMessage: Message | null;
+  contextMenu: ContextMenuState | null;
 }
 
 export interface QuickButtonsState {
@@ -118,3 +125,9 @@ export interface MessageButton {
   label: string;
   onClick?: () => void;
 }
+
+export type ContextMenuItem = 'divider' | {
+  icon: string;
+  label: string;
+  onClick?: (data: any) => void;
+};

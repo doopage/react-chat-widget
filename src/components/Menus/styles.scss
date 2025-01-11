@@ -1,0 +1,14 @@
+@import 'variables/colors';
+@import 'common';
+
+.rcw-menus {
+  z-index: 10000;
+
+  .MuiMenuItem-root {
+    img {
+      height: 1em;
+      width: 1em;
+      margin-right: .5em;
+    }
+  }
+}

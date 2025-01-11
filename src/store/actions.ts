@@ -5,6 +5,7 @@ import {
   hideAvatar,
   markAllMessagesRead,
   setBadgeCount,
+  setContextMenu,
   setMessages,
   setMessageStatus,
   setPopupMessage,
@@ -49,6 +50,7 @@ export {
   setStatusLocale,
   setVoiceLocale,
   setReplyMessage,
+  setContextMenu,
   setNotification,
   showNotification,
   closeNotification

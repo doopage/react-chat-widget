@@ -8,6 +8,7 @@ import { MESSAGE_SENDER } from '@constants';
 
 import Loader from './components/Loader';
 import Suggestions, { CProps as SuggestionsProps } from './components/Suggestions';
+import ContextMenu from './components/Toolbar/context-menu';
 import './styles.scss';
 import { useSelector } from '@selectors';
 import { Snapshot } from '@utils/types';
@@ -65,7 +66,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, re
 
   return (
     <div id="rcw-messages" className="rcw-messages-container" ref={messageRef}>
-      {/*<ContextMenu />*/}
+      <ContextMenu reply={reply} reaction={reaction} />
       {messages?.map((message, index) =>
         <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`}
              key={`${index}-${format(message.timestamp, 'hh:mm')}`}>

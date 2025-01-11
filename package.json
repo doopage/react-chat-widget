@@ -26,7 +26,6 @@
     "markdown-it-sanitizer": "^0.4.3",
     "markdown-it-sup": "^1.0.0",
     "punycode": "^2.3.0",
-    "react-contexify": "^6.0.0",
     "react-refresh-typescript": "^2.0.9",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "utility-types": "^3.11.0",

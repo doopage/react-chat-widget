@@ -1,12 +1,14 @@
 import { Message, MessagesState, ResponseUser } from '@types';
 import { proxy } from 'valtio';
+import { Position } from '@utils/types';
 
 const initialState: MessagesState = {
   responseUser: null,
   messages: [],
   badgeCount: 0,
   popupMessage: null,
-  replyMessage: null
+  replyMessage: null,
+  contextMenu: null
 };
 
 const state = proxy(initialState);
@@ -76,6 +78,11 @@ export function setVoiceLocale(locale: string) {
 
 export function setReplyMessage(message: Message | null) {
   state.replyMessage = message;
+}
+
+export function setContextMenu(id: string | null, pos?: Position, data?: any) {
+  const position = pos ?? { x: 0, y: 0 };
+  state.contextMenu = id ? { id, position, data } : null;
 }
 
 export default state;

@@ -1,9 +1,8 @@
 import './styles.scss';
 import { MessageButton, MessageTypes } from '@types';
-import { useContextMenu } from 'react-contexify';
-import React, { useMemo } from 'react';
-import { MenuId } from './context-menu';
-import { setReplyMessage } from '@actions';
+import React, { MouseEvent, MouseEventHandler, useMemo } from 'react';
+import { setContextMenu, setReplyMessage } from '@actions';
+import { MenuId } from '@components/Widget/components/Conversation/components/Messages/components/Toolbar/context-menu';
 
 const replyIcon = require('@assets/reply.svg') as string;
 const faceSmileIcon = require('@assets/face-smile.svg') as string;
@@ -16,8 +15,6 @@ export type Props = {
 }
 
 function Toolbar({ message, reply, reaction, children }: Props) {
-  const { show } = useContextMenu({ id: MenuId });
-
   const buttons = useMemo(() => {
     const buttons: MessageButton[] = [];
     if (reaction) {
@@ -36,9 +33,10 @@ function Toolbar({ message, reply, reaction, children }: Props) {
     return buttons;
   }, [reply, reaction, message]);
 
-  function displayMenu(event) {
-    show({ event });
-  }
+  const displayMenu = useMemo((): MouseEventHandler => (ev: MouseEvent) => {
+    ev.preventDefault();
+    setContextMenu(MenuId, { x: ev.clientX, y: ev.clientY }, { message });
+  }, [message]);
 
   return (
     <div className={`rcw-toolbar rcw-toolbar-${message.sender}`}>

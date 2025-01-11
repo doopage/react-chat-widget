@@ -13,3 +13,8 @@ export type SnapshotIgnore = Date | Map<any, any> | Set<any> | WeakMap<any, any>
 export type Snapshot<T> = T extends StateRef<infer S> ? S : T extends SnapshotIgnore ? T : T extends Promise<unknown> ? Awaited<T> : T extends object ? {
   readonly [K in keyof T]: Snapshot<T[K]>;
 } : T;
+
+export type Position = {
+  x: number;
+  y: number;
+}
