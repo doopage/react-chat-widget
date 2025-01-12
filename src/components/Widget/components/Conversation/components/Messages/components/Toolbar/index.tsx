@@ -1,8 +1,9 @@
 import './styles.scss';
 import { MessageButton, MessageTypes } from '@types';
-import React, { MouseEvent, MouseEventHandler, useMemo } from 'react';
+import React, { MouseEvent, MouseEventHandler, useMemo, useRef } from 'react';
 import { setContextMenu, setReplyMessage } from '@actions';
-import { MenuId } from '@components/Widget/components/Conversation/components/Messages/components/Toolbar/context-menu';
+import { MenuId } from './context-menu';
+import { MenuId as ReactionMenuId } from './context-reaction';
 
 const replyIcon = require('@assets/reply.svg') as string;
 const faceSmileIcon = require('@assets/face-smile.svg') as string;
@@ -15,12 +16,15 @@ export type Props = {
 }
 
 function Toolbar({ message, reply, reaction, children }: Props) {
+  const msgRef = useRef<HTMLDivElement>(null);
+
   const buttons = useMemo(() => {
     const buttons: MessageButton[] = [];
     if (reaction) {
       buttons.push({
         icon: faceSmileIcon,
-        label: 'Cảm xúc'
+        label: 'Cảm xúc',
+        onClick: () => msgRef.current && setContextMenu(ReactionMenuId, msgRef.current)
       });
     }
     if (reply) {
@@ -40,7 +44,7 @@ function Toolbar({ message, reply, reaction, children }: Props) {
 
   return (
     <div className={`rcw-toolbar rcw-toolbar-${message.sender}`}>
-      <div className="rcw-toolbar-msg" onContextMenu={displayMenu}>{children}</div>
+      <div className="rcw-toolbar-msg" onContextMenu={displayMenu} ref={msgRef}>{children}</div>
       <div className="rcw-toolbar-btns">
         {buttons.map(({ icon, label, onClick }, i) => <button key={i} title={label} onClick={onClick}>
           <img src={icon} />

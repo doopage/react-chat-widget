@@ -8,12 +8,14 @@ import './styles.scss';
 
 export interface Props {
   items: ContextMenuItem[];
-  position: Position;
+  position: Position | HTMLElement;
   data?: any;
   onClose?: () => void;
 }
 
 export default function Menus({ items, position, data, onClose }: Props) {
+  const isPositionByEl = position instanceof HTMLElement;
+
   const handleClick = (next?: (data: any) => void) => (ev) => {
     ev.preventDefault();
     onClose?.();
@@ -24,8 +26,9 @@ export default function Menus({ items, position, data, onClose }: Props) {
     <Menu
       open
       className="rcw-menus"
-      anchorReference="anchorPosition"
-      anchorPosition={{ left: position?.x, top: position?.y }}
+      anchorReference={isPositionByEl ? 'anchorEl' : 'anchorPosition'}
+      anchorEl={isPositionByEl ? position : undefined}
+      anchorPosition={isPositionByEl ? undefined : { left: position?.x, top: position?.y }}
       elevation={1}
       onClose={onClose}
     >

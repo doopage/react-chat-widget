@@ -1,5 +1,5 @@
 import { Message, MessagesState, ResponseUser } from '@types';
-import { proxy } from 'valtio';
+import { proxy, ref } from 'valtio';
 import { Position } from '@utils/types';
 
 const initialState: MessagesState = {
@@ -80,8 +80,8 @@ export function setReplyMessage(message: Message | null) {
   state.replyMessage = message;
 }
 
-export function setContextMenu(id: string | null, pos?: Position, data?: any) {
-  const position = pos ?? { x: 0, y: 0 };
+export function setContextMenu(id: string | null, pos?: Position | HTMLElement, data?: any) {
+  const position = ref(pos ?? { x: 0, y: 0 });
   state.contextMenu = id ? { id, position, data } : null;
 }
 

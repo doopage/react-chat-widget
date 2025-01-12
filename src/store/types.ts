@@ -75,7 +75,7 @@ export type ResponseUser = {
 
 interface ContextMenuState {
   id: string;
-  position: Position;
+  position: StateRef<Position | HTMLElement>;
   data?: any;
 }
 
