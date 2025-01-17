@@ -166,7 +166,8 @@ export default class App extends Component {
               files: true,
               reply: true,
               reaction: true,
-              copyright: '&copy; 2024 LiveChat, Inc. All rights reserved.'
+              copyright: '&copy; 2024 LiveChat, Inc. All rights reserved.',
+              copyrightPosition: 'outside-bottom',
             },
             launcherProps: {
               // openImg: doopageIcon

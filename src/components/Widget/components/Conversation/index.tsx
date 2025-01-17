@@ -33,6 +33,7 @@ export type CProps = {
   reaction?: boolean;
   disabledInput?: boolean;
   copyright?: string;
+  copyrightPosition?: string;
 };
 
 const minSize = {
@@ -60,7 +61,8 @@ function Conversation({
                         reply,
                         reaction,
                         disabledInput: propDisabledInput,
-                        copyright
+                        copyright,
+                        copyrightPosition = 'bottom'
                       }: CProps) {
   const containerDivRef = useRef<HTMLElement | null>(null);
   const boundResizeRef = useRef<(event: MouseEvent) => void>(() => {
@@ -184,7 +186,7 @@ function Conversation({
         {resizable && <div data-resizer="top" className="rcw-conversation-y-resizer" onMouseDown={initResize} />}
         <Header {...headerProps} />
         <Messages reply={reply} reaction={reaction} {...messagesProps} />
-        {copyright && <div className="copyright" dangerouslySetInnerHTML={{ __html: copyright }} />}
+        {copyright && copyrightPosition === 'bottom' && <div className="copyright bottom" dangerouslySetInnerHTML={{ __html: copyright }} />}
         <QuickButtons {...quickButtonsProps} />
         {emojis && pickerStatus && (<EmojiPickerPopup
           onEmojiClick={onSelectEmoji}
@@ -211,6 +213,7 @@ function Conversation({
           disabledInput={!!propDisabledInput || disableInput || (!!files && fileItems.length > 0)}
           allowSend={!!files && fileItems.length > 0}
         />
+        {copyright && copyrightPosition === 'outside-bottom' && <div className="copyright outside-bottom" dangerouslySetInnerHTML={{ __html: copyright }} />}
       </div>
     </NotificationProvider>
   );
