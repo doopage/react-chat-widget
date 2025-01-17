@@ -3,8 +3,8 @@ import React$1 from 'react';
 import { CSSProperties, ComponentType, ElementType, ReactElement, ReactNode, Ref } from 'react';
 import { Primitive } from 'utility-types';
 
-declare function Message$1({ message, showTimeStamp }: Props$3): import("react/jsx-runtime").JSX.Element;
-declare function Message$2({ message, showTimeStamp, className, children }: Props$5): import("react/jsx-runtime").JSX.Element;
+declare function Message$1({ message, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props$3): import("react/jsx-runtime").JSX.Element;
+declare function Message$2({ message, showTimeStamp, reply, reaction, className, children }: Props$5): import("react/jsx-runtime").JSX.Element;
 declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, anchorBottom, anchorRight, headerPaddingTop, headerPaddingBottom }: CProps$7): import("react/jsx-runtime").JSX.Element;
 declare function Snippet({ message, showTimeStamp }: Props$4): import("react/jsx-runtime").JSX.Element;
 export declare const Component: {
@@ -53,6 +53,7 @@ export declare function openFullscreenPreview(payload: ImageState): void;
 export declare function renderCustomComponent(component: React$1.ComponentType, props: any, showAvatar: boolean, id?: string): void;
 export declare function scrollToBottom(messagesDiv: HTMLDivElement | null): void;
 export declare function setBadgeCount(count: number): void;
+export declare function setContextMenu(id: string | null, pos?: Position | HTMLElement, data?: any): void;
 export declare function setMessageStatus(id: string, status: string, props?: any): boolean;
 export declare function setMessages(messages: Message[]): void;
 export declare function setNotification({ show, close }: NotificationState): void;
@@ -61,6 +62,7 @@ export declare function setQuickButtons(buttons: Array<{
 	label: string;
 	value: string | number;
 }>): void;
+export declare function setReplyMessage(message: Message | null): void;
 export declare function setResponseUser(user: ResponseUser): void;
 export declare function setStatusLocale(locale: string): void;
 export declare function setVoiceLocale(locale: string): void;
@@ -74,6 +76,11 @@ export interface BehaviorState {
 	showChat: boolean;
 	disabledInput: boolean;
 	messageLoader: boolean;
+}
+export interface ContextMenuState {
+	id: string;
+	position: StateRef<Position | HTMLElement>;
+	data?: any;
 }
 export interface CustomCompMessage extends BaseMessage {
 	props: any;
@@ -109,6 +116,11 @@ export interface LinkParams {
 	title: string;
 	target?: string;
 }
+export interface MessageButton {
+	icon: string;
+	label: string;
+	onClick?: () => void;
+}
 export interface MessageTypes extends BaseMessage {
 	text: string;
 }
@@ -119,6 +131,8 @@ export interface MessagesState {
 	popupMessage: string | string[] | null;
 	statusLocale?: string;
 	voiceLocale?: string;
+	replyMessage: Message | null;
+	contextMenu: ContextMenuState | null;
 }
 export interface NotificationState {
 	show: ShowNotification | null;
@@ -171,6 +185,11 @@ export type CProps = {
 		}>;
 	}>;
 };
+export type ContextMenuItem = "divider" | {
+	icon: string;
+	label: string;
+	onClick?: (data: any) => void;
+};
 export type FileAddProps = {
 	onSelect?: (items: FileList) => void;
 	addFileRef?: React$1.MutableRefObject<() => void>;
@@ -187,6 +206,10 @@ export type MessageOptions = {
 	props?: any;
 };
 export type Nullable<T> = T | null;
+export type Position = {
+	x: number;
+	y: number;
+};
 export type Props = {
 	onQuickButtonClicked?: AnyFunction;
 };
@@ -213,6 +236,8 @@ type CProps$1 = {
 };
 type CProps$2 = {
 	showTimeStamp?: boolean;
+	reply?: boolean;
+	reaction?: boolean;
 	profileAvatar?: string;
 	profileClientAvatar?: string;
 	suggestionsProps?: CProps$1;
@@ -232,7 +257,7 @@ type CProps$3 = {
 };
 type CProps$4 = {
 	headerProps?: CProps;
-	messagesProps?: CProps$2;
+	messagesProps?: Omit<CProps$2, "reply" | "reaction">;
 	senderProps?: Omit<CProps$3, "sendMessage" | "onPressEmoji" | "onPressFile" | "disabledInput" | "allowSend">;
 	quickButtonsProps?: Props;
 	filePickerProps?: Omit<FileAddProps, "items" | "onSelectFile" | "addFileRef">;
@@ -240,6 +265,7 @@ type CProps$4 = {
 	sendMessage?: (data: {
 		text?: string;
 		files?: File[];
+		replyMessage?: Message | null;
 	}) => void;
 	resizable?: boolean;
 	resizableProps?: ResizableProps;
@@ -250,8 +276,11 @@ type CProps$4 = {
 	onResize?: (w: number, h: number) => void;
 	emojis?: boolean;
 	files?: boolean;
+	reply?: boolean;
+	reaction?: boolean;
 	disabledInput?: boolean;
 	copyright?: string;
+	copyrightPosition?: string;
 };
 type CProps$5 = {
 	toggle: () => void;
@@ -296,6 +325,7 @@ type Props$2 = {
 	handleNewUserMessage?: (data: {
 		text?: string;
 		files?: File[];
+		replyMessage?: Message | null;
 	}) => void | Promise<void>;
 	handleQuickButtonClicked?: AnyFunction;
 	handleTextInputChange?: (event: any) => void;
@@ -309,7 +339,11 @@ type Props$2 = {
 };
 type Props$3 = {
 	message: MessageTypes;
-	showTimeStamp: boolean;
+	showTimeStamp?: boolean;
+	reply?: boolean;
+	reaction?: boolean;
+	isReplyContext?: boolean;
+	isReplyMessage?: boolean;
 };
 type Props$4 = {
 	message: Link;
@@ -317,7 +351,9 @@ type Props$4 = {
 };
 type Props$5 = {
 	message: MessageTypes;
-	showTimeStamp: boolean;
+	showTimeStamp?: boolean;
+	reply?: boolean;
+	reaction?: boolean;
 	className: string;
 	children?: React$1.ReactNode;
 };
