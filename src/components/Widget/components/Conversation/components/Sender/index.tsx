@@ -103,6 +103,11 @@ function Sender({
       el.innerHTML = emoji.emoji;
     }
     updateCaret(el, start, emoji.emoji.length);
+    setIsTextReady(el.innerHTML.length > 0);
+  };
+
+  const handlerOnBlur = (event) => {
+    setIsTextReady((inputRef.current?.textContent?.length ?? 0) > 0);
   };
 
   const handlerOnKeyPress = (event) => {
@@ -182,6 +187,7 @@ function Sender({
           onKeyPress={handlerOnKeyPress}
           onKeyUp={handlerOnKeyUp}
           onKeyDown={handlerOnKeyDown}
+          onBlur={handlerOnBlur}
         />
         <div className="rcw-input-fake" role="textbox">&nbsp;</div>
 
