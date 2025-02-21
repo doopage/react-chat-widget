@@ -69,7 +69,7 @@ function Message({ message, reply, reaction, showTimeStamp, isReplyContext, isRe
   let sanitizedHTML: string | null = null;
 
   if (message.text) {
-    sanitizedHTML = markdownIt({ html: true, breaks: true })
+    sanitizedHTML = markdownIt({ html: true, breaks: true, linkify: true })
       .use(markdownItClass, {
         img: ['rcw-message-img']
       })
