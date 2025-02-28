@@ -20,9 +20,15 @@ import {
 import Widget from '../src/root';
 import { setResponseUser } from '../src';
 import { ref } from 'valtio';
-import Custom from '../src/components/Widget/components/Conversation/components/Messages/components/Custom';
+import Custom, { Props as CustomProps } from '../src/components/Widget/components/Conversation/components/Messages/components/Custom';
 
 const doopageIcon = require('@assets/doopage-icon.png') as string;
+
+const CustomMessage: React.FC<CustomProps> = (props) => {
+  return <Custom {...props}>
+    <b>Hi</b>
+  </Custom>;
+};
 
 export default class App extends Component {
   componentDidMount() {
@@ -42,7 +48,7 @@ export default class App extends Component {
     // addResponseMessage('![](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)');
     // addResponseMessage('![vertical](https://d2sofvawe08yqg.cloudfront.net/reintroducing-react/hero2x?1556470143)');
     addResponseMessage('Xin chào :D');
-    addSystemMessage('ABC', {}, { component: ref(Custom) });
+    addSystemMessage('ABC', {}, { component: ref(CustomMessage) });
   }
 
   handleNewUserMessage = ({ id, text, files, replyMessage }: any) => {
@@ -167,7 +173,7 @@ export default class App extends Component {
               reply: true,
               reaction: true,
               copyright: '&copy; 2024 LiveChat, Inc. All rights reserved.',
-              copyrightPosition: 'outside-bottom',
+              copyrightPosition: 'outside-bottom'
             },
             launcherProps: {
               // openImg: doopageIcon
