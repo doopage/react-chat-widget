@@ -3,8 +3,8 @@ import React$1 from 'react';
 import { CSSProperties, ComponentType, ElementType, ReactElement, ReactNode, Ref } from 'react';
 import { Primitive } from 'utility-types';
 
-declare function Message$1({ message, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props$3): import("react/jsx-runtime").JSX.Element;
-declare function Message$2({ message, showTimeStamp, reply, reaction, className, children }: Props$5): import("react/jsx-runtime").JSX.Element;
+declare function Message$1({ reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props$3): import("react/jsx-runtime").JSX.Element;
+declare function Message$2({ showTimeStamp, reply, reaction, className, children }: Props$5): import("react/jsx-runtime").JSX.Element;
 declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, anchorBottom, anchorRight, headerPaddingTop, headerPaddingBottom }: CProps$7): import("react/jsx-runtime").JSX.Element;
 declare function Snippet({ message, showTimeStamp }: Props$4): import("react/jsx-runtime").JSX.Element;
 export declare const Component: {
@@ -190,6 +190,7 @@ export type ContextMenuItem = "divider" | {
 	label: string;
 	onClick?: (data: any) => void;
 };
+export type CustomComponentProps = Props$5;
 export type FileAddProps = {
 	onSelect?: (items: FileList) => void;
 	addFileRef?: React$1.MutableRefObject<() => void>;
