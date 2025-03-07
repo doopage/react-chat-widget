@@ -40,8 +40,8 @@ function Toolbar({ reply, reaction, children }: Props) {
 
   const displayMenu = useMemo((): MouseEventHandler => (ev: MouseEvent) => {
     ev.preventDefault();
-    setContextMenu(MenuId, { x: ev.clientX, y: ev.clientY }, { message });
-  }, [message]);
+    buttons.length > 0 && setContextMenu(MenuId, { x: ev.clientX, y: ev.clientY }, { message });
+  }, [message, buttons]);
 
   return (
     <div className={`rcw-toolbar rcw-toolbar-${message.sender}`}>
