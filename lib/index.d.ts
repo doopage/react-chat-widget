@@ -26,6 +26,7 @@ export declare const MESSAGE_SENDER: {
 	RESPONSE: string;
 	SYSTEM: string;
 };
+export declare const MessageContext: React$1.Context<MessageAPI>;
 export declare const ref: <T extends object>(v: T) => StateRef<T>;
 export declare const useSelector: <T>(selector: (state: Snapshot<GlobalState>) => T) => T;
 export declare function addLinkSnippet(link: LinkParams, id?: string, props?: any): void;
@@ -201,6 +202,10 @@ export type FileAddProps = {
 	allowAny?: boolean;
 };
 export type Message = MessageTypes | Link | CustomCompMessage;
+export type MessageAPI = Message & {
+	isShow: boolean;
+	hide(): void;
+};
 export type MessageOptions = {
 	id?: string;
 	status?: string;
