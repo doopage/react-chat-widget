@@ -1,9 +1,9 @@
 import './styles.scss';
-import React from 'react';
+import React, { useContext } from 'react';
 import cn from 'classnames';
-import { MessageTypes } from '@types';
 import { format_time } from '@utils/time';
 import { format } from 'date-fns';
+import { MessageContext } from '../../context';
 
 const statuses = {
   prepare: require('@assets/status-prepare.svg') as string,
@@ -13,14 +13,14 @@ const statuses = {
 };
 
 export type Props = {
-  message: MessageTypes;
   showTimeStamp: boolean;
   showStatus?: boolean;
   locale?: string;
   children: React.ReactNode;
 }
 
-function Status({ message, showTimeStamp, showStatus, locale, children }: Props) {
+function Status({ showTimeStamp, showStatus, locale, children }: Props) {
+  const message = useContext(MessageContext);
   const hasStatus = showStatus && message.sender == 'client' && message.status && statuses[message.status];
   const isStatusError = hasStatus && message.status === 'error';
   let statusTitle = '';

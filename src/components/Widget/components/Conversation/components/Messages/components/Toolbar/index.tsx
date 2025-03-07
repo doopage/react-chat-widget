@@ -1,21 +1,22 @@
 import './styles.scss';
-import { MessageButton, MessageTypes } from '@types';
-import React, { MouseEvent, MouseEventHandler, useMemo, useRef } from 'react';
+import { MessageButton } from '@types';
+import React, { MouseEvent, MouseEventHandler, useContext, useMemo, useRef } from 'react';
 import { setContextMenu, setReplyMessage } from '@actions';
 import { MenuId } from './context-menu';
 import { MenuId as ReactionMenuId } from './context-reaction';
+import { MessageContext } from '../../context';
 
 const replyIcon = require('@assets/reply.svg') as string;
 const faceSmileIcon = require('@assets/face-smile.svg') as string;
 
 export type Props = {
-  message: MessageTypes;
   reply?: boolean;
   reaction?: boolean;
   children: React.ReactNode;
 }
 
-function Toolbar({ message, reply, reaction, children }: Props) {
+function Toolbar({ reply, reaction, children }: Props) {
+  const message = useContext(MessageContext);
   const msgRef = useRef<HTMLDivElement>(null);
 
   const buttons = useMemo(() => {

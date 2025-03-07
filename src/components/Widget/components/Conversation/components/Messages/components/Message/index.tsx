@@ -6,11 +6,12 @@ import markdownItLinkAttributes from 'markdown-it-link-attributes';
 import { imgSize } from '@mdit/plugin-img-size';
 import { attrs } from '@mdit/plugin-attrs';
 import { MessageTypes } from '@types';
-import React, { ReactElement, useMemo } from 'react';
+import React, { ReactElement, useContext, useMemo } from 'react';
 import Status from '../Status';
 import Toolbar from '../Toolbar';
 import { useSelector } from '@selectors';
 import './styles.scss';
+import { MessageContext } from '../../context';
 
 const quoteIcon = require('@assets/quote-right.svg') as string;
 
@@ -63,7 +64,8 @@ function FileAttachment({ item }: FileProps) {
   }
 }
 
-function Message({ message, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props) {
+function Message({ reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props) {
+  const message = useContext(MessageContext) as MessageTypes;
   const locale = useSelector(({ messages }) => messages?.statusLocale);
 
   let sanitizedHTML: string | null = null;
@@ -172,8 +174,8 @@ function Message({ message, reply, reaction, showTimeStamp, isReplyContext, isRe
   }
 
   return (
-    <Status message={message} showTimeStamp={!!showTimeStamp} locale={locale} showStatus>
-      <Toolbar message={message} reply={reply} reaction={reaction}>
+    <Status showTimeStamp={!!showTimeStamp} locale={locale} showStatus>
+      <Toolbar reply={reply} reaction={reaction}>
         {sanitizedHTML && (replySection
             ? (<div className="rcw-message-text">
               <div className={`reply-section rcw-${message.sender}`}>

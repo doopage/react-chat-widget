@@ -10,6 +10,7 @@ import Loader from './components/Loader';
 import Suggestions, { CProps as SuggestionsProps } from './components/Suggestions';
 import ContextMenu from './components/Toolbar/context-menu';
 import ContextReaction from './components/Toolbar/context-reaction';
+import MessageWithContext from './context';
 import './styles.scss';
 import { useSelector } from '@selectors';
 import { Snapshot } from '@utils/types';
@@ -35,7 +36,7 @@ export const getComponentToRender = (message: Snapshot<Message>, opts?: RenderOp
   if (message.type === 'component') {
     return <ComponentToRender {...message.props} />;
   }
-  return <ComponentToRender message={message} {...opts} />;
+  return <ComponentToRender {...opts} />;
 };
 
 function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, reply, reaction, suggestionsProps }: CProps) {
@@ -69,19 +70,19 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, re
     <div id="rcw-messages" className="rcw-messages-container" ref={messageRef}>
       <ContextMenu reply={reply} reaction={reaction} />
       <ContextReaction />
-      {messages?.filter(m => m.status !== 'hidden').map((message, index) =>
-        <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`}
-             key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
-          {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
-            message.showAvatar &&
-            <img
-              src={message.profileAvatar ?? (isClient(message.sender) ? profileClientAvatar : profileAvatar)}
-              className={`rcw-avatar ${isClient(message.sender) ? 'rcw-avatar-client' : ''}`}
-              alt="profile"
-            />
-          }
-          {getComponentToRender(message, { reply, reaction, showTimeStamp })}
-        </div>
+      {messages?.filter(m => m.status !== 'hidden').map((message, index) => <MessageWithContext message={message as Message} key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
+          <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`}>
+            {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
+              message.showAvatar &&
+              <img
+                src={message.profileAvatar ?? (isClient(message.sender) ? profileClientAvatar : profileAvatar)}
+                className={`rcw-avatar ${isClient(message.sender) ? 'rcw-avatar-client' : ''}`}
+                alt="profile"
+              />
+            }
+            {getComponentToRender(message, { reply, reaction, showTimeStamp })}
+          </div>
+        </MessageWithContext>
       )}
       <Loader typing={typing} />
       <div style={{ flexGrow: 1 }} />

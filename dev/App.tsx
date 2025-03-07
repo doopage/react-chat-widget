@@ -18,16 +18,15 @@ import {
   toggleMsgLoader
 } from '@actions';
 import Widget from '../src/root';
-import { setResponseUser } from '../src';
+import { Component as C, CustomComponentProps, setResponseUser } from '../src';
 import { ref } from 'valtio';
-import Custom, { Props as CustomProps } from '../src/components/Widget/components/Conversation/components/Messages/components/Custom';
 
 const doopageIcon = require('@assets/doopage-icon.png') as string;
 
-const CustomMessage: React.FC<CustomProps> = (props) => {
-  return <Custom {...props}>
+const CustomMessage: React.FC<CustomComponentProps> = (props) => {
+  return <C.Custom {...props}>
     <b>Hi</b>
-  </Custom>;
+  </C.Custom>;
 };
 
 export default class App extends Component {

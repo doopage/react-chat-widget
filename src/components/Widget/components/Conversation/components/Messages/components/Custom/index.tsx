@@ -14,12 +14,12 @@ export type Props = {
   children?: React.ReactNode;
 }
 
-function Message({ message, showTimeStamp, reply, reaction, className, children }: Props) {
+function Message({ showTimeStamp, reply, reaction, className, children }: Props) {
   const locale = useSelector(({ messages }) => messages?.statusLocale);
 
   return (
-    <Status message={message} showTimeStamp={!!showTimeStamp} locale={locale} showStatus>
-      <Toolbar message={message} reply={reply} reaction={reaction}>
+    <Status showTimeStamp={!!showTimeStamp} locale={locale} showStatus>
+      <Toolbar reply={reply} reaction={reaction}>
         <div className={`rcw-message-custom ${className}`}>
           {children}
         </div>

@@ -4,7 +4,7 @@ import { CustomCompMessage, Link, LinkParams, MessageTypes as MessageI, QuickBut
 
 import Message from '../components/Widget/components/Conversation/components/Messages/components/Message';
 import Snippet from '../components/Widget/components/Conversation/components/Messages/components/Snippet';
-import Custom from '../components/Widget/components/Conversation/components/Messages/components/Custom';
+import Custom, { Props as CustomProps } from '../components/Widget/components/Conversation/components/Messages/components/Custom';
 import QuickButton from '../components/Widget/components/Conversation/components/QuickButtons/components/QuickButton';
 
 import { MESSAGE_BOX_SCROLL_DURATION, MESSAGE_SENDER, MESSAGES_TYPES } from '@constants';
@@ -108,3 +108,4 @@ export function scrollToBottom(messagesDiv: HTMLDivElement | null) {
 }
 
 export const Component = { Message, Snippet, Custom };
+export type CustomComponentProps = CustomProps;
