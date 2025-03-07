@@ -34,7 +34,7 @@ export default function Menus({ items, position, data, onClose }: Props) {
     >
       {items.map((item, i) => {
         if (item == 'divider') {
-          return <Divider sx={{ my: 0.5 }} />;
+          return <Divider sx={{ my: 0.5 }} key={i} />;
         }
         const { icon, label, onClick } = item;
         return <MenuItem key={i} onClick={handleClick(onClick)}>
