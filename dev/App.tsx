@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 
 import './App.scss';
 
@@ -20,12 +20,16 @@ import {
 import Widget from '../src/root';
 import { Component as C, CustomComponentProps, setResponseUser } from '../src';
 import { ref } from 'valtio';
+import { MessageContext } from '../src/components/Widget/components/Conversation/components/Messages/context';
 
 const doopageIcon = require('@assets/doopage-icon.png') as string;
 
 const CustomMessage: React.FC<CustomComponentProps> = (props) => {
+  const message = useContext(MessageContext);
+
   return <C.Custom {...props}>
-    <b>Hi</b>
+    <b>Hi</b><br/>
+    <button onClick={message.hide}>Hide</button>
   </C.Custom>;
 };
 

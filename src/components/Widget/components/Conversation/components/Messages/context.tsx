@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Message } from '@types';
 
 export type CProps = {
@@ -6,16 +6,28 @@ export type CProps = {
   children: React.ReactElement;
 }
 
-export type MessageAPI = Message & {}
+export type MessageAPI = Message & {
+  isShow: boolean;
+  hide(): void;
+}
 
-export const MessageContext = React.createContext<MessageAPI>({} as Message);
+export const MessageContext = React.createContext<MessageAPI>({} as MessageAPI);
 
 function createAPI(message: Message): MessageAPI {
-  return message;
+  const [isShow, setShow] = useState(!!message);
+
+  return {
+    ...message,
+    isShow,
+    hide() {
+      setShow(false);
+    }
+  };
 }
 
 function MessageWithContext({ message, children }: CProps) {
-  return message && <MessageContext.Provider value={createAPI(message)}>{children}</MessageContext.Provider>;
+  const state = createAPI(message);
+  return state.isShow && <MessageContext.Provider value={state}>{children}</MessageContext.Provider>;
 }
 
 export default MessageWithContext;
