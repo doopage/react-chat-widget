@@ -2,10 +2,11 @@ import { ComponentType } from 'react';
 
 import { CustomCompMessage, Link, LinkParams, MessageTypes as MessageI, QuickButtonTypes } from '@types';
 
-import Message from '../components/Widget/components/Conversation/components/Messages/components/Message';
-import Snippet from '../components/Widget/components/Conversation/components/Messages/components/Snippet';
-import Custom, { Props as CustomProps } from '../components/Widget/components/Conversation/components/Messages/components/Custom';
-import QuickButton from '../components/Widget/components/Conversation/components/QuickButtons/components/QuickButton';
+import Message from '@components/Widget/components/Conversation/components/Messages/components/Message';
+import Snippet from '@components/Widget/components/Conversation/components/Messages/components/Snippet';
+import Custom, { Props as CustomProps } from '@components/Widget/components/Conversation/components/Messages/components/Custom';
+import QuickButton from '@components/Widget/components/Conversation/components/QuickButtons/components/QuickButton';
+import { MessageContext } from '@components/Widget/components/Conversation/components/Messages/context';
 
 import { MESSAGE_BOX_SCROLL_DURATION, MESSAGE_SENDER, MESSAGES_TYPES } from '@constants';
 import { ref } from '@utils/store';
@@ -109,3 +110,4 @@ export function scrollToBottom(messagesDiv: HTMLDivElement | null) {
 
 export const Component = { Message, Snippet, Custom };
 export type CustomComponentProps = CustomProps;
+export { MessageContext };
