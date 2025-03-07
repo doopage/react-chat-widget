@@ -356,7 +356,6 @@ type Props$4 = {
 	showTimeStamp: boolean;
 };
 type Props$5 = {
-	message: MessageTypes;
 	showTimeStamp?: boolean;
 	reply?: boolean;
 	reaction?: boolean;
