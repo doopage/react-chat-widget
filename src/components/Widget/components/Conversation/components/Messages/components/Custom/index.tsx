@@ -1,4 +1,3 @@
-import { MessageTypes } from '@types';
 import React from 'react';
 import Status from '../Status';
 import Toolbar from '../Toolbar';
@@ -6,7 +5,6 @@ import { useSelector } from '@selectors';
 import './styles.scss';
 
 export type Props = {
-  message: MessageTypes;
   showTimeStamp?: boolean;
   reply?: boolean;
   reaction?: boolean;
