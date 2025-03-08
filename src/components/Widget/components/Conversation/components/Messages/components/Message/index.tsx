@@ -12,6 +12,8 @@ import Toolbar from '../Toolbar';
 import { useSelector } from '@selectors';
 import './styles.scss';
 import { MessageContext } from '../../context';
+import { showNotification } from '@actions';
+import { scrollIntoView } from '@utils/scroll';
 
 const quoteIcon = require('@assets/quote-right.svg') as string;
 
@@ -173,6 +175,23 @@ function Message({ message: messageRaw, reply, reaction, showTimeStamp, isReplyC
     replySection = <Message message={message.props.replyMessage} isReplyMessage />;
   }
 
+  const goToReply = () => {
+    const { customId } = message.props.replyMessage;
+    if (!customId) {
+      return;
+    }
+    const ctx = document.querySelector('#rcw-messages');
+    if (!ctx) {
+      return;
+    }
+    const m = ctx.querySelector(`.rcw-message[data-id="${customId}"]`);
+    if (m) {
+      scrollIntoView(ctx, m, { behavior: 'smooth', y: -64 * 2 });
+    } else {
+      showNotification('Không thể tìm thấy tin nhắn', { severity: 'warning' });
+    }
+  };
+
   return (
     <Status showTimeStamp={!!showTimeStamp} locale={locale} showStatus>
       <Toolbar reply={reply} reaction={reaction}>
@@ -183,6 +202,7 @@ function Message({ message: messageRaw, reply, reaction, showTimeStamp, isReplyC
                 <div className="rcw-message-reply-content">
                   {replySection}
                 </div>
+                <div className="full-overlay" onClick={goToReply} />
               </div>
               <div dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />
             </div>)
