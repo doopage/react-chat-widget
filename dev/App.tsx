@@ -75,7 +75,7 @@ export default class App extends Component {
       } else {
         addResponseMessage(text, { props: { files, replyMessage } });
       }
-      toggleInputDisabled();
+      // toggleInputDisabled();
     }, 5000);
   };
 
@@ -100,7 +100,7 @@ export default class App extends Component {
       });
       return;
     }
-    toggleInputDisabled();
+    // toggleInputDisabled();
     setResponseUser({
       avatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',
       name: 'Chien Nguyen',
