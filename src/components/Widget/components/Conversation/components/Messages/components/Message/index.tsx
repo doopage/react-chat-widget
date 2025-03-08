@@ -64,8 +64,8 @@ function FileAttachment({ item }: FileProps) {
   }
 }
 
-function Message({ reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props) {
-  const message = useContext(MessageContext) as MessageTypes;
+function Message({ message: messageRaw, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props) {
+  const message = messageRaw ?? useContext(MessageContext) as MessageTypes;
   const locale = useSelector(({ messages }) => messages?.statusLocale);
 
   let sanitizedHTML: string | null = null;
