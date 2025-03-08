@@ -28,7 +28,7 @@ export function createNewMessage(
     timestamp: new Date(),
     showAvatar: true,
     status,
-    customId: id,
+    customId: id ?? `generated_${Date.now()}`,
     unread: sender === MESSAGE_SENDER.RESPONSE,
     ...overrides
   };
