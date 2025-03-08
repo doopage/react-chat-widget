@@ -36,7 +36,7 @@ export const getComponentToRender = (message: Snapshot<Message>, opts?: RenderOp
   if (message.type === 'component') {
     return <ComponentToRender {...message.props} />;
   }
-  return <ComponentToRender {...opts} />;
+  return <ComponentToRender message={message} {...opts} />;
 };
 
 function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, reply, reaction, suggestionsProps }: CProps) {
