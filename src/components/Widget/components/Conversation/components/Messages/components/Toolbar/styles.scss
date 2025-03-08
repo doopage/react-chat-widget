@@ -52,3 +52,17 @@
     }
   }
 }
+
+.context-reaction {
+  .context-reaction-body {
+    position: absolute;
+    display: flex;
+    width: 300px;
+    z-index: 1001;
+
+    & > aside {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}

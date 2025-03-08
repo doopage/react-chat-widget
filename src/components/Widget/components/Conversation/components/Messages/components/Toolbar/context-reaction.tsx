@@ -1,7 +1,12 @@
 import { useSelector } from '@selectors';
 import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
+import Overlay from '@components/Overlay';
+import { setContextMenu } from '@actions';
+import { Position } from '@utils/types';
 
 export const MenuId = 'message-reaction';
+
+const width = 300;
 
 export function ContextReaction() {
   const contextMenu = useSelector(({ messages }) => messages?.contextMenu);
@@ -10,13 +15,36 @@ export function ContextReaction() {
     return;
   }
 
-  return <div style={{ width: 'fit-content' }}>
-    <EmojiPicker
-      onReactionClick={console.log}
-      emojiStyle={EmojiStyle.NATIVE}
-      reactionsDefaultOpen
-      allowExpandReactions={false}
-    />
+  let position: Position;
+  if (contextMenu.position instanceof HTMLElement) {
+    const el = contextMenu.position;
+    const r = el.getBoundingClientRect();
+    position = {
+      x: el.offsetLeft + (el.offsetWidth / 2) - (width / 2),
+      y: r.top - 64 - 40
+    };
+  } else {
+    position = contextMenu.position;
+  }
+
+  if (position.x < 0) {
+    position.x = 10;
+  }
+  const m = document.querySelector('#rcw-messages');
+  if (m && (position.x + width) > m.clientWidth) {
+    position.x = m.clientWidth - width;
+  }
+
+  return <div className="context-reaction">
+    <Overlay opacity={0.05} onClick={() => setContextMenu(null)} />
+    <div className="context-reaction-body" style={{ left: position.x, top: position.y }}>
+      <EmojiPicker
+        onReactionClick={console.log}
+        emojiStyle={EmojiStyle.NATIVE}
+        reactionsDefaultOpen
+        allowExpandReactions={false}
+      />
+    </div>
   </div>;
 }
 
