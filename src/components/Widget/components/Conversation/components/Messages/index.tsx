@@ -71,7 +71,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, re
       <ContextMenu reply={reply} reaction={reaction} />
       <ContextReaction />
       {messages?.filter(m => m.status !== 'hidden').map((message, index) => <MessageWithContext message={message as Message} key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
-          <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`}>
+          <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`} data-id={message.customId}>
             {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
               message.showAvatar &&
               <img
