@@ -3,7 +3,7 @@ import React$1 from 'react';
 import { CSSProperties, ComponentType, ElementType, ReactElement, ReactNode, Ref } from 'react';
 import { Primitive } from 'utility-types';
 
-declare function Message$1({ reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props$3): import("react/jsx-runtime").JSX.Element;
+declare function Message$1({ message: messageRaw, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props$3): import("react/jsx-runtime").JSX.Element;
 declare function Message$2({ showTimeStamp, reply, reaction, className, children }: Props$5): import("react/jsx-runtime").JSX.Element;
 declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, anchorBottom, anchorRight, headerPaddingTop, headerPaddingBottom }: CProps$7): import("react/jsx-runtime").JSX.Element;
 declare function Snippet({ message, showTimeStamp }: Props$4): import("react/jsx-runtime").JSX.Element;
@@ -55,6 +55,7 @@ export declare function renderCustomComponent(component: React$1.ComponentType, 
 export declare function scrollToBottom(messagesDiv: HTMLDivElement | null): void;
 export declare function setBadgeCount(count: number): void;
 export declare function setContextMenu(id: string | null, pos?: Position | HTMLElement, data?: any): void;
+export declare function setMessageReaction(id: string, reaction: string | null): boolean;
 export declare function setMessageStatus(id: string, status: string, props?: any): boolean;
 export declare function setMessages(messages: Message[]): void;
 export declare function setNotification({ show, close }: NotificationState): void;
