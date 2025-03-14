@@ -60,6 +60,18 @@ export function setMessageStatus(id: string, status: string, props: any = null):
   return false;
 }
 
+export function setMessageReaction(id: string, reaction: string | null): boolean {
+  const m = findMessageByCustomId(id);
+  if (m) {
+    if (typeof m.props === 'undefined') {
+      m.props = {};
+    }
+    m.props.reaction = reaction;
+    return true;
+  }
+  return false;
+}
+
 export function setResponseUser(user: ResponseUser) {
   state.responseUser = user;
 }

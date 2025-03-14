@@ -25,7 +25,7 @@ function Toolbar({ reply, reaction, children }: Props) {
       buttons.push({
         icon: faceSmileIcon,
         label: 'Cảm xúc',
-        onClick: () => msgRef.current && setContextMenu(ReactionMenuId, msgRef.current)
+        onClick: () => msgRef.current && setContextMenu(ReactionMenuId, msgRef.current, { message })
       });
     }
     if (reply) {
@@ -45,7 +45,10 @@ function Toolbar({ reply, reaction, children }: Props) {
 
   return (
     <div className={`rcw-toolbar rcw-toolbar-${message.sender}`}>
-      <div className="rcw-toolbar-msg" onContextMenu={displayMenu} ref={msgRef}>{children}</div>
+      <div className="rcw-toolbar-msg" onContextMenu={displayMenu} ref={msgRef}>
+        {children}
+        {message.props?.reaction && <span className="icon-reaction">{message.props?.reaction}</span>}
+      </div>
       <div className="rcw-toolbar-btns">
         {buttons.map(({ icon, label, onClick }, i) => <button key={i} title={label} onClick={onClick}>
           <img src={icon} />

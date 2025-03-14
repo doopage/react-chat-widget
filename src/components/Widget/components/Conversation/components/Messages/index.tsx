@@ -3,7 +3,7 @@ import format from 'date-fns/format';
 
 import { scrollToBottom } from '@utils/messages';
 import { Message } from '@types';
-import { markAllMessagesRead, setBadgeCount } from '@actions';
+import { markAllMessagesRead, setBadgeCount, setMessageReaction } from '@actions';
 import { MESSAGE_SENDER } from '@constants';
 
 import Loader from './components/Loader';
@@ -69,7 +69,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, re
   return (
     <div id="rcw-messages" className="rcw-messages-container" ref={messageRef}>
       <ContextMenu reply={reply} reaction={reaction} />
-      <ContextReaction onReaction={console.log} />
+      <ContextReaction onReaction={(emoji, data) => setMessageReaction(data.message.customId, emoji)} />
       {messages?.filter(m => m.status !== 'hidden').map((message, index) => <MessageWithContext message={message as Message} key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
           <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`} data-id={message.customId}>
             {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&

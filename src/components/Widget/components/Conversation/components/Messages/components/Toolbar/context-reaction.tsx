@@ -9,14 +9,14 @@ export const MenuId = 'message-reaction';
 const width = 300;
 
 export type CProps = {
-  onReaction?: (emoji: string | null) => void;
+  onReaction?: (emoji: string | null, data?: any) => void;
 }
 
 export function ContextReaction({ onReaction }: CProps) {
   const contextMenu = useSelector(({ messages }) => messages?.contextMenu);
 
   const onClick = (ev: EmojiClickData) => {
-    onReaction?.(ev.emoji);
+    onReaction?.(ev.emoji, contextMenu?.data);
     setContextMenu(null);
   };
 
