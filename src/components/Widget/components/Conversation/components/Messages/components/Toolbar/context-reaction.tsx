@@ -1,5 +1,5 @@
 import { useSelector } from '@selectors';
-import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
+import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 import Overlay from '@components/Overlay';
 import { setContextMenu } from '@actions';
 import { Position } from '@utils/types';
@@ -8,8 +8,17 @@ export const MenuId = 'message-reaction';
 
 const width = 300;
 
-export function ContextReaction() {
+export type CProps = {
+  onReaction?: (emoji: string | null) => void;
+}
+
+export function ContextReaction({ onReaction }: CProps) {
   const contextMenu = useSelector(({ messages }) => messages?.contextMenu);
+
+  const onClick = (ev: EmojiClickData) => {
+    onReaction?.(ev.emoji);
+    setContextMenu(null);
+  };
 
   if (!contextMenu || contextMenu.id != MenuId) {
     return;
@@ -39,7 +48,7 @@ export function ContextReaction() {
     <Overlay opacity={0.05} onClick={() => setContextMenu(null)} />
     <div className="context-reaction-body" style={{ left: position.x, top: position.y }}>
       <EmojiPicker
-        onReactionClick={console.log}
+        onReactionClick={onClick}
         emojiStyle={EmojiStyle.NATIVE}
         reactionsDefaultOpen
         allowExpandReactions={false}

@@ -69,7 +69,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, re
   return (
     <div id="rcw-messages" className="rcw-messages-container" ref={messageRef}>
       <ContextMenu reply={reply} reaction={reaction} />
-      <ContextReaction />
+      <ContextReaction onReaction={console.log} />
       {messages?.filter(m => m.status !== 'hidden').map((message, index) => <MessageWithContext message={message as Message} key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
           <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`} data-id={message.customId}>
             {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
