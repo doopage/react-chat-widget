@@ -1,7 +1,7 @@
 import './styles.scss';
 import { MessageButton } from '@types';
 import React, { MouseEvent, MouseEventHandler, useContext, useMemo, useRef } from 'react';
-import { setContextMenu, setReplyMessage } from '@actions';
+import { setContextMenu, setMessageReaction, setReplyMessage } from '@actions';
 import { MenuId } from './context-menu';
 import { MenuId as ReactionMenuId } from './context-reaction';
 import { MessageContext } from '../../context';
@@ -47,7 +47,7 @@ function Toolbar({ reply, reaction, children }: Props) {
     <div className={`rcw-toolbar rcw-toolbar-${message.sender}`}>
       <div className="rcw-toolbar-msg" onContextMenu={displayMenu} ref={msgRef}>
         {children}
-        {message.props?.reaction && <span className="icon-reaction">{message.props?.reaction}</span>}
+        {message.props?.reaction && <span className="icon-reaction" onClick={() => setMessageReaction(message.customId!, null)}>{message.props?.reaction}</span>}
       </div>
       <div className="rcw-toolbar-btns">
         {buttons.map(({ icon, label, onClick }, i) => <button key={i} title={label} onClick={onClick}>
