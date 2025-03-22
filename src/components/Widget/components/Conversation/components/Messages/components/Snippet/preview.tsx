@@ -74,8 +74,31 @@ export const parseFacebookLink = (url: URL): FacebookProps | null => {
 
 export const FacebookPreview: React.FC<FacebookProps> = ({ url }) => {
   return (
-    <div className="facebook">
+    <div className="facebook-preview">
       <iframe src={`https://www.facebook.com/plugins/video.php?href=${url}`} />
+    </div>
+  );
+};
+
+interface VimeoProps {
+  id?: string;
+}
+
+export const parseVimeoLink = (url: URL): VimeoProps | null => {
+  if (!/(^|\.)vimeo\.com(\.|$)/.test(url.hostname)) {
+    return null;
+  }
+  const m = /^\/([0-9]+)/.exec(url.pathname);
+  if (!m) {
+    return null;
+  }
+  return { id: m.pop() };
+};
+
+export const VimeoPreview: React.FC<VimeoProps> = ({ id }) => {
+  return (
+    <div className="vimeo-preview">
+      <iframe src={`https://player.vimeo.com/video/${id}`} />
     </div>
   );
 };
