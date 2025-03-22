@@ -41,6 +41,7 @@ export function createLinkSnippet(link: LinkParams, id?: string, props?: any): L
     title: link.title,
     link: link.link,
     target: link.target || '_blank',
+    showPreview: true,
     props: props ? ref(props) : undefined,
     sender: MESSAGE_SENDER.RESPONSE,
     timestamp: new Date(),

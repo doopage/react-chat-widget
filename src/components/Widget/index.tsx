@@ -37,6 +37,15 @@ function Widget({ layoutProps, handleNewUserMessage, handleQuickButtonClicked, h
         }
       }
       onResize!(width, height);
+      let gridLevel: string = 'sm';
+      if (width >= 700) {
+        gridLevel = 'xl';
+      } else if (width >= 560) {
+        gridLevel = 'lg';
+      } else if (width >= 480) {
+        gridLevel = 'md';
+      }
+      el.setAttribute('x-grid', gridLevel ?? '');
     });
     s.observe(el);
   }, [rootRef, onResize]);

@@ -1,27 +1,56 @@
-import format from 'date-fns/format';
-
+import cn from 'classnames';
+import Status from '../Status';
+import Toolbar from '../Toolbar';
 import { Link } from '@types';
-
+import { useContext, useMemo } from 'react';
+import { MessageContext } from '../../context';
+import { useSelector } from '@selectors';
+import { parseTiktokLink, parseYoutubeLink, TiktokPreview, YoutubePreview } from './preview';
 import './styles.scss';
 
 export type Props = {
   message: Link;
-  showTimeStamp: boolean;
+  showTimeStamp?: boolean;
+  reply?: boolean;
+  reaction?: boolean;
+  isReplyContext?: boolean;
+  isReplyMessage?: boolean;
 }
 
-function Snippet({ message, showTimeStamp }: Props) {
+function Snippet({ message: messageRaw, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props) {
+  const message = messageRaw ?? useContext(MessageContext) as Link;
+  const locale = useSelector(({ messages }) => messages?.statusLocale);
+
+  const preview = useMemo(() => {
+    if (!message.showPreview || isReplyContext || isReplyMessage) {
+      return;
+    }
+    const { link } = message;
+    const urlLink = new URL(link);
+    const youtubeParams = parseYoutubeLink(urlLink);
+    if (youtubeParams !== null) {
+      return <YoutubePreview {...youtubeParams} />;
+    }
+    const tiktokParams = parseTiktokLink(urlLink);
+    if (tiktokParams !== null) {
+      return <TiktokPreview {...tiktokParams} />;
+    }
+  }, [message.link, message.showPreview, isReplyContext, isReplyMessage]);
+
   return (
-    <div>
-      <div className="rcw-snippet">
-        <h5 className="rcw-snippet-title">{message.title}</h5>
-        <div className="rcw-snippet-details">
-          <a href={message.link} target={message.target} className="rcw-link">
-            {message.link}
-          </a>
+    <Status showTimeStamp={!!showTimeStamp} locale={locale} showStatus>
+      <Toolbar reply={reply} reaction={reaction}>
+        <div className={cn('rcw-snippet', { 'is-preview': !!preview })}>
+          {preview ? preview : <><h5 className="rcw-snippet-title">{message.title}</h5>
+            <div className="rcw-snippet-details">
+              <a href={message.link} target={message.target} className="rcw-link">
+                {message.link}
+              </a>
+            </div>
+          </>}
         </div>
-      </div>
-      {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, 'hh:mm')}</span>}
-    </div>
+      </Toolbar>
+    </Status>
   );
 }
 

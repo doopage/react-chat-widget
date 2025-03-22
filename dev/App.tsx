@@ -3,6 +3,7 @@ import React, { Component, useContext } from 'react';
 import './App.scss';
 
 import {
+  addLinkSnippet,
   addResponseMessage,
   addSystemMessage,
   addToggleChatListener,
@@ -14,13 +15,11 @@ import {
   showNotification,
   showPopup,
   showSuggestions,
-  toggleInputDisabled,
   toggleMsgLoader
 } from '@actions';
 import Widget from '../src/root';
-import { Component as C, CustomComponentProps, setResponseUser } from '../src';
+import { Component as C, CustomComponentProps, MessageContext, setResponseUser } from '../src';
 import { ref } from 'valtio';
-import { MessageContext } from '../src/components/Widget/components/Conversation/components/Messages/context';
 
 const doopageIcon = require('@assets/doopage-icon.png') as string;
 
@@ -28,7 +27,7 @@ const CustomMessage: React.FC<CustomComponentProps> = (props) => {
   const message = useContext(MessageContext);
 
   return <C.Custom {...props}>
-    <b>Hi</b><br/>
+    <b>Hi</b><br />
     <button onClick={message.hide}>Hide</button>
   </C.Custom>;
 };
@@ -73,7 +72,14 @@ export default class App extends Component {
         };
         showSuggestions(right, bottom);
       } else {
-        addResponseMessage(text, { props: { files, replyMessage } });
+        if (/^https?:/.test(text)) {
+          addLinkSnippet({
+            title: 'Link',
+            link: text
+          });
+        } else {
+          addResponseMessage(text, { props: { files, replyMessage } });
+        }
       }
       // toggleInputDisabled();
     }, 5000);

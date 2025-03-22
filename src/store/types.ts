@@ -29,6 +29,7 @@ export interface Link extends BaseMessage {
   title: string;
   link: string;
   target: string;
+  showPreview?: boolean;
 }
 
 export interface LinkParams {
