@@ -5,7 +5,7 @@ import { Link } from '@types';
 import { useContext, useMemo } from 'react';
 import { MessageContext } from '../../context';
 import { useSelector } from '@selectors';
-import { parseTiktokLink, parseYoutubeLink, TiktokPreview, YoutubePreview } from './preview';
+import { FacebookPreview, parseFacebookLink, parseTiktokLink, parseYoutubeLink, TiktokPreview, YoutubePreview } from './preview';
 import './styles.scss';
 
 export type Props = {
@@ -34,6 +34,10 @@ function Snippet({ message: messageRaw, reply, reaction, showTimeStamp, isReplyC
     const tiktokParams = parseTiktokLink(urlLink);
     if (tiktokParams !== null) {
       return <TiktokPreview {...tiktokParams} />;
+    }
+    const facebookParams = parseFacebookLink(urlLink);
+    if (facebookParams !== null) {
+      return <FacebookPreview {...facebookParams} />;
     }
   }, [message.link, message.showPreview, isReplyContext, isReplyMessage]);
 

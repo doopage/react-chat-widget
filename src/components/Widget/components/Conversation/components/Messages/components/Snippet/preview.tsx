@@ -32,7 +32,7 @@ interface TikTokProps {
 }
 
 export const parseTiktokLink = (url: URL): TikTokProps | null => {
-  if (!/(^|\.)vt\.tiktok\.com(\.|$)/.test(url.hostname)) {
+  if (!/(^|\.)tiktok\.com(\.|$)/.test(url.hostname)) {
     return null;
   }
   const m = /^\/(.+)\//.exec(url.pathname);
@@ -44,7 +44,7 @@ export const parseTiktokLink = (url: URL): TikTokProps | null => {
 
 export const TiktokPreview: React.FC<TikTokProps> = ({ productId, url }) => {
   const [embedId, setEmbedId] = useState(productId);
-  useEffect(() => void fetch(`https://www.tiktok.com/oembed?url=${url}/`)
+  useEffect(() => void fetch(`https://www.tiktok.com/oembed?url=${url}`)
     .then(async (res) => {
       const { embed_type, embed_product_id } = await res.json();
       if (embed_type === 'video') {
@@ -54,6 +54,28 @@ export const TiktokPreview: React.FC<TikTokProps> = ({ productId, url }) => {
   return (
     <div className="tiktok-preview">
       {embedId && <iframe src={`https://www.tiktok.com/player/v1/${embedId}/`} />}
+    </div>
+  );
+};
+
+interface FacebookProps {
+  url?: string;
+}
+
+export const parseFacebookLink = (url: URL): FacebookProps | null => {
+  if (!/(^|\.)facebook\.com(\.|$)/.test(url.hostname)) {
+    return null;
+  }
+  if (!url.pathname.startsWith('/reel/') && url.pathname !== '/watch/') {
+    return null;
+  }
+  return { url: url.toString() };
+};
+
+export const FacebookPreview: React.FC<FacebookProps> = ({ url }) => {
+  return (
+    <div className="facebook">
+      <iframe src={`https://www.facebook.com/plugins/video.php?href=${url}`} />
     </div>
   );
 };
