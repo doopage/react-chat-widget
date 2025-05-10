@@ -109,6 +109,18 @@
       .reply-content-preview {
         height: 24px;
       }
+
+      .reply-content-body {
+        .reply-content-header {
+          font-size: small;
+
+          img {
+            height: 12px;
+            width: 12px;
+            margin-right: 8px;
+          }
+        }
+      }
     }
   }
 }
