@@ -6,7 +6,7 @@ import { Primitive } from 'utility-types';
 declare function Message$1({ message: messageRaw, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props$3): import("react/jsx-runtime").JSX.Element;
 declare function Message$2({ showTimeStamp, reply, reaction, className, children }: Props$5): import("react/jsx-runtime").JSX.Element;
 declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, anchorBottom, anchorRight, headerPaddingTop, headerPaddingBottom }: CProps$7): import("react/jsx-runtime").JSX.Element;
-declare function Snippet({ message, showTimeStamp }: Props$4): import("react/jsx-runtime").JSX.Element;
+declare function Snippet({ message: messageRaw, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props$4): import("react/jsx-runtime").JSX.Element;
 export declare const Component: {
 	Message: typeof Message$1;
 	Snippet: typeof Snippet;
@@ -112,6 +112,7 @@ export interface Link extends BaseMessage {
 	title: string;
 	link: string;
 	target: string;
+	showPreview?: boolean;
 }
 export interface LinkParams {
 	link: string;
@@ -354,7 +355,11 @@ type Props$3 = {
 };
 type Props$4 = {
 	message: Link;
-	showTimeStamp: boolean;
+	showTimeStamp?: boolean;
+	reply?: boolean;
+	reaction?: boolean;
+	isReplyContext?: boolean;
+	isReplyMessage?: boolean;
 };
 type Props$5 = {
 	showTimeStamp?: boolean;
