@@ -246,6 +246,7 @@ type CProps$2 = {
 	showTimeStamp?: boolean;
 	reply?: boolean;
 	reaction?: boolean;
+	onReaction?: (mId: string, emoji: string | null) => boolean;
 	profileAvatar?: string;
 	profileClientAvatar?: string;
 	suggestionsProps?: CProps$1;
