@@ -164,6 +164,10 @@ export default class App extends Component {
                     alert('Bạn đã chọn: ' + text);
                     next();
                   }
+                },
+                onReaction: (mId, emoji) => {
+                  console.log('reaction', mId, emoji);
+                  return true;
                 }
               },
               senderProps: {

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import format from 'date-fns/format';
 
 import { scrollToBottom } from '@utils/messages';
@@ -19,6 +19,7 @@ export type CProps = {
   showTimeStamp?: boolean,
   reply?: boolean;
   reaction?: boolean;
+  onReaction?: (mId: string, emoji: string | null) => boolean;
   profileAvatar?: string;
   profileClientAvatar?: string;
   suggestionsProps?: SuggestionsProps;
@@ -39,7 +40,7 @@ export const getComponentToRender = (message: Snapshot<Message>, opts?: RenderOp
   return <ComponentToRender message={message} {...opts} />;
 };
 
-function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, reply, reaction, suggestionsProps }: CProps) {
+function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, reply, reaction, onReaction, suggestionsProps }: CProps) {
   const { messages, typing, showChat, badgeCount, showSuggestion } = useSelector(({ behavior, messages, suggestions }) => ({
     messages: messages.messages,
     badgeCount: messages.badgeCount,
@@ -47,6 +48,12 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, re
     showChat: behavior.showChat,
     showSuggestion: suggestions.showSuggestion
   }));
+
+  const handleReaction = useMemo(() => (emoji, data) => {
+    if (!onReaction || onReaction(data.message.customId, emoji)) {
+      setMessageReaction(data.message.customId, emoji);
+    }
+  }, [onReaction]);
 
   const messageRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -69,7 +76,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, re
   return (
     <div id="rcw-messages" className="rcw-messages-container" ref={messageRef}>
       <ContextMenu reply={reply} reaction={reaction} />
-      <ContextReaction onReaction={(emoji, data) => setMessageReaction(data.message.customId, emoji)} />
+      <ContextReaction onReaction={handleReaction} />
       {messages?.filter(m => m.status !== 'hidden').map((message, index) => <MessageWithContext message={message as Message} key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
           <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`} data-id={message.customId}>
             {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
