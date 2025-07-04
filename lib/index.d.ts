@@ -250,6 +250,8 @@ type CProps$2 = {
 	profileAvatar?: string;
 	profileClientAvatar?: string;
 	suggestionsProps?: CProps$1;
+	allowDropToUpload?: boolean;
+	onSelectFile?: (event: any) => void;
 };
 type CProps$3 = {
 	senderRef?: React$1.Ref<ISenderRef>;
