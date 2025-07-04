@@ -1,0 +1,43 @@
+.rcw-messages-area {
+  position: absolute;
+  z-index: 99;
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn {
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+
+      &:hover {
+        background: #CCCCCC;
+      }
+    }
+  }
+
+  &.file-uploader {
+    > label {
+      max-width: -webkit-fill-available;
+      height: -webkit-fill-available;
+      justify-content: center;
+
+      > div:last-child {
+        flex-grow: unset;
+      }
+    }
+  }
+}

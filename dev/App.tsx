@@ -157,6 +157,7 @@ export default class App extends Component {
                 ]
               },
               messagesProps: {
+                allowDropToUpload: true,
                 profileAvatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',
                 profileClientAvatar: 'https://gravatar.com/avatar/a6b4011d2aa73154e225faa999e252ae3f2d7489819e8c04324549850712d6f7?size=512',
                 suggestionsProps: {

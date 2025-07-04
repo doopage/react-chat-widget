@@ -154,7 +154,10 @@ function Conversation({
     senderRef.current?.onSelectEmoji(emoji);
   };
 
-  const onSelectFile = (files: File[]) => {
+  const onSelectFile = (files: File | File[]) => {
+    if (!Array.isArray(files)) {
+      files = [files];
+    }
     // setFileItems(files);
     sendMessage?.({ files, replyMessage });
   };
@@ -185,7 +188,7 @@ function Conversation({
         {resizable && <div data-resizer="left" className="rcw-conversation-x-resizer" onMouseDown={initResize} />}
         {resizable && <div data-resizer="top" className="rcw-conversation-y-resizer" onMouseDown={initResize} />}
         <Header {...headerProps} />
-        <Messages reply={reply} reaction={reaction} {...messagesProps} />
+        <Messages reply={reply} reaction={reaction} onSelectFile={onSelectFile} {...messagesProps} />
         {copyright && copyrightPosition === 'bottom' && <div className="copyright bottom" dangerouslySetInnerHTML={{ __html: copyright }} />}
         <QuickButtons {...quickButtonsProps} />
         {emojis && pickerStatus && (<EmojiPickerPopup

@@ -14,6 +14,7 @@ import MessageWithContext from './context';
 import './styles.scss';
 import { useSelector } from '@selectors';
 import { Snapshot } from '@utils/types';
+import FileArea from './components/Area/file-area';
 
 export type CProps = {
   showTimeStamp?: boolean,
@@ -23,6 +24,8 @@ export type CProps = {
   profileAvatar?: string;
   profileClientAvatar?: string;
   suggestionsProps?: SuggestionsProps;
+  allowDropToUpload?: boolean;
+  onSelectFile?: (event: any) => void;
 }
 
 export type RenderOptions = {
@@ -40,7 +43,7 @@ export const getComponentToRender = (message: Snapshot<Message>, opts?: RenderOp
   return <ComponentToRender message={message} {...opts} />;
 };
 
-function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, reply, reaction, onReaction, suggestionsProps }: CProps) {
+function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, reply, reaction, onReaction, suggestionsProps, allowDropToUpload, onSelectFile }: CProps) {
   const { messages, typing, showChat, badgeCount, showSuggestion } = useSelector(({ behavior, messages, suggestions }) => ({
     messages: messages.messages,
     badgeCount: messages.badgeCount,
@@ -74,27 +77,31 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp = true, re
   const isClient = (sender) => sender === MESSAGE_SENDER.CLIENT;
 
   return (
-    <div id="rcw-messages" className="rcw-messages-container" ref={messageRef}>
-      <ContextMenu reply={reply} reaction={reaction} />
-      <ContextReaction onReaction={handleReaction} />
-      {messages?.filter(m => m.status !== 'hidden').map((message, index) => <MessageWithContext message={message as Message} key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
-          <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`} data-id={message.customId}>
-            {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
-              message.showAvatar &&
-              <img
-                src={message.profileAvatar ?? (isClient(message.sender) ? profileClientAvatar : profileAvatar)}
-                className={`rcw-avatar ${isClient(message.sender) ? 'rcw-avatar-client' : ''}`}
-                alt="profile"
-              />
-            }
-            {getComponentToRender(message, { reply, reaction, showTimeStamp })}
-          </div>
-        </MessageWithContext>
-      )}
-      <Loader typing={typing} />
-      <div style={{ flexGrow: 1 }} />
-      {showSuggestion && <Suggestions {...suggestionsProps} />}
-    </div>
+    <>
+      <div id="rcw-messages" className="rcw-messages-container" ref={messageRef}>
+        <ContextMenu reply={reply} reaction={reaction} />
+        <ContextReaction onReaction={handleReaction} />
+        {messages?.filter(m => m.status !== 'hidden').map((message, index) => <MessageWithContext message={message as Message}
+                                                                                                  key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
+            <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`} data-id={message.customId}>
+              {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
+                message.showAvatar &&
+                <img
+                  src={message.profileAvatar ?? (isClient(message.sender) ? profileClientAvatar : profileAvatar)}
+                  className={`rcw-avatar ${isClient(message.sender) ? 'rcw-avatar-client' : ''}`}
+                  alt="profile"
+                />
+              }
+              {getComponentToRender(message, { reply, reaction, showTimeStamp })}
+            </div>
+          </MessageWithContext>
+        )}
+        <Loader typing={typing} />
+        <div style={{ flexGrow: 1 }} />
+        {showSuggestion && <Suggestions {...suggestionsProps} />}
+      </div>
+      {allowDropToUpload && onSelectFile && <FileArea anchor={messageRef} handleChange={onSelectFile} />}
+    </>
   );
 }
 
