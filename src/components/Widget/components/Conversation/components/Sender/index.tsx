@@ -192,10 +192,10 @@ function Sender({
         <div className="rcw-input-fake" role="textbox">&nbsp;</div>
 
       </div>
-      <VoiceButton onChange={handlerOnSpeech} />
-      <button type="submit" className={cn('rcw-send', { active: isSendActive })} onClick={handlerSendMessage} disabled={!enter && !allowSend}>
-        <img src={isSendActive ? sendActive : send} className="rcw-send-icon" alt={buttonAlt} />
-      </button>
+      {!isSendActive ? <VoiceButton onChange={handlerOnSpeech} /> :
+        <button type="submit" className={cn('rcw-send', { active: isSendActive })} onClick={handlerSendMessage} disabled={!enter && !allowSend}>
+          <img src={isSendActive ? sendActive : send} className="rcw-send-icon" alt={buttonAlt} />
+        </button>}
     </div>
   );
 }
