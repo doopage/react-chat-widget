@@ -43,7 +43,9 @@ const useVoiceToText = () => {
             }
           }
           setText(finalTranscript || interimTranscript);
-          if (finalTranscript) setIsFinal(true);
+          if (finalTranscript) {
+            setIsFinal(true);
+          }
         });
 
         r.addEventListener('end', () => {
@@ -72,18 +74,28 @@ const useVoiceToText = () => {
     };
   }, [locale]);
 
-  const start = () => {
+  const start = async () => {
     const r = recognition.current;
     if (r) {
-      r.start();
-      setIsFinal(false);
+      try {
+        r.start();
+        setIsFinal(false);
+      } catch (e) {
+        console.error(e);
+        r.abort();
+      }
     }
   };
 
   const stop = () => {
     const r = recognition.current;
     if (r) {
-      r.stop();
+      try {
+        r.stop();
+      } catch (e) {
+        console.error(e);
+        r.abort();
+      }
     }
   };
 
@@ -95,10 +107,14 @@ const useVoiceToText = () => {
 };
 
 const useClickAndHold = (callback: (() => void) | null = null, duration = 500) => {
+  const [isClicked, setIsClicked] = useState(false);
   const [isHolding, setIsHolding] = useState(false);
   let holdTimer = useRef<NodeJS.Timeout>();
 
   const onMouseDown = () => {
+    if (!isClicked) {
+      return;
+    }
     holdTimer.current = setTimeout(() => {
       setIsHolding(true);
       if (callback) {
@@ -108,6 +124,9 @@ const useClickAndHold = (callback: (() => void) | null = null, duration = 500) =
   };
 
   const onMouseUp = () => {
+    if (!isClicked) {
+      return;
+    }
     clearTimeout(holdTimer.current);
     if (isHolding) {
       setIsHolding(false);
@@ -115,10 +134,21 @@ const useClickAndHold = (callback: (() => void) | null = null, duration = 500) =
   };
 
   const onMouseLeave = () => {
+    if (!isClicked) {
+      return;
+    }
     clearTimeout(holdTimer.current);
     if (isHolding) {
       setIsHolding(false);
     }
+  };
+
+  const onClick = () => {
+    if (isClicked || isHolding) {
+      setIsHolding(false);
+      return;
+    }
+    setIsHolding(true);
   };
 
   useEffect(() => {
@@ -127,7 +157,7 @@ const useClickAndHold = (callback: (() => void) | null = null, duration = 500) =
     };
   }, [isHolding, callback, duration]);
 
-  return { isHolding, onMouseDown, onMouseUp, onMouseLeave };
+  return { isHolding, onMouseDown, onMouseUp, onMouseLeave, onClick };
 };
 
 const VoiceButton = ({ onChange }) => {
