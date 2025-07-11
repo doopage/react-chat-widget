@@ -209,6 +209,10 @@
         &.in-avatars:not(:first-child) {
           margin-left: -25px;
         }
+
+        &.in-avatars.has-error {
+          display: none;
+        }
       }
     }
 

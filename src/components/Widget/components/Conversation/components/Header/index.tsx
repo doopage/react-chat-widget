@@ -88,7 +88,7 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
             : (<div className="avatars">
               {user.avatar.map((src, index) => (
                 <div className="avatar in-avatars" style={{ zIndex: user.avatar.length - index }}>
-                  <img src={src} key={index} alt="profile" />
+                  <img src={src} key={index} alt="profile" onError={ev => ev.currentTarget.parentElement?.classList.add('has-error')} />
                 </div>
               ))}
             </div>)
