@@ -4,6 +4,7 @@ import { hidePopup, toggleChat } from '@actions';
 import { ReactElement, useState } from 'react';
 import Overlay from '@components/Overlay';
 import cn from 'classnames';
+import Img from '@components/Img';
 
 const menu = require('@assets/menu.svg') as string;
 const close = require('@assets/close.svg') as string;
@@ -50,19 +51,19 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
         {showMenuButton && menus &&
           <>
             <button className="rcw-menu-button" onClick={() => setShowMenu(!showMenu)}>
-              <img src={menu} className="rcw-menu" alt="menu" />
+              <Img src={menu} className="rcw-menu" alt="menu" />
             </button>
             {showMenu && <>
               <Overlay onClick={() => setShowMenu(false)} />
               <ul className="menu-popup">
                 {menus.map(({ icon, title, onClick, selects }, i) => <li key={i} className={cn('menu-item', {'has-submenu': selects})} onClick={onClick && clickMenuHandler(onClick)}>
-                  <img src={icon} />
+                  <Img src={icon} />
                   <span>{title}</span>
                   {selects && <>
                     <div className="right-anchor" dangerouslySetInnerHTML={{ __html: '&blacktriangleright;' }} />
                     <ul className="menu-submenu">
                       {selects.map(({ icon, title, onClick }, j) => <li key={j} onClick={onClick}>
-                        {icon && <img src={icon} />}
+                        {icon && <Img src={icon} />}
                         <span>{title}</span>
                       </li>)}
                     </ul>
@@ -74,7 +75,7 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
         }
         {showCloseButton &&
           <button className="rcw-close-button" onClick={toggleChat}>
-            <img src={close} className="rcw-close" alt="close" />
+            <Img src={close} className="rcw-close" alt="close" />
           </button>
         }
       </div>}
@@ -82,13 +83,13 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
         ? <div className="rcw-user">
           {typeof user.avatar === 'string'
             ? (<div className="avatar">
-              <img src={user.avatar} alt="profile" />
+              <Img src={user.avatar} alt="profile" />
               {typeof user.online == 'boolean' && <div className={`status status-${user.online ? 'online' : 'offline'}`} />}
             </div>)
             : (<div className="avatars">
               {user.avatar.map((src, index) => (
                 <div className="avatar in-avatars" style={{ zIndex: user.avatar.length - index }}>
-                  <img src={src} key={index} alt="profile" onError={ev => ev.currentTarget.parentElement?.classList.add('has-error')} />
+                  <Img src={src} key={index} alt="profile" onError={ev => ev.currentTarget.parentElement?.classList.add('has-error')} />
                 </div>
               ))}
             </div>)
@@ -100,7 +101,7 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
         </div>
         : <>
           <p className="rcw-title">
-            {titleAvatar && <img src={titleAvatar} className="avatar" alt="profile" />}
+            {titleAvatar && <Img src={titleAvatar} className="avatar" alt="profile" />}
             {title ?? <>&nbsp;</>}
           </p>
           {subtitle && <span className="rcw-subtitle">{subtitle}</span>}

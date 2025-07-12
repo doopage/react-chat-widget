@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import { useSelector } from '@selectors';
 import './VoiceButton.scss';
+import Img from '@components/Img';
 
 const microphone = require('@assets/microphone.svg') as string;
 const microphoneActive = require('@assets/microphone-active.svg') as string;
@@ -200,7 +201,7 @@ const VoiceButton = ({ onChange }) => {
 
   return (
     <button type="submit" className={cn('rcw-micro', { active: isHolding })} {...mouseProps}>
-      <img src={isHolding ? microphoneActive : microphone} className="rcw-micro-icon" />
+      <Img src={isHolding ? microphoneActive : microphone} className="rcw-micro-icon" />
     </button>
   );
 };

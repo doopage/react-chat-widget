@@ -68,7 +68,7 @@ export default class App extends Component {
           'Tôi muốn gặp tư vấn viên': () => alert('Chọn C')
         };
         const bottom = {
-          'Quan tâm <img src="https://s3.amazonaws.com/upload.uxpin/files/793532/789453/uxpmod_9cfef642227c4e5cb6c4cb256b1f2dcc_140256163_IMG_5751_229a96-3e9982eee04f5e916e71ffaea58217df-a6073e.JPG"> Áo caro newyork, paris, london': () => alert('Chọn Z')
+          'Quan tâm <Imgsrc="https://s3.amazonaws.com/upload.uxpin/files/793532/789453/uxpmod_9cfef642227c4e5cb6c4cb256b1f2dcc_140256163_IMG_5751_229a96-3e9982eee04f5e916e71ffaea58217df-a6073e.JPG"> Áo caro newyork, paris, london': () => alert('Chọn Z')
         };
         showSuggestions(right, bottom);
       } else {

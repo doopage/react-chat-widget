@@ -7,6 +7,7 @@ import './style.scss';
 import { useSelector } from '@selectors';
 import React from 'react';
 import Popup, { Props as PopupProps } from './components/Popup';
+import Img from '@components/Img';
 
 const openLauncherDefault = require('@assets/launcher-button.svg') as string;
 const loading = require('@assets/loading.svg') as string;
@@ -53,14 +54,14 @@ function Launcher({
     <button type="button" className={cn('rcw-launcher', { 'rcw-hide-sm': showChat, 'default-launcher': !openImg })} onClick={toggleChat} aria-controls={chatId}>
       {!showChat && showBadge && <Badge badge={badgeCount} />}
       {showChat ?
-        <img src={closeImg || close} className="rcw-close-launcher" alt={openLabel} /> :
+        <Img src={closeImg || close} className="rcw-close-launcher" alt={openLabel} /> :
         <div className={cn('rcw-open-launcher', { 'default-launcher': !openImg && !isLoading, 'loading': isLoading })}>
           {
             isLoading ?
-              <img src={loading} alt={closeLabel} /> :
+              <Img src={loading} alt={closeLabel} /> :
               (openImg ?
-                <img src={openImg} alt={closeLabel} /> :
-                <img src={openLauncherDefault} alt={closeLabel} />)
+                <Img src={openImg} alt={closeLabel} /> :
+                <Img src={openLauncherDefault} alt={closeLabel} />)
           }
         </div>
       }

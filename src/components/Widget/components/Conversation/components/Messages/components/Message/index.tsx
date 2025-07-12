@@ -14,6 +14,7 @@ import './styles.scss';
 import { MessageContext } from '../../context';
 import { showNotification } from '@actions';
 import { scrollIntoView } from '@utils/scroll';
+import Img from '@components/Img';
 
 const quoteIcon = require('@assets/quote-right.svg') as string;
 
@@ -97,7 +98,7 @@ function Message({ message: messageRaw, reply, reaction, showTimeStamp, isReplyC
       return (
         <div className="reply-content-body">
           <div className="reply-content-header">
-            <img src={quoteIcon} />
+            <Img src={quoteIcon} />
             Trả lời
           </div>
           <div className="rcw-message-text" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/, '') }} />
@@ -112,14 +113,14 @@ function Message({ message: messageRaw, reply, reaction, showTimeStamp, isReplyC
         if (fileType.startsWith('image/')) {
           const href = file.url ?? URL.createObjectURL(file);
           if (isReplyMessage) {
-            return <img className="reply-content-preview" src={href} />;
+            return <Img className="reply-content-preview" src={href} />;
           }
           return (
             <>
-              <img className="reply-content-preview" src={href} />
+              <Img className="reply-content-preview" src={href} />
               <div className="reply-content-body has-preview">
                 <div className="reply-content-header">
-                  <img src={quoteIcon} />
+                  <Img src={quoteIcon} />
                   Trả lời
                 </div>
                 <div className="rcw-message-text">
@@ -135,7 +136,7 @@ function Message({ message: messageRaw, reply, reaction, showTimeStamp, isReplyC
         return (
           <div className="reply-content-body">
             <div className="reply-content-header">
-              <img src={quoteIcon} />
+              <Img src={quoteIcon} />
               Trả lời
             </div>
             <div className="rcw-message-text">
@@ -150,7 +151,7 @@ function Message({ message: messageRaw, reply, reaction, showTimeStamp, isReplyC
       return (
         <div className="reply-content-body">
           <div className="reply-content-header">
-            <img src={quoteIcon} />
+            <Img src={quoteIcon} />
             Trả lời
           </div>
           <div className="rcw-message-text">
@@ -162,7 +163,7 @@ function Message({ message: messageRaw, reply, reaction, showTimeStamp, isReplyC
     return (
       <div className="reply-content-body">
         <div className="reply-content-header">
-          <img src={quoteIcon} />
+          <Img src={quoteIcon} />
           Trả lời
         </div>
         <div>[Tin nhắn]</div>

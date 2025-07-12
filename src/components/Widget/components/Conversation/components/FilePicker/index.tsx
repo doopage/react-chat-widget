@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import './style.scss';
 import React, { useEffect, useRef, useState } from 'react';
+import Img from '@components/Img';
 
 const file = require('@assets/icon-file.svg') as string;
 const close = require('@assets/close.svg') as string;
@@ -42,7 +43,7 @@ type FileRemoveProps = {
 function FileRemove({ onClick }: FileRemoveProps) {
   return (
     <button className="rcw-file-remove" onClick={onClick}>
-      <img src={close} alt="" />
+      <Img src={close} alt="" />
     </button>
   );
 }
@@ -55,7 +56,7 @@ function FileImage({ item, onRemove }: FileProps) {
   return (
     <div className="rcw-file rcw-file-type-image">
       {onRemove && <FileRemove onClick={onRemove} />}
-      {url && <img src={url} alt="" />}
+      {url && <Img src={url} alt="" />}
       <div className="rcw-file-name">&nbsp;</div>
     </div>
   );
@@ -79,7 +80,7 @@ function FileUnknown({ item, onRemove }: FileProps) {
   return (
     <div className="rcw-file rcw-file-type-unknown">
       {onRemove && <FileRemove onClick={onRemove} />}
-      <img src={file} className="rcw-file-icon" alt="" />
+      <Img src={file} className="rcw-file-icon" alt="" />
       <div className="rcw-file-name" title={item.name}>{item.name}</div>
     </div>
   );
@@ -112,7 +113,7 @@ function FileAddButton({ onSelect, addFileRef, showButton, multiple, allowImage,
     <div className="rcw-file rcw-file-add">
       {showButton && <>
         <button onClick={handleClick}>
-          <img src={plus} className="rcw-file-icon" alt="" />
+          <Img src={plus} className="rcw-file-icon" alt="" />
         </button>
         <div className="rcw-file-name">&nbsp;</div>
       </>}

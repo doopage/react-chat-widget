@@ -5,6 +5,7 @@ import { getCaretIndex, getSelection, insertNodeAtCaret, isFirefox, updateCaret 
 import VoiceButton from './components/VoiceButton';
 import './style.scss';
 import { useSelector } from '@selectors';
+import Img from '@components/Img';
 
 const send = require('@assets/send_button.svg') as string;
 const sendActive = require('@assets/send_button-active.svg') as string;
@@ -166,10 +167,10 @@ function Sender({
   return (
     <div ref={refContainer} className="rcw-sender">
       {onPressFile && <button className="rcw-picker-btn file-picker-btn" type="submit" onClick={handlerPressFile}>
-        <img src={file} className="rcw-picker-icon" alt="" />
+        <Img src={file} className="rcw-picker-icon" alt="" />
       </button>}
       {onPressEmoji && <button className="rcw-picker-btn emoji-picker-btn" type="submit" onClick={handlerPressEmoji}>
-        <img src={emoji} className="rcw-picker-icon" alt="" />
+        <Img src={emoji} className="rcw-picker-icon" alt="" />
       </button>}
       <div className={cn('rcw-new-message', {
         'rcw-message-disable': disabledInput
@@ -194,7 +195,7 @@ function Sender({
       </div>
       {!isSendActive ? <VoiceButton onChange={handlerOnSpeech} /> :
         <button type="submit" className={cn('rcw-send', { active: isSendActive })} onClick={handlerSendMessage} disabled={!enter && !allowSend}>
-          <img src={isSendActive ? sendActive : send} className="rcw-send-icon" alt={buttonAlt} />
+          <Img src={isSendActive ? sendActive : send} className="rcw-send-icon" alt={buttonAlt} />
         </button>}
     </div>
   );

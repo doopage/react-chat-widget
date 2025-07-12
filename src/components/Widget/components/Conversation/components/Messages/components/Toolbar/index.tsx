@@ -5,6 +5,7 @@ import { setContextMenu, setMessageReaction, setReplyMessage } from '@actions';
 import { MenuId } from './context-menu';
 import { MenuId as ReactionMenuId } from './context-reaction';
 import { MessageContext } from '../../context';
+import Img from '@components/Img';
 
 const replyIcon = require('@assets/reply.svg') as string;
 const faceSmileIcon = require('@assets/face-smile.svg') as string;
@@ -51,7 +52,7 @@ function Toolbar({ reply, reaction, children }: Props) {
       </div>
       <div className="rcw-toolbar-btns">
         {buttons.map(({ icon, label, onClick }, i) => <button key={i} title={label} onClick={onClick}>
-          <img src={icon} />
+          <Img src={icon} />
         </button>)}
       </div>
     </div>

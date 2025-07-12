@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider';
 import { Position } from '@utils/types';
 import { ContextMenuItem } from '@types';
 import './styles.scss';
+import Img from '@components/Img';
 
 export interface Props {
   items: ContextMenuItem[];
@@ -38,7 +39,7 @@ export default function Menus({ items, position, data, onClose }: Props) {
         }
         const { icon, label, onClick } = item;
         return <MenuItem key={i} onClick={handleClick(onClick)}>
-          {icon && <img src={icon} />}
+          {icon && <Img src={icon} />}
           {label}
         </MenuItem>;
       })}

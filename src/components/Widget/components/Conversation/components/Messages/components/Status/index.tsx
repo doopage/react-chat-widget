@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { format_time } from '@utils/time';
 import { format } from 'date-fns';
 import { MessageContext } from '../../context';
+import Img from '@components/Img';
 
 const statuses = {
   prepare: require('@assets/status-prepare.svg') as string,
@@ -39,7 +40,7 @@ function Status({ showTimeStamp, showStatus, locale, children }: Props) {
       {children}
       <div className="status">
         {showTimeStamp && <span className="rcw-timestamp" title={format(message.timestamp, 'hh:mm:ss, dd MMM, yyyy')}>{format_time(message.timestamp, locale)}</span>}
-        {(hasStatus) && <div className="icon-status" title={statusTitle}><img src={statuses[message.status!]} alt={message.status} /></div>}
+        {(hasStatus) && <div className="icon-status" title={statusTitle}><Img src={statuses[message.status!]} alt={message.status} /></div>}
       </div>
       {(hasStatus && isStatusError) &&
         <div
