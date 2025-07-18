@@ -38,6 +38,8 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
     PopupComponent: popup.component
   }));
 
+  const [invalidAvatars, setInvalidAvatars] = useState<string[]>([]);
+
   const clickMenuHandler = (f: () => void) => {
     return () => {
       setShowMenu(false);
@@ -56,7 +58,8 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
             {showMenu && <>
               <Overlay onClick={() => setShowMenu(false)} />
               <ul className="menu-popup">
-                {menus.map(({ icon, title, onClick, selects }, i) => <li key={i} className={cn('menu-item', {'has-submenu': selects})} onClick={onClick && clickMenuHandler(onClick)}>
+                {menus.map(({ icon, title, onClick, selects }, i) => <li key={i} className={cn('menu-item', { 'has-submenu': selects })}
+                                                                         onClick={onClick && clickMenuHandler(onClick)}>
                   <Img src={icon} />
                   <span>{title}</span>
                   {selects && <>
@@ -87,9 +90,9 @@ function Header({ title, subtitle, showMenuButton = true, showCloseButton = true
               {typeof user.online == 'boolean' && <div className={`status status-${user.online ? 'online' : 'offline'}`} />}
             </div>)
             : (<div className="avatars">
-              {user.avatar.map((src, index) => (
+              {user.avatar.filter(src => !invalidAvatars.includes(src)).map((src, index) => (
                 <div className="avatar in-avatars" style={{ zIndex: user.avatar.length - index }}>
-                  <Img src={src} key={index} alt="profile" onError={ev => ev.currentTarget.parentElement?.classList.add('has-error')} />
+                  <Img src={src} key={index} alt="profile" onError={ev => setInvalidAvatars([...invalidAvatars, src])} />
                 </div>
               ))}
             </div>)
