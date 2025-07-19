@@ -1,0 +1,28 @@
+@import 'variables/sizes';
+@import 'variables/colors';
+
+.rcw-voice-popup {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  top: -100%;
+
+  &:not(.active) {
+    //display: none;
+    z-index: -1;
+  }
+
+  .rcw-voice-popup-container {
+    background: #cccccc;
+    width: 30%;
+    min-width: 300px;
+    height: 50px;
+    border-radius: 50px;
+
+    > div {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+  }
+}

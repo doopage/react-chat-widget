@@ -6,6 +6,7 @@ import VoiceButton from './components/VoiceButton';
 import './style.scss';
 import { useSelector } from '@selectors';
 import Img from '@components/Img';
+import VoicePopup, { VoicePopupRef } from './components/VoicePopup';
 
 const send = require('@assets/send_button.svg') as string;
 const sendActive = require('@assets/send_button-active.svg') as string;
@@ -50,6 +51,8 @@ function Sender({
   const [enter, setEnter] = useState(true);
   const [firefox, setFirefox] = useState(false);
   const [isTextReady, setIsTextReady] = useState(false);
+  const voicePopupRef = useRef<VoicePopupRef>(null);
+
   // @ts-ignore
   useEffect(() => {
     if (showChat && autofocus) inputRef.current?.focus();
@@ -166,6 +169,7 @@ function Sender({
 
   return (
     <div ref={refContainer} className="rcw-sender">
+      <VoicePopup apiRef={voicePopupRef} />
       {onPressFile && <button className="rcw-picker-btn file-picker-btn" type="submit" onClick={handlerPressFile}>
         <Img src={file} className="rcw-picker-icon" alt="" />
       </button>}
@@ -193,7 +197,7 @@ function Sender({
         <div className="rcw-input-fake" role="textbox">&nbsp;</div>
 
       </div>
-      {!isSendActive ? <VoiceButton onChange={handlerOnSpeech} /> :
+      {!isSendActive ? <VoiceButton onChange={handlerOnSpeech} popupRef={voicePopupRef} /> :
         <button type="submit" className={cn('rcw-send', { active: isSendActive })} onClick={handlerSendMessage} disabled={!enter && !allowSend}>
           <Img src={isSendActive ? sendActive : send} className="rcw-send-icon" alt={buttonAlt} />
         </button>}

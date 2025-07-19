@@ -5,9 +5,16 @@ import cn from 'classnames';
 import { useSelector } from '@selectors';
 import './VoiceButton.scss';
 import Img from '@components/Img';
+import { VoicePopupRef } from './VoicePopup';
 
 const microphone = require('@assets/microphone.svg') as string;
 const microphoneActive = require('@assets/microphone-active.svg') as string;
+
+
+export type CProps = {
+  onChange: (text: string, isFinal: boolean) => void;
+  popupRef?: React.RefObject<VoicePopupRef>;
+}
 
 const useVoiceToText = () => {
   const locale = useSelector(({ messages }) => messages?.voiceLocale);
@@ -169,7 +176,7 @@ const useClickAndHold = (callback: (() => void) | null = null, duration = 500) =
   return { isHolding, onMouseDown, onMouseUp, onMouseLeave };
 };
 
-const VoiceButton = ({ onChange }) => {
+const VoiceButton = ({ onChange, popupRef }: CProps) => {
   const {
     text,
     listening,
@@ -197,9 +204,14 @@ const VoiceButton = ({ onChange }) => {
 
   useEffect(() => {
     if (isHolding) {
-      startListening();
+      popupRef?.current?.init();
+      Promise.all([
+        startListening(),
+        popupRef?.current?.start()
+      ]);
     } else {
       stopListening();
+      popupRef?.current?.stop();
     }
   }, [isHolding]);
 
