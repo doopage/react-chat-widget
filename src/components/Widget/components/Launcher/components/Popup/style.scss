@@ -1,3 +1,4 @@
+@import 'variables/sizes';
 @import 'variables/colors';
 
 .rcw-popup {
@@ -31,5 +32,12 @@
     text-align: center;
     width: fit-content;
     background-color: #ffffff;
+  }
+}
+
+@media screen and (max-width: $fullscreen-break) {
+  .rcw-popup {
+    bottom: calc(var(--anchor-mobile-bottom, 20px) + 60px);
+    right: var(--anchor-mobile-right, 20px);
   }
 }

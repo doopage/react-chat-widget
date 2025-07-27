@@ -217,6 +217,8 @@ export default class App extends Component {
         }}
         anchorBottom={120}
         anchorRight={120}
+        anchorMobileBottom={90}
+        anchorMobileRight={30}
       />
     );
   }
