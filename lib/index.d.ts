@@ -5,7 +5,7 @@ import { Primitive } from 'utility-types';
 
 declare function Message$1({ message: messageRaw, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props$3): import("react/jsx-runtime").JSX.Element;
 declare function Message$2({ showTimeStamp, reply, reaction, className, children }: Props$5): import("react/jsx-runtime").JSX.Element;
-declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, anchorBottom, anchorRight, headerPaddingTop, headerPaddingBottom }: CProps$7): import("react/jsx-runtime").JSX.Element;
+declare function Root({ widgetProps, primaryColor, messageClientColor, messageClientTextColor, messageResponseColor, messageResponseTextColor, anchorBottom, anchorRight, anchorMobileBottom, anchorMobileRight, headerPaddingTop, headerPaddingBottom }: CProps$7): import("react/jsx-runtime").JSX.Element;
 declare function Snippet({ message: messageRaw, reply, reaction, showTimeStamp, isReplyContext, isReplyMessage }: Props$4): import("react/jsx-runtime").JSX.Element;
 export declare const Component: {
 	Message: typeof Message$1;
@@ -324,6 +324,8 @@ type CProps$7 = {
 	messageResponseTextColor?: string;
 	anchorBottom?: number | string;
 	anchorRight?: number | string;
+	anchorMobileBottom?: number | string;
+	anchorMobileRight?: number | string;
 	headerPaddingTop?: string;
 	headerPaddingBottom?: string;
 };
