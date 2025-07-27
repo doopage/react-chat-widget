@@ -59,8 +59,8 @@
   .rcw-launcher {
     @include launcher-fs;
     margin: 0;
-    bottom: var(--anchor-mobile-bottom);
-    right: var(--anchor-mobile-right);
+    bottom: var(--anchor-mobile-bottom, 20px);
+    right: var(--anchor-mobile-right, 20px);
   }
 
   .rcw-hide-sm {
