@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
 import Header, { CProps as HeaderProps } from './components/Header';
@@ -14,6 +14,7 @@ import { useSelector } from '@selectors';
 import EmojiPickerPopup from './components/EmojiPickerPopup';
 import { NotificationProvider } from '../Notification';
 import { setReplyMessage } from '@actions';
+import CloseConfirmPopup from '@components/CloseConfirmPopup';
 
 export type CProps = {
   headerProps?: HeaderProps;
@@ -34,6 +35,9 @@ export type CProps = {
   disabledInput?: boolean;
   copyright?: string;
   copyrightPosition?: string;
+  isShowCloseConfirmPopup?: boolean;
+  onCloseConfirmPopup?: () => void;
+  CloseConfirmElement?: React.FC<void>;
 };
 
 const minSize = {
@@ -62,7 +66,9 @@ function Conversation({
                         reaction,
                         disabledInput: propDisabledInput,
                         copyright,
-                        copyrightPosition = 'bottom'
+                        copyrightPosition = 'bottom',
+                        isShowCloseConfirmPopup,
+                        CloseConfirmElement
                       }: CProps) {
   const containerDivRef = useRef<HTMLElement | null>(null);
   const boundResizeRef = useRef<(event: MouseEvent) => void>(() => {
@@ -217,6 +223,7 @@ function Conversation({
           allowSend={!!files && fileItems.length > 0}
         />
         {copyright && copyrightPosition === 'outside-bottom' && <div className="copyright outside-bottom" dangerouslySetInnerHTML={{ __html: copyright }} />}
+        {CloseConfirmElement && isShowCloseConfirmPopup && <CloseConfirmPopup children={CloseConfirmElement()} />}
       </div>
     </NotificationProvider>
   );

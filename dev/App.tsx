@@ -51,6 +51,9 @@ export default class App extends Component {
     // addResponseMessage('![vertical](https://d2sofvawe08yqg.cloudfront.net/reintroducing-react/hero2x?1556470143)');
     addResponseMessage('Xin chào :D');
     addSystemMessage('ABC', {}, { component: ref(CustomMessage) });
+    window.addEventListener('beforeunload', (e) => {
+      e.preventDefault();
+    });
   }
 
   handleNewUserMessage = ({ id, text, files, replyMessage }: any) => {
@@ -187,7 +190,10 @@ export default class App extends Component {
               reply: true,
               reaction: true,
               copyright: '&copy; 2024 LiveChat, Inc. All rights reserved.',
-              copyrightPosition: 'outside-bottom'
+              copyrightPosition: 'outside-bottom',
+              isShowCloseConfirmPopup: true,
+              onCloseConfirmPopup: () => alert('Close'),
+              CloseConfirmElement: () => <p>Close popup</p>
             },
             launcherProps: {
               // openImg: doopageIcon
