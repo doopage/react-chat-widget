@@ -191,7 +191,7 @@ export default class App extends Component {
               reaction: true,
               copyright: '&copy; 2024 LiveChat, Inc. All rights reserved.',
               copyrightPosition: 'outside-bottom',
-              isShowCloseConfirmPopup: true,
+              // isShowCloseConfirmPopup: true,
               onCloseConfirmPopup: () => alert('Close'),
               CloseConfirmElement: () => <p>Close popup</p>
             },

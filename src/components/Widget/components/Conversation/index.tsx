@@ -68,6 +68,7 @@ function Conversation({
                         copyright,
                         copyrightPosition = 'bottom',
                         isShowCloseConfirmPopup,
+                        onCloseConfirmPopup,
                         CloseConfirmElement
                       }: CProps) {
   const containerDivRef = useRef<HTMLElement | null>(null);
@@ -223,7 +224,7 @@ function Conversation({
           allowSend={!!files && fileItems.length > 0}
         />
         {copyright && copyrightPosition === 'outside-bottom' && <div className="copyright outside-bottom" dangerouslySetInnerHTML={{ __html: copyright }} />}
-        {CloseConfirmElement && isShowCloseConfirmPopup && <CloseConfirmPopup children={CloseConfirmElement()} />}
+        {CloseConfirmElement && isShowCloseConfirmPopup && <CloseConfirmPopup children={CloseConfirmElement()} onClose={onCloseConfirmPopup} />}
       </div>
     </NotificationProvider>
   );
