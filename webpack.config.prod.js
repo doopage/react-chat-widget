@@ -7,6 +7,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const {BundleDeclarationsWebpackPlugin} = require('bundle-declarations-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: path.join(__dirname, 'src/index.ts'),
@@ -44,11 +45,6 @@ module.exports = {
         options: {
           transpileOnly: true
         }
-      },
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader'
       },
       {
         test: /\.js$/,
@@ -92,20 +88,7 @@ module.exports = {
     }),
     new BundleDeclarationsWebpackPlugin()
   ],
-  externals: {
-    react: {
-      root: 'React',
-      commonjs2: 'react',
-      commonjs: 'react',
-      amd: 'react'
-    },
-    'react-dom': {
-      root: 'ReactDOM',
-      commonjs2: 'react-dom',
-      commonjs: 'react-dom',
-      amd: 'react-dom'
-    }
-  },
+  externals: [nodeExternals()],
   optimization: {
     minimizer: [
       new CssMinimizerPlugin(),
