@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const { BundleDeclarationsWebpackPlugin } = require('bundle-declarations-webpack-plugin');
+const {BundleDeclarationsWebpackPlugin} = require('bundle-declarations-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'src/index.ts'),
@@ -71,10 +71,8 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              implementation: require('node-sass'),
-              sassOptions: {
-                includePaths: [path.resolve(__dirname, 'src/scss/')]
-              }
+              api: 'modern',
+              implementation: require('sass'),
             }
           }
         ]

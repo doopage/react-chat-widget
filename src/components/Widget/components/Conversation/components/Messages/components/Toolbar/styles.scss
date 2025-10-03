@@ -1,5 +1,5 @@
-@import 'variables/colors';
-@import 'common';
+@use '../../../../../../../../scss/variables/colors';
+@use '../../../../../../../../scss/common';
 
 .rcw-toolbar {
   display: flex;

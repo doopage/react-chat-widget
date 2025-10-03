@@ -1,5 +1,5 @@
-@import 'variables/sizes';
-@import 'variables/colors';
+@use '../../../../../../../scss/variables/sizes';
+@use '../../../../../../../scss/variables/colors';
 
 .rcw-voice-popup {
   position: absolute;

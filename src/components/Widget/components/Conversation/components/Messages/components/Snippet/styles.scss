@@ -1,9 +1,9 @@
-@import 'variables/sizes';
-@import 'variables/colors';
-@import 'common';
+@use '../../../../../../../../scss/variables/sizes';
+@use '../../../../../../../../scss/variables/colors';
+@use '../../../../../../../../scss/common';
 
 .rcw-snippet {
-  @include message-bubble($grey-2);
+  @include common.message-bubble(colors.$grey-2);
 
   &.is-preview {
     max-width: fit-content;
@@ -19,7 +19,7 @@
   }
 
   .rcw-snippet-details {
-    border-left: 2px solid $green-1;
+    border-left: 2px solid colors.$green-1;
     margin-top: 5px;
     padding-left: 10px;
   }

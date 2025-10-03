@@ -1,6 +1,6 @@
-@import 'variables/sizes';
-@import 'animation';
-@import 'common';
+@use '../../scss/variables/sizes';
+@use '../../scss/animation';
+@use '../../scss/common';
 
 .rcw-widget-container {
   bottom: 0;
@@ -13,13 +13,13 @@
 }
 
 .rcw-full-screen {
-  @include widget-container-fs;
+  @include common.widget-container-fs;
 }
 
-@media screen and (max-width: $fullscreen-break) {
+@media screen and (max-width: sizes.$fullscreen-break) {
   .rcw-widget-container {
     height: 100%;
-    @include widget-container-fs;
+    @include common.widget-container-fs;
   }
 }
 

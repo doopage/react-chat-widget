@@ -1,16 +1,16 @@
-@import 'variables/colors';
-@import 'common';
+@use '../../../../../../../../scss/variables/colors';
+@use '../../../../../../../../scss/common';
 
 .rcw-client {
   .rcw-message-custom {
-    @include message-bubble(var(--message-client-color));
+    @include common.message-bubble(var(--message-client-color));
     color: var(--message-client-text-color);
   }
 }
 
 .rcw-response, .rcw-system {
   .rcw-message-custom {
-    @include message-bubble(var(--message-response-color));
+    @include common.message-bubble(var(--message-response-color));
     color: var(--message-response-text-color);
 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 2px 0 rgba(255, 152, 0, 0.5);

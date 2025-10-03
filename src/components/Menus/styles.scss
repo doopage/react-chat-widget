@@ -1,5 +1,5 @@
-@import 'variables/colors';
-@import 'common';
+@use '../../scss/variables/colors';
+@use '../../scss/common';
 
 .rcw-menus {
   z-index: 10000 !important;

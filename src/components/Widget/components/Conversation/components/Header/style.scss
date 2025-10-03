@@ -1,6 +1,6 @@
-@import 'variables/sizes';
-@import 'variables/colors';
-@import 'common';
+@use '../../../../../../scss/variables/sizes';
+@use '../../../../../../scss/variables/colors';
+@use '../../../../../../scss/common';
 
 .rcw-conversation-container {
   font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
@@ -8,7 +8,7 @@
   .rcw-header {
     background-color: var(--primary-color);
     border-radius: 10px 10px 0 0;
-    color: $white;
+    color: colors.$white;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -60,10 +60,10 @@
   }
 
   .buttons {
-    @include header-button-fs;
+    @include common.header-button-fs;
 
     .rcw-menu-button {
-      @include menu-button-fs;
+      @include common.menu-button-fs;
       //display: none;
     }
 
@@ -151,7 +151,7 @@
     }
 
     .rcw-close-button {
-      @include close-button-fs;
+      @include common.close-button-fs;
       //display: none;
     }
   }
@@ -235,56 +235,56 @@
 .rcw-full-screen {
 
   .rcw-header {
-    @include header-fs;
+    @include common.header-fs;
   }
 
   .rcw-title {
-    @include title-fs;
+    @include common.title-fs;
   }
 
   .buttons {
-    @include header-button-fs;
+    @include common.header-button-fs;
 
     .rcw-menu-button {
-      @include menu-button-fs;
+      @include common.menu-button-fs;
     }
 
     .rcw-close-button {
-      @include close-button-fs;
+      @include common.close-button-fs;
     }
   }
 
   .rcw-close {
-    @include close-fs;
+    @include common.close-fs;
   }
 }
 
-@media screen and (max-width: $fullscreen-break) {
+@media screen and (max-width: sizes.$fullscreen-break) {
 
   .rcw-conversation-container {
 
     .rcw-header {
-      @include header-fs;
+      @include common.header-fs;
     }
 
     .rcw-title {
-      @include title-fs;
+      @include common.title-fs;
     }
 
     .buttons {
-      @include header-button-fs;
+      @include common.header-button-fs;
 
       .rcw-menu-button {
-        @include menu-button-fs;
+        @include common.menu-button-fs;
       }
 
       .rcw-close-button {
-        @include close-button-fs;
+        @include common.close-button-fs;
       }
     }
 
     .rcw-close {
-      @include close-fs;
+      @include common.close-fs;
     }
   }
 }

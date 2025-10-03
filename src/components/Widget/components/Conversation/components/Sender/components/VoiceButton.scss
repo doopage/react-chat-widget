@@ -1,8 +1,8 @@
-@import 'variables/sizes';
-@import 'variables/colors';
+@use '../../../../../../../scss/variables/sizes';
+@use '../../../../../../../scss/variables/colors';
 
 .rcw-micro {
-  background: $grey-2;
+  background: colors.$grey-2;
   border: 0;
   cursor: pointer;
 

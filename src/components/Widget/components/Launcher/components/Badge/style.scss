@@ -1,4 +1,4 @@
-@import 'variables/colors';
+@use '../../../../../../scss/variables/colors';
 
 .rcw-launcher {
 
@@ -6,8 +6,8 @@
     position: fixed;
     top: -10px;
     right: -5px;
-    background-color: $red;
-    color: $white;
+    background-color: colors.$red;
+    color: colors.$white;
     width: 25px;
     height: 25px;
     text-align: center;

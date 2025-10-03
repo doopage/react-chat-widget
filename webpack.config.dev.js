@@ -69,10 +69,8 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              implementation: require('node-sass'),
-              sassOptions: {
-                includePaths: [path.resolve(__dirname, 'src/scss/')]
-              }
+              api: 'modern',
+              implementation: require('sass'),
             }
           }
         ]

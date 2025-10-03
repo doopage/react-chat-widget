@@ -1,4 +1,4 @@
-@import 'variables/colors';
+@use '../../../../../../../../scss/variables/colors';
 
 .quick-button {
   background: none;
@@ -11,6 +11,6 @@
 
   &:active {
     background: var(--primary-color);
-    color: $white;
+    color: colors.$white;
   }
 }

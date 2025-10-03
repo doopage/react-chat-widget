@@ -1,8 +1,8 @@
-@import 'variables/sizes';
-@import 'variables/colors';
+@use '../../../../../../scss/variables/sizes';
+@use '../../../../../../scss/variables/colors';
 
 .quick-buttons-container {
-  background: $white;
+  background: colors.$white;
   //overflow-x: auto;
   white-space: nowrap;
   //padding: 10px;
@@ -19,7 +19,7 @@
     }
   }
 
-  @media screen and (max-width: $fullscreen-break) {
+  @media screen and (max-width: sizes.$fullscreen-break) {
     padding-bottom: 15px;
   }
 }

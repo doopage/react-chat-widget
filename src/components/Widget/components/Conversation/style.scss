@@ -1,11 +1,11 @@
-@import 'variables/sizes';
-@import 'variables/colors';
-@import 'common';
-@import 'animation';
+@use '../../../../scss/variables/sizes';
+@use '../../../../scss/variables/colors';
+@use '../../../../scss/common';
+@use '../../../../scss/animation';
 
 .rcw-conversation-container {
   border-radius: 10px;
-  box-shadow: 0px 2px 10px 1px $grey-3;
+  box-shadow: 0px 2px 10px 1px colors.$grey-3;
   position: relative;
   width: 400px;
   height: 300px;
@@ -72,12 +72,12 @@
 
 .rcw-full-screen {
   .rcw-conversation-container {
-    @include conversation-container-fs;
+    @include common.conversation-container-fs;
   }
 }
 
-@media screen and (max-width: $fullscreen-break) {
+@media screen and (max-width: sizes.$fullscreen-break) {
   .rcw-conversation-container {
-    @include conversation-container-fs;
+    @include common.conversation-container-fs;
   }
 }
