@@ -98,6 +98,7 @@ function Conversation({
       onResize?.(width, height);
       containerDivRef.current.style.width = width + 'px';
       containerDivRef.current.style.height = height + 'px';
+      window.dispatchEvent(new Event('resize'));
     }
   };
 

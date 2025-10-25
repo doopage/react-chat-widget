@@ -20,6 +20,7 @@
     "classnames": "^2.3.2",
     "date-fns": "^2.30.0",
     "emoji-picker-react": "^4.5.2",
+    "fitty": "^2.4.2",
     "lodash": "^4.17.21",
     "markdown-it": "^14.1.0",
     "markdown-it-link-attributes": "^4.0.1",

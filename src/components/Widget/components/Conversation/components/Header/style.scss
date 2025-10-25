@@ -43,13 +43,10 @@
   }
 
   .rcw-title {
-    font-size: 24px;
+    display: flex;
     font-weight: 500;
     padding: 10px 0;
     margin: 0 65px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
   }
 
   .rcw-subtitle {
