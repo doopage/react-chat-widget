@@ -1,0 +1,10 @@
+.fitty-text {
+  margin: 0 auto;
+
+  &.fit {
+    &.fit-overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import fitty from 'fitty';
+import './styles.scss';
 
 export interface Props {
   children?: React.ReactNode;
@@ -17,7 +18,15 @@ function FittyText({children, Element = 'div', minSize = 10, maxSize = 24, multi
     if (!textRef.current) {
       return;
     }
-    const fitInstance = fitty(textRef.current, {
+    const el = textRef.current as HTMLElement;
+    const elParent = el.parentElement as HTMLElement;
+    el.classList.add('fit');
+    el.addEventListener('fit', e => {
+      const isOverflow = elParent.scrollWidth > elParent.clientWidth;
+      el.classList.toggle('fit-overflow', isOverflow);
+    });
+
+    const fitInstance = fitty(el, {
       minSize,
       maxSize,
       multiLine,
@@ -27,15 +36,7 @@ function FittyText({children, Element = 'div', minSize = 10, maxSize = 24, multi
   }, [minSize, maxSize]);
 
   return (
-    <Element
-      ref={textRef}
-      style={{
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-      }}
-      {...props}
-    >
+    <Element ref={textRef} className="fitty-text"{...props}>
       {children}
     </Element>
   );
